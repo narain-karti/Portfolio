@@ -5,15 +5,36 @@ import Image from 'next/image';
 import { ArrowLeft, Sparkles, CheckCircle2, ChevronRight, Award, Terminal, Cpu, Users, Layers, ExternalLink } from 'lucide-react';
 import { TechBrandIcon } from './TechBrandIcons';
 
+export type CaseStudyId = 'datadoc' | 'project-k' | 'quorum' | 'axoweb' | 'deceptrix' | 'beyond-earth';
+
 interface CaseStudyExactSectionProps {
   onBackToOverview?: () => void;
-  initialStudy?: 'datadoc' | 'project-k' | 'quorum' | 'axoweb' | 'wayline' | 'tandem';
+  initialStudy?: CaseStudyId;
 }
 
 export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datadoc' }: CaseStudyExactSectionProps) {
-  const [selectedStudy, setSelectedStudy] = useState<'datadoc' | 'project-k' | 'quorum' | 'axoweb' | 'wayline' | 'tandem'>(initialStudy);
+  const [selectedStudy, setSelectedStudy] = useState<CaseStudyId>(initialStudy);
 
-  const studyData = {
+  const studyData: Record<CaseStudyId, {
+    date: string;
+    title: string;
+    subtitle: string;
+    pills: string[];
+    role: string;
+    timeline: string;
+    team: string;
+    year: string;
+    heroBadge: string;
+    heroImage: string;
+    resultsText: string;
+    metric1: { value: string; label: string };
+    metric2: { value: string; label: string };
+    metric3: { value: string; label: string };
+    photo1: string;
+    photo1Badge: string;
+    photo2: string;
+    photo2Badge: string;
+  }> = {
     'datadoc': {
       date: 'AUG 2026',
       title: 'DATADOC CLI',
@@ -24,14 +45,14 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
       team: 'Independent Author',
       year: '2026',
       heroBadge: 'PUBLISHED ON PYPI · pip install datadoc-cli',
-      heroImage: 'https://picsum.photos/seed/dataset-engineering-code/1200/800',
+      heroImage: '/images/datadoc_showcase.jpg',
       resultsText: 'DataDoc replaces slow, boilerplate-heavy exploratory data analysis notebooks with deterministic, instant CLI commands. Leveraging Apache Arrow memory structures and Polars multi-threaded kernels, it scans 1,000,000+ rows in 0.42 seconds and applies agentic schema repairs with zero data corruption.',
       metric1: { value: '0.42s', label: '1M-ROW PROFILING SPEED' },
       metric2: { value: '14x', label: 'FASTER THAN PANDAS EDA' },
       metric3: { value: '100%', label: 'DETERMINISTIC PIPELINES' },
-      photo1: 'https://picsum.photos/seed/terminal-cli-screen/600/500',
+      photo1: '/images/datadoc_showcase.jpg',
       photo1Badge: 'TERMINAL DIAGNOSTIC INTERFACE',
-      photo2: 'https://picsum.photos/seed/data-analyst-laptop-flow/600/500',
+      photo2: '/images/hardware_lab.jpg',
       photo2Badge: 'AGENTIC PLANNER & CHAT REPAIR'
     },
     'project-k': {
@@ -44,14 +65,14 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
       team: '4 Engineers (Lead)',
       year: '2026',
       heroBadge: 'OPENAI ACADEMY × NXTWAVE HACKATHON · NATIONAL RUNNER-UP (₹3L PRIZE)',
-      heroImage: 'https://picsum.photos/seed/smart-traffic-jetson-vision/1200/800',
+      heroImage: '/images/project_k_showcase.jpg',
       resultsText: 'The edge-cloud pipeline achieves sub-120ms vehicle detection and collision triage directly on NVIDIA Jetson Orin. By integrating multi-agent reinforcement learning in SUMO for adaptive traffic signal phasing alongside MQTT-based green wave emergency clearance, junction bottlenecks were cut by 38% with zero ambulance transit delays.',
       metric1: { value: '-38%', label: 'INTERSECTION DELAYS' },
       metric2: { value: '<120ms', label: 'JETSON INFERENCE TIME' },
       metric3: { value: '₹3L Won', label: 'NATIONAL RUNNER-UP PRIZE' },
-      photo1: 'https://picsum.photos/seed/jetson-edge-device-desk/600/500',
+      photo1: '/images/hardware_lab.jpg',
       photo1Badge: 'JETSON ORIN HARDWARE DEPLOYMENT',
-      photo2: 'https://picsum.photos/seed/traffic-control-room-monitors/600/500',
+      photo2: '/images/project_k_showcase.jpg',
       photo2Badge: 'SUMO SIMULATION BENCHMARKING'
     },
     'quorum': {
@@ -64,14 +85,14 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
       team: 'Top Rank Team',
       year: '2026',
       heroBadge: 'NATIONAL HACKATHON TAKEOVER\'26 · TOP RANK',
-      heroImage: 'https://picsum.photos/seed/multi-agent-debate-graph/1200/800',
+      heroImage: '/images/quorum_showcase.jpg',
       resultsText: 'Quorum resolves single-agent hallucinations by running an automated, turn-based boardroom debate with persistent SQLite context indexing and ReactFlow graph streaming. Each persona critiques counterarguments before synthesizing an executive verdict with full traceability.',
-      metric1: { value: '5 Roles', label: 'AUTONOMOUS AGENTS' },
+      metric1: { value: '6 Roles', label: 'AUTONOMOUS AGENTS' },
       metric2: { value: '<80ms', label: 'GRAPH STREAMING LATENCY' },
       metric3: { value: '100%', label: 'AUDITABLE DEBATE TRANSCRIPTS' },
-      photo1: 'https://picsum.photos/seed/network-node-graph-ui/600/500',
+      photo1: '/images/quorum_showcase.jpg',
       photo1Badge: 'REACTFLOW AGENT TOPOLOGY GRAPH',
-      photo2: 'https://picsum.photos/seed/boardroom-ai-executive/600/500',
+      photo2: '/images/datadoc_showcase.jpg',
       photo2Badge: 'EXECUTIVE SYNTHESIS OUTPUT'
     },
     'axoweb': {
@@ -84,55 +105,55 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
       team: 'Founding Team',
       year: '2025-2026',
       heroBadge: 'BRAVE STARTUPS NATIONAL WINNER · ₹7L+ REVENUE IN 3 MONTHS',
-      heroImage: 'https://picsum.photos/seed/startup-office-founders/1200/800',
+      heroImage: '/images/axoweb_showcase.jpg',
       resultsText: 'Led development of customer, partner, and admin apps in a tri-part Flutter/React/Firebase car-wash platform. In parallel, designed an AWS-based microservice architecture (Lambda, RDS PostgreSQL, ElastiCache, SQS, Cognito) for a university grievance platform serving 5 distinct roles.',
       metric1: { value: '₹7L+', label: 'REVENUE IN FIRST 3 MONTHS' },
       metric2: { value: '5 Roles', label: 'RBAC AWS MICROSERVICES' },
       metric3: { value: '1st Place', label: 'BRAVE STARTUPS COMPETITION' },
-      photo1: 'https://picsum.photos/seed/car-wash-mobile-app/600/500',
+      photo1: '/images/axoweb_showcase.jpg',
       photo1Badge: 'TRI-APP ECOSYSTEM LAUNCH',
-      photo2: 'https://picsum.photos/seed/cloud-architecture-serverless/600/500',
+      photo2: '/images/hardware_lab.jpg',
       photo2Badge: 'AWS SERVERLESS INFRASTRUCTURE'
     },
-    'wayline': {
-      date: 'MAR 19, 2026',
-      title: 'WAYLINE',
-      subtitle: 'Urban multi-modal transit navigation interface designed for glanceable, high-stress station commuter clarity.',
-      pills: ['MOBILITY', 'CONSUMER APP', 'TRANSIT UX'],
-      role: 'Lead Systems Designer',
-      timeline: '6 months',
-      team: '3 Engineers, 1 PM',
+    'deceptrix': {
+      date: '2026',
+      title: 'DECEPTRIX',
+      subtitle: 'Multimodal Video Forensic & Deepfake Temporal Artifact Detector powered by spatial CNNs, FFT spectral analysis, and temporal transformers.',
+      pills: ['COMPUTER VISION', 'DEEPFAKE FORENSICS', 'PYTORCH / FFT'],
+      role: 'Research & ML Engineer',
+      timeline: 'Open Source / Research',
+      team: 'Independent Build',
       year: '2026',
-      heroBadge: 'LIVE PILOT DEPLOYMENT · METRO LINE 01 & 02',
-      heroImage: 'https://picsum.photos/seed/subway-phone-transit/1200/800',
-      resultsText: 'Engineered a glanceable mobile interface for high-density metro stations. Real-time platform step routing reduced trip-planning delays by 47% and minimized missed interchange connections across initial pilot lines.',
-      metric1: { value: '47%', label: 'FASTER TRIP PLANNING' },
-      metric2: { value: '-55%', label: 'LATE ARRIVALS' },
-      metric3: { value: 'Live Network', label: 'SCALE IMPACT' },
-      photo1: 'https://picsum.photos/seed/commuter-train-view/600/500',
-      photo1Badge: 'PLATFORM IN-HAND VALIDATION',
-      photo2: 'https://picsum.photos/seed/commuter-happy-group/600/500',
-      photo2Badge: 'METRO STATION LAUNCH DAY'
+      heroBadge: 'EXPLAINABLE MEDIA FORENSICS SUITE',
+      heroImage: '/images/deceptrix_showcase.jpg',
+      resultsText: 'DECEPTRIX analyzes frame-level spatial blurs alongside 2D FFT high-frequency spectral artifacts and cross-frame optical-flow micro-expressions. Achieves 93.4% accuracy on FaceForensics++ benchmarks while rendering explainable Grad-CAM heatmaps for forensic video audits.',
+      metric1: { value: '93.4%', label: 'DETECTION ACCURACY' },
+      metric2: { value: '45 FPS', label: 'REAL-TIME INFERENCE' },
+      metric3: { value: '3 Streams', label: 'MULTIMODAL CONSENSUS' },
+      photo1: '/images/deceptrix_showcase.jpg',
+      photo1Badge: 'SPECTRAL ARTIFACT HEATMAPS',
+      photo2: '/images/hardware_lab.jpg',
+      photo2Badge: 'TEMPORAL OPTICAL FLOW PIPELINE'
     },
-    'tandem': {
-      date: 'MAY 2, 2026',
-      title: 'TANDEM',
-      subtitle: 'Multi-party balance reconciliation and shared finance ledger with real-time settlement tracking.',
-      pills: ['FINTECH', 'MOBILE WALLET', 'SHARED FINANCE'],
-      role: 'Design & Systems',
-      timeline: '4 months',
-      team: '2 Engineers, 1 Designer',
-      year: '2026',
-      heroBadge: 'EARLY ACCESS BETA · 10K+ TRANSFERS',
-      heroImage: 'https://picsum.photos/seed/fintech-dark-app/1200/800',
-      resultsText: 'Engineered group financial ledgers with transparent ledger proofs, instant P2P settled balances, and recurring budget envelopes with sub-3 second settlement cycles.',
-      metric1: { value: '3.2s', label: 'AVG SETTLEMENT TIME' },
-      metric2: { value: '94%', label: 'RETENTION AFTER MONTH 1' },
-      metric3: { value: '$1.4M', label: 'TRANSACTION VOLUME' },
-      photo1: 'https://picsum.photos/seed/phone-banking-ui/600/500',
-      photo1Badge: 'INSTANT RECONCILIATION FLOW',
-      photo2: 'https://picsum.photos/seed/coffee-friends-payment/600/500',
-      photo2Badge: 'SOCIAL BILL-SPLIT SESSIONS'
+    'beyond-earth': {
+      date: '2024 - 2025',
+      title: 'BEYOND EARTH',
+      subtitle: 'Closed-loop 224m rotating torus space settlement engineering blueprint with artificial gravity and biological life support.',
+      pills: ['SPACE SYSTEMS', 'CELSS LIFE SUPPORT', 'NASA ZONAL WINNER'],
+      role: 'Chief Systems Author',
+      timeline: 'Research Contest',
+      team: 'Engineering Team',
+      year: '2024-2025',
+      heroBadge: 'NASA SPACE SETTLEMENT CONTEST · ZONAL AWARD WINNER',
+      heroImage: '/images/space_settlement.jpg',
+      resultsText: 'Authored an 80+ page technical dossier calculating artificial 1.0g centrifugal rotation, multi-tier lunar regolith radiation shielding, 99.7% closed-loop biological life support (CELSS), and electromagnetic lunar mass drivers.',
+      metric1: { value: '224m', label: 'TORUS HABITAT RADIUS' },
+      metric2: { value: '1.0g', label: 'CENTRIFUGAL GRAVITY' },
+      metric3: { value: 'Zonal Award', label: 'NASA DESIGN CONTEST' },
+      photo1: '/images/space_settlement.jpg',
+      photo1Badge: 'HABITAT RING ARCHITECTURAL BLUEPRINT',
+      photo2: '/images/hardware_lab.jpg',
+      photo2Badge: 'THERMODYNAMIC MASS BALANCE'
     }
   };
 
@@ -197,14 +218,26 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
 
             <button
               type="button"
-              onClick={() => setSelectedStudy('wayline')}
+              onClick={() => setSelectedStudy('deceptrix')}
               className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border ${
-                selectedStudy === 'wayline'
-                  ? 'bg-black text-white border-black shadow-xs'
+                selectedStudy === 'deceptrix'
+                  ? 'bg-[#f59e0b] text-neutral-950 border-black shadow-xs'
                   : 'bg-white text-neutral-800 border-black/20 hover:bg-neutral-100'
               }`}
             >
-              05. WAYLINE (TRANSIT UX)
+              05. DECEPTRIX (FORENSICS)
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setSelectedStudy('beyond-earth')}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border ${
+                selectedStudy === 'beyond-earth'
+                  ? 'bg-[#38bdf8] text-neutral-950 border-black shadow-xs'
+                  : 'bg-white text-neutral-800 border-black/20 hover:bg-neutral-100'
+              }`}
+            >
+              06. NASA BLUEPRINT (SPACE)
             </button>
           </div>
 
@@ -305,7 +338,6 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
               alt={`${current.title} Hero`}
               fill
               className="object-cover group-hover:scale-102 transition-transform duration-700 opacity-90"
-              referrerPolicy="no-referrer"
             />
             {/* Context Badge */}
             <div className="absolute top-4 left-4 bg-black/95 text-white font-spacemono text-xs px-3.5 py-1.5 rounded border border-white/30 shadow-lg">
@@ -373,7 +405,6 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
                 alt={`${current.title} Context 1`}
                 fill
                 className="object-cover"
-                referrerPolicy="no-referrer"
               />
               <div className="absolute bottom-3 left-3 bg-white/95 text-black font-spacemono text-[11px] font-bold px-2.5 py-1 rounded shadow-xs border border-black">
                 {current.photo1Badge}
@@ -386,7 +417,6 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
                 alt={`${current.title} Context 2`}
                 fill
                 className="object-cover"
-                referrerPolicy="no-referrer"
               />
               <div className="absolute bottom-3 left-3 bg-white/95 text-black font-spacemono text-[11px] font-bold px-2.5 py-1 rounded shadow-xs border border-black">
                 {current.photo2Badge}
@@ -400,4 +430,3 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
     </section>
   );
 }
-

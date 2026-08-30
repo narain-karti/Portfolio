@@ -97,11 +97,10 @@ export function AboutExactSection({ nameMode = 'NARAIN' }: AboutExactSectionProp
                 
                 <div className="relative w-full h-48 bg-neutral-200 rounded-xs overflow-hidden mb-2">
                   <Image
-                    src="https://picsum.photos/seed/narain-portrait-chennai/400/500"
+                    src="/images/hero_avatar.jpg"
                     alt="Narain Karti"
                     fill
                     className="object-cover"
-                    referrerPolicy="no-referrer"
                   />
                 </div>
                 <div className="text-center font-handwriting text-base text-neutral-800 font-bold">
@@ -157,11 +156,10 @@ export function AboutExactSection({ nameMode = 'NARAIN' }: AboutExactSectionProp
                 
                 <div className="relative w-full h-48 bg-neutral-900 rounded-xs overflow-hidden mb-2">
                   <Image
-                    src="https://picsum.photos/seed/jetson-hardware-lab/400/500"
+                    src="/images/hardware_lab.jpg"
                     alt="AI Hardware Lab"
                     fill
                     className="object-cover"
-                    referrerPolicy="no-referrer"
                   />
                 </div>
                 <div className="text-center font-handwriting text-base text-neutral-800 font-bold">

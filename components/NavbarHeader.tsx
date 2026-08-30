@@ -98,14 +98,6 @@ export function NavbarHeader({
               <span>PLAYGROUND</span>
             </button>
 
-            {/* 📄 RESUME TAB */}
-            <Link
-              href="/resume"
-              className="flex items-center gap-1 px-3 sm:px-3.5 py-1 rounded-full text-xs font-spacemono font-bold uppercase tracking-wider transition-all whitespace-nowrap bg-[#a7f3d0] text-emerald-950 hover:bg-[#86efac] border border-black/30 shadow-2xs"
-            >
-              <FileText className="w-3.5 h-3.5 text-emerald-900" />
-              <span>RESUME</span>
-            </Link>
           </nav>
         </div>
 

@@ -50,11 +50,10 @@ export function VisualResumePoster({ onPrint }: VisualResumePosterProps) {
         <div className="relative z-20 flex justify-center -mb-8 sm:-mb-12 mt-2">
           <div className="relative w-40 sm:w-48 md:w-56 h-48 sm:h-56 md:h-64 rounded-t-full rounded-b-2xl overflow-hidden border-4 border-white shadow-2xl bg-neutral-900">
             <Image
-              src="https://picsum.photos/seed/narain-portrait-chennai/600/700"
+              src="/images/hero_avatar.jpg"
               alt="Narain Karti"
               fill
               className="object-cover object-top"
-              referrerPolicy="no-referrer"
               priority
             />
             {/* Torn washi tape piece on portrait bottom */}

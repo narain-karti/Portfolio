@@ -149,11 +149,10 @@ export function ContactExactSection({}: ContactExactSectionProps) {
                 
                 <div className="relative w-full h-48 bg-neutral-900 rounded-xs overflow-hidden mb-2">
                   <Image
-                    src="https://picsum.photos/seed/art-gallery-people/400/500"
+                    src="/images/hardware_lab.jpg"
                     alt="Lab Space"
                     fill
                     className="object-cover"
-                    referrerPolicy="no-referrer"
                   />
                 </div>
                 <div className="text-center font-handwriting text-xs text-neutral-800 font-bold">
@@ -216,11 +215,10 @@ export function ContactExactSection({}: ContactExactSectionProps) {
                 
                 <div className="relative w-full h-48 bg-neutral-100 rounded-xs overflow-hidden mb-2">
                   <Image
-                    src="https://picsum.photos/seed/gadgets-layout/400/500"
-                    alt="Desk Gear"
+                    src="/images/space_settlement.jpg"
+                    alt="Space Settlement Blueprint"
                     fill
                     className="object-cover"
-                    referrerPolicy="no-referrer"
                   />
                 </div>
                 <div className="text-center font-handwriting text-xs text-neutral-800 font-bold">

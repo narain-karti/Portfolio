@@ -122,7 +122,7 @@ export default function HomePage() {
         {/* ARTBOARD 5 & 6: Featured Works (Tabbed Folder Cards & Project 01/02/03) */}
         <FeaturedWorksExactSection onSelectCaseStudy={handleOpenDetailedCaseStudy} />
 
-        {/* ARTBOARD 7 & 8: Deep Case Study View (WAYLINE hero, sticky notes, & results swatches) */}
+        {/* ARTBOARD 7 & 8: Deep Case Study View (Hero, sticky notes, & results swatches) */}
         <CaseStudyExactSection onBackToOverview={() => handleSelectNavTab('case-study')} />
 
         {/* ARTBOARD 2: Playground ("JUST FOR FUN" retro Mac, polaroids, stickers, zoom controls) */}

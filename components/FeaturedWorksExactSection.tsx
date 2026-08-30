@@ -64,11 +64,10 @@ export function FeaturedWorksExactSection({
               {/* Card Photo Preview */}
               <div className="relative w-full h-56 sm:h-64 bg-neutral-950 overflow-hidden flex items-center justify-center p-4">
                 <Image
-                  src="https://picsum.photos/seed/dataset-terminal-code/700/500"
+                  src="/images/datadoc_showcase.jpg"
                   alt="DataDoc CLI Terminal"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-75"
-                  referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex items-center justify-center p-4">
                   <div className="w-full max-w-sm bg-neutral-950/95 p-3.5 rounded-lg border border-emerald-500/50 text-left font-spacemono text-[11px] shadow-2xl space-y-1">
@@ -139,11 +138,10 @@ export function FeaturedWorksExactSection({
               {/* Card Photo Preview */}
               <div className="relative w-full h-56 sm:h-64 bg-neutral-950 overflow-hidden">
                 <Image
-                  src="https://picsum.photos/seed/mobile-carwash-startup/700/500"
+                  src="/images/axoweb_showcase.jpg"
                   alt="AXOWEB Platform"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"
-                  referrerPolicy="no-referrer"
                 />
                 {/* Overlay Badges */}
                 <div className="absolute top-3 left-3 bg-black/90 text-white font-spacemono text-[11px] px-2.5 py-1 rounded border border-white/20 flex items-center gap-1.5">
@@ -414,11 +412,10 @@ export function FeaturedWorksExactSection({
                 <div className="w-full max-w-sm h-64 bg-teal-950 rounded-lg p-3 border border-teal-400/40 relative shadow-2xl">
                   <div className="relative w-full h-full rounded overflow-hidden">
                     <Image
-                      src="https://picsum.photos/seed/mobile-carwash-startup/600/500"
+                      src="/images/axoweb_showcase.jpg"
                       alt="AXOWEB Platform"
                       fill
                       className="object-cover"
-                      referrerPolicy="no-referrer"
                     />
                   </div>
                 </div>
@@ -476,11 +473,10 @@ export function FeaturedWorksExactSection({
                 <div className="w-full max-w-sm h-64 bg-neutral-900 rounded-lg p-3 border border-neutral-700 relative shadow-2xl">
                   <div className="relative w-full h-full rounded overflow-hidden">
                     <Image
-                      src="https://picsum.photos/seed/jetson-smart-city-sim/600/500"
+                      src="/images/project_k_showcase.jpg"
                       alt="Project K Sim"
                       fill
                       className="object-cover"
-                      referrerPolicy="no-referrer"
                     />
                   </div>
                 </div>

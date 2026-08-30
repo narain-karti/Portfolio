@@ -22,11 +22,11 @@ export function HeroExactSection({
         <div className="hidden lg:flex absolute -left-12 xl:-left-16 top-1/2 -translate-y-1/2 flex-col items-center gap-1 z-20">
           <div className="w-13 h-13 rounded-full p-0.5 bg-white border-2 border-rose-500 shadow-md relative overflow-hidden group">
             <Image
-              src="https://picsum.photos/seed/narain-coder-tech/200/200"
+              src="/images/hero_avatar.jpg"
               alt="Narain Karti"
               fill
               className="object-cover rounded-full group-hover:scale-110 transition-transform duration-300"
-              referrerPolicy="no-referrer"
+              priority
             />
           </div>
           <span className="text-[9px] font-spacemono font-bold bg-yellow-200 text-yellow-950 px-1.5 py-0.5 border border-black/30 rounded shadow-2xs">

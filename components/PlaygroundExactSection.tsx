@@ -33,7 +33,7 @@ export function PlaygroundExactSection() {
           {/* Subtle grid on canvas */}
           <div className="absolute inset-0 paper-grid opacity-60 pointer-events-none" />
 
-          {/* ITEM 1: Top-Left Polaroid "random shot" */}
+          {/* ITEM 1: Top-Left Polaroid "jetson lab gear" */}
           <div 
             onClick={() => setActiveItem('gallery')}
             className="absolute top-4 left-4 sm:left-12 w-40 sm:w-48 polaroid-card -rotate-3 z-10 cursor-pointer hover:z-30 hover:rotate-0 transition-all duration-200"
@@ -42,16 +42,15 @@ export function PlaygroundExactSection() {
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-4 bg-white/80 border-x border-dashed border-black/20 shadow-2xs rotate-2" />
             <div className="relative w-full h-44 sm:h-52 bg-neutral-900 rounded-xs overflow-hidden mb-2">
               <Image
-                src="https://picsum.photos/seed/museum-shot-dark/400/500"
-                alt="Random Shot"
+                src="/images/hardware_lab.jpg"
+                alt="AI Hardware Lab"
                 fill
                 className="object-cover"
-                referrerPolicy="no-referrer"
               />
             </div>
             <div className="flex items-center justify-between text-[11px] font-handwriting text-neutral-800">
-              <span>random shot</span>
-              <span className="text-[10px] font-spacemono text-neutral-500">#04</span>
+              <span>jetson lab gear</span>
+              <span className="text-[10px] font-spacemono text-neutral-500">#01</span>
             </div>
           </div>
 
@@ -80,7 +79,7 @@ export function PlaygroundExactSection() {
             </div>
           </div>
 
-          {/* ITEM 3: Top-Right Polaroid "first trim" (Architecture) */}
+          {/* ITEM 3: Top-Right Polaroid "nasa blueprint" (Space Settlement) */}
           <div 
             onClick={() => setActiveItem('arch')}
             className="absolute top-6 right-4 sm:right-12 w-40 sm:w-48 polaroid-card rotate-4 z-10 cursor-pointer hover:z-30 hover:rotate-0 transition-all duration-200"
@@ -89,56 +88,53 @@ export function PlaygroundExactSection() {
             <div className="absolute -top-3 right-6 w-14 h-4 bg-white/80 border-x border-dashed border-black/20 shadow-2xs -rotate-6" />
             <div className="relative w-full h-44 sm:h-52 bg-neutral-200 rounded-xs overflow-hidden mb-2">
               <Image
-                src="https://picsum.photos/seed/arch-sculpture/400/500"
-                alt="First Trim"
+                src="/images/space_settlement.jpg"
+                alt="NASA Space Settlement Blueprint"
                 fill
                 className="object-cover"
-                referrerPolicy="no-referrer"
               />
             </div>
             <div className="flex items-center justify-between text-[11px] font-handwriting text-neutral-800">
-              <span>first trim</span>
-              <span className="text-[10px] font-spacemono text-neutral-500">#09</span>
+              <span>nasa blueprint</span>
+              <span className="text-[10px] font-spacemono text-neutral-500">#02</span>
             </div>
           </div>
 
-          {/* ITEM 4: 3D Art & Accessories / Gadgets (Bottom Right) */}
+          {/* ITEM 4: Media Forensics (Bottom Right) */}
           <div 
             onClick={() => setActiveItem('gadgets')}
             className="absolute bottom-6 right-8 sm:right-24 w-44 sm:w-52 polaroid-card -rotate-2 z-15 cursor-pointer hover:z-30 hover:rotate-0 transition-all duration-200"
           >
             <div className="relative w-full h-36 sm:h-44 bg-neutral-900 rounded-xs overflow-hidden mb-2">
               <Image
-                src="https://picsum.photos/seed/phone-accessories/400/400"
-                alt="Gadgets"
+                src="/images/deceptrix_showcase.jpg"
+                alt="Deepfake Video Forensics"
                 fill
                 className="object-cover"
-                referrerPolicy="no-referrer"
               />
             </div>
             <div className="flex items-center justify-between text-[11px] font-handwriting text-neutral-800">
-              <span>hardware lab</span>
-              <span className="text-[10px] font-spacemono text-neutral-500">Jetson Orin</span>
+              <span>media forensics</span>
+              <span className="text-[10px] font-spacemono text-neutral-500">DECEPTRIX</span>
             </div>
           </div>
 
-          {/* ITEM 5: Bottom Left Book / Magazine Polaroid */}
+          {/* ITEM 5: Bottom Left Agent Debate Graph */}
           <div 
             onClick={() => setActiveItem('reading')}
             className="absolute bottom-6 left-6 sm:left-16 w-36 sm:w-44 polaroid-card rotate-3 z-15 cursor-pointer hover:z-30 hover:rotate-0 transition-all duration-200"
           >
             <div className="relative w-full h-36 sm:h-40 bg-neutral-100 rounded-xs overflow-hidden mb-2">
               <Image
-                src="https://picsum.photos/seed/art-catalog/400/400"
-                alt="Book"
+                src="/images/quorum_showcase.jpg"
+                alt="Agent Debate Graph"
                 fill
                 className="object-cover"
-                referrerPolicy="no-referrer"
               />
             </div>
             <div className="flex items-center justify-between text-[11px] font-handwriting text-neutral-800">
-              <span>research notes</span>
-              <span className="text-[10px] font-spacemono text-neutral-500">RL &bull; Polars</span>
+              <span>agent graph</span>
+              <span className="text-[10px] font-spacemono text-neutral-500">Quorum OS</span>
             </div>
           </div>
 
