@@ -1,0 +1,180 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@layer base {
+  :root {
+    --bg-paper: #faf8f5;
+    --bg-paper-subtle: #f4f1ea;
+    --line-color: rgba(203, 213, 225, 0.55);
+    --ink-primary: #111827;
+    --ink-secondary: #4b5563;
+    --ink-muted: #9ca3af;
+  }
+
+  body {
+    background-color: var(--bg-paper);
+    color: var(--ink-primary);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow-x: hidden;
+    selection-background-color: #fef08a;
+    selection-color: #000000;
+  }
+}
+
+/* Notebook Ruled Background */
+.notebook-ruled-bg {
+  background-color: #faf8f5;
+  background-image: linear-gradient(to bottom, rgba(203, 213, 225, 0.45) 1px, transparent 1px);
+  background-size: 100% 28px;
+}
+
+.notebook-ruled-dense {
+  background-color: #faf8f5;
+  background-image: linear-gradient(to bottom, rgba(203, 213, 225, 0.4) 1px, transparent 1px);
+  background-size: 100% 22px;
+}
+
+/* Typography Utility Classes */
+.font-pixel {
+  font-family: 'Pixelify Sans', 'Silkscreen', 'Press Start 2P', monospace;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.font-silkscreen {
+  font-family: 'Silkscreen', 'Pixelify Sans', monospace;
+}
+
+.font-vt323 {
+  font-family: 'VT323', monospace;
+}
+
+.font-typewriter {
+  font-family: 'Courier Prime', Courier, monospace;
+}
+
+.font-spacemono {
+  font-family: 'Space Mono', monospace;
+}
+
+.font-handwriting {
+  font-family: 'Caveat', 'Kalam', cursive, sans-serif;
+}
+
+.font-kalam {
+  font-family: 'Kalam', cursive, sans-serif;
+}
+
+.font-tech-mono {
+  font-family: 'Space Mono', 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Retro Hardware Chip / Blueprint card styling */
+.retro-chip {
+  background: #ffffff;
+  border: 2px solid #18181b;
+  box-shadow: 3px 3px 0px #18181b;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.retro-chip:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #18181b;
+}
+
+.retro-chip-dark {
+  background: #121316;
+  color: #ffffff;
+  border: 2px solid #3f3f46;
+  box-shadow: 3px 3px 0px #000000;
+}
+
+/* Tape styles with semi-translucent washi tape effect */
+.tape-strip {
+  position: relative;
+  background: rgba(254, 240, 138, 0.7);
+  backdrop-filter: blur(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.tape-white {
+  position: relative;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  border-left: 1px dashed rgba(0, 0, 0, 0.08);
+  border-right: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+.tape-blue {
+  position: relative;
+  background: rgba(191, 219, 254, 0.8);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.tape-pink {
+  position: relative;
+  background: rgba(254, 205, 211, 0.8);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.tape-mint {
+  position: relative;
+  background: rgba(167, 243, 208, 0.8);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.tape-orange {
+  position: relative;
+  background: rgba(254, 215, 170, 0.8);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Figma / Vector Selection Bounding Box Style */
+.vector-select-box {
+  position: relative;
+  border: 1.5px solid #2563eb;
+}
+
+.select-handle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #2563eb;
+  border: 1px solid #ffffff;
+}
+
+/* Polaroid Card Effect */
+.polaroid-card {
+  background: #ffffff;
+  padding: 8px 8px 18px 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.polaroid-card:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Folder tab styling */
+.folder-tab {
+  position: relative;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 12px;
+}
+
+/* Custom Scrollbar for OS look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f4f1ea;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
