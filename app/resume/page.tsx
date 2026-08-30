@@ -452,51 +452,61 @@ LinkedIn: linkedin.com/in/narainkarti | GitHub: github.com/narain-karti
             </div>
           </section>
 
-          {/* 5. TECHNICAL SKILLS MATRIX (WITH BRAND LOGOS) */}
+          {/* 5. TECHNICAL SKILLS MATRIX (EXACT RESUME MATCH) */}
           <section className="py-6 border-b border-black/20 space-y-4">
             <h2 className="font-spacemono text-sm sm:text-base font-bold text-black uppercase tracking-wider flex items-center gap-2">
               <Layers className="w-4 h-4 text-emerald-600" />
-              <span>TECHNICAL SKILLS &bull; PRODUCTION VERIFIED</span>
+              <span>TECHNICAL SKILLS</span>
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
               <div className="p-3 bg-white rounded-lg border border-black/20 space-y-1">
                 <div className="font-spacemono font-bold text-neutral-900 flex items-center gap-1.5">
                   <TechBrandIcon name="python" size={16} />
                   <span>LANGUAGES</span>
                 </div>
                 <div className="font-typewriter text-neutral-700">
-                  Python, TypeScript, JavaScript, C++, SQL, PostgreSQL, Bash
-                </div>
-              </div>
-
-              <div className="p-3 bg-white rounded-lg border border-black/20 space-y-1">
-                <div className="font-spacemono font-bold text-neutral-900 flex items-center gap-1.5">
-                  <TechBrandIcon name="agentic" size={16} />
-                  <span>AI / ML &amp; AGENTIC SYSTEMS</span>
-                </div>
-                <div className="font-typewriter text-neutral-700">
-                  Agentic AI, PyTorch, TensorFlow, YOLOv8, OpenCV, LangChain, Polars, Hugging Face, RAG
+                  Python, JavaScript, TypeScript, C++, SQL
                 </div>
               </div>
 
               <div className="p-3 bg-white rounded-lg border border-black/20 space-y-1">
                 <div className="font-spacemono font-bold text-neutral-900 flex items-center gap-1.5">
                   <TechBrandIcon name="react" size={16} />
-                  <span>FRAMEWORKS &amp; BACKEND</span>
+                  <span>FRAMEWORKS</span>
                 </div>
                 <div className="font-typewriter text-neutral-700">
-                  React, Next.js, Node.js, FastAPI, Fastify, Express, Flutter, Tailwind CSS
+                  React, Node.js, Express, FastAPI
+                </div>
+              </div>
+
+              <div className="p-3 bg-white rounded-lg border border-black/20 space-y-1 sm:col-span-2 lg:col-span-1">
+                <div className="font-spacemono font-bold text-neutral-900 flex items-center gap-1.5">
+                  <TechBrandIcon name="agentic" size={16} />
+                  <span>AI / ML</span>
+                </div>
+                <div className="font-typewriter text-neutral-700 text-[11px] leading-relaxed">
+                  Machine Learning, Generative AI, LLMs, Agentic AI, RAG, LangChain, PyTorch, TensorFlow, Fine-Tuning, Prompt Engineering, Model Evaluation &amp; Benchmarking, Vector Databases, Computer Vision
                 </div>
               </div>
 
               <div className="p-3 bg-white rounded-lg border border-black/20 space-y-1">
                 <div className="font-spacemono font-bold text-neutral-900 flex items-center gap-1.5">
-                  <TechBrandIcon name="aws" size={16} />
-                  <span>SYSTEMS &amp; CLOUD INFRA</span>
+                  <TechBrandIcon name="docker" size={16} />
+                  <span>SYSTEMS</span>
                 </div>
                 <div className="font-typewriter text-neutral-700">
-                  AWS (Lambda, RDS, SQS, ElastiCache, Cognito), Docker, Kubernetes, Linux, MQTT, NVIDIA Jetson
+                  System Design, Distributed Systems, Kubernetes, CI/CD, Docker
+                </div>
+              </div>
+
+              <div className="p-3 bg-white rounded-lg border border-black/20 space-y-1 sm:col-span-2">
+                <div className="font-spacemono font-bold text-neutral-900 flex items-center gap-1.5">
+                  <TechBrandIcon name="git" size={16} />
+                  <span>TOOLS</span>
+                </div>
+                <div className="font-typewriter text-neutral-700">
+                  Git, GitHub, Supabase, REST APIs
                 </div>
               </div>
             </div>

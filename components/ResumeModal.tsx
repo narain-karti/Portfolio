@@ -179,6 +179,37 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 </div>
               </div>
 
+              {/* Technical Skills (Exact Resume Match) */}
+              <div className="space-y-3">
+                <h2 className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-500 border-b pb-1 flex items-center gap-1.5">
+                  <Wrench className="w-4 h-4 text-emerald-700" />
+                  <span>TECHNICAL SKILLS</span>
+                </h2>
+
+                <div className="space-y-2 font-mono text-xs">
+                  <div>
+                    <strong className="text-neutral-950 font-bold">Languages:</strong>{' '}
+                    <span className="text-neutral-700">{PORTFOLIO_DATA.technicalSkills.languages.join(', ')}</span>
+                  </div>
+                  <div>
+                    <strong className="text-neutral-950 font-bold">Frameworks:</strong>{' '}
+                    <span className="text-neutral-700">{PORTFOLIO_DATA.technicalSkills.frameworks.join(', ')}</span>
+                  </div>
+                  <div>
+                    <strong className="text-neutral-950 font-bold">AI / ML:</strong>{' '}
+                    <span className="text-neutral-700">{PORTFOLIO_DATA.technicalSkills.aiMl.join(', ')}</span>
+                  </div>
+                  <div>
+                    <strong className="text-neutral-950 font-bold">Systems:</strong>{' '}
+                    <span className="text-neutral-700">{PORTFOLIO_DATA.technicalSkills.systems.join(', ')}</span>
+                  </div>
+                  <div>
+                    <strong className="text-neutral-950 font-bold">Tools:</strong>{' '}
+                    <span className="text-neutral-700">{PORTFOLIO_DATA.technicalSkills.tools.join(', ')}</span>
+                  </div>
+                </div>
+              </div>
+
               {/* Experience */}
               <div className="space-y-3">
                 <h2 className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-500 border-b pb-1 flex items-center gap-1.5">

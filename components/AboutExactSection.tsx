@@ -18,46 +18,46 @@ interface TechItem {
 }
 
 const TECH_CATALOG: TechItem[] = [
-  // Languages
-  { name: 'Python', category: 'languages', categoryLabel: 'LANGUAGES', provenIn: 'DataDoc CLI / Project K', level: 'Production / Advanced' },
-  { name: 'TypeScript', category: 'languages', categoryLabel: 'LANGUAGES', provenIn: 'Quorum / Web Lab', level: 'Production / Full-Stack' },
-  { name: 'JavaScript', category: 'languages', categoryLabel: 'LANGUAGES', provenIn: 'AXOWEB Platform', level: 'Advanced' },
+  // 1. Languages (From Resume: Python, JavaScript, TypeScript, C++, SQL)
+  { name: 'Python', category: 'languages', categoryLabel: 'LANGUAGES', provenIn: 'DataDoc CLI / Project K', level: 'Core Language' },
+  { name: 'TypeScript', category: 'languages', categoryLabel: 'LANGUAGES', provenIn: 'Quorum / Web Lab', level: 'Full-Stack' },
+  { name: 'JavaScript', category: 'languages', categoryLabel: 'LANGUAGES', provenIn: 'Full-Stack Web Apps', level: 'Production' },
   { name: 'C++', category: 'languages', categoryLabel: 'LANGUAGES', provenIn: 'Edge Performance & Algo', level: 'Systems Core' },
-  { name: 'SQL', category: 'languages', categoryLabel: 'LANGUAGES', provenIn: 'IIT Madras / AWS RDS', level: 'Relational Schema' },
-  { name: 'PostgreSQL', category: 'languages', categoryLabel: 'LANGUAGES', provenIn: 'AWS RDS & Supabase', level: 'Enterprise DB' },
+  { name: 'SQL', category: 'languages', categoryLabel: 'LANGUAGES', provenIn: 'IIT Madras / RDS Postgres', level: 'Relational DB' },
 
-  // AI/ML & Agentic
-  { name: 'Agentic AI', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'Quorum / Microdolphin', level: 'Multi-Agent Loops' },
-  { name: 'PyTorch', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'Deep Learning & Vision', level: 'Model Training' },
+  // 2. Frameworks (From Resume: React, Node.js, Express, FastAPI + Flutter)
+  { name: 'React', category: 'backend', categoryLabel: 'FRAMEWORKS', provenIn: 'Quorum Flow / Admin Web', level: 'Frontend' },
+  { name: 'Node.js', category: 'backend', categoryLabel: 'FRAMEWORKS', provenIn: 'Quorum & Microservices', level: 'Event-Driven' },
+  { name: 'Express', category: 'backend', categoryLabel: 'FRAMEWORKS', provenIn: 'ThinkersCave APIs', level: 'REST Backend' },
+  { name: 'FastAPI', category: 'backend', categoryLabel: 'FRAMEWORKS', provenIn: 'AI Inference Backends', level: 'High Throughput' },
+  { name: 'Flutter', category: 'backend', categoryLabel: 'FRAMEWORKS', provenIn: '3-App Car-Wash Platform', level: 'Cross-Platform Mobile' },
+
+  // 3. AI / ML (From Resume: Machine Learning, Generative AI, LLMs, Agentic AI, RAG, LangChain, PyTorch, TensorFlow, Fine-Tuning, Prompt Engineering, Model Evaluation, Vector DBs, Computer Vision, YOLOv8)
+  { name: 'Agentic AI', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'Quorum / Microdolphin', level: 'Autonomous Swarms' },
+  { name: 'Generative AI & LLMs', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'Quorum / ThinkersCave', level: 'Prompt & Evaluation' },
+  { name: 'RAG & Knowledge Graphs', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'ThinkersCave Support Bot', level: 'Graph Retrieval' },
+  { name: 'LangChain', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'Tool-Calling Workflows', level: 'Chains & Routing' },
+  { name: 'PyTorch', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'DECEPTRIX & Deep Learning', level: 'Model Training' },
   { name: 'TensorFlow', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'Neural Pipelines', level: 'Inference' },
-  { name: 'YOLOv8', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'Project K Edge Jetson', level: 'Computer Vision' },
-  { name: 'OpenCV', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'Video Preemption Pipeline', level: 'Real-Time Frames' },
-  { name: 'LangChain', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'ThinkersCave RAG', level: 'Tool-Calling Chains' },
-  { name: 'Polars', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'DataDoc PyPI Package', level: '0.42s 1M-Row EDA' },
-  { name: 'Hugging Face', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'LLM Fine-Tuning', level: 'Transformers' },
+  { name: 'Computer Vision & YOLOv8', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'Project K Edge Jetson', level: 'Real-Time Edge' },
+  { name: 'Vector Databases', category: 'ai-ml', categoryLabel: 'AI / ML & AGENTS', provenIn: 'Semantic Embeddings', level: 'Vector Indexing' },
 
-  // Frameworks & Backend
-  { name: 'React', category: 'backend', categoryLabel: 'BACKEND & WEB', provenIn: 'AXOWEB & Quorum Flow', level: 'Modern Frontend' },
-  { name: 'Next.js', category: 'backend', categoryLabel: 'BACKEND & WEB', provenIn: 'Production Portals', level: 'SSR / App Router' },
-  { name: 'Node.js', category: 'backend', categoryLabel: 'BACKEND & WEB', provenIn: 'Microservices & APIs', level: 'Event-Driven' },
-  { name: 'FastAPI', category: 'backend', categoryLabel: 'BACKEND & WEB', provenIn: 'AI Inference Backends', level: 'High Throughput' },
-  { name: 'Fastify', category: 'backend', categoryLabel: 'BACKEND & WEB', provenIn: 'Quorum Monorepo', level: 'Low-Latency' },
-  { name: 'Express', category: 'backend', categoryLabel: 'BACKEND & WEB', provenIn: 'ThinkersCave Chatbot', level: 'REST Endpoints' },
-  { name: 'Flutter', category: 'backend', categoryLabel: 'BACKEND & WEB', provenIn: '3-App Car-Wash Suite', level: 'Cross-Platform App' },
+  // 4. Systems (From Resume: System Design, Distributed Systems, Kubernetes, CI/CD, Docker + AWS, Jetson, MQTT)
+  { name: 'System Design', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'Enterprise Backends', level: 'Architecture' },
+  { name: 'Distributed Systems', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'Edge-Cloud Coordination', level: 'Distributed Mesh' },
+  { name: 'AWS (Lambda, RDS, SQS, ElastiCache, Cognito)', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'AXOWEB 5-Role Platform', level: 'Serverless Cloud' },
+  { name: 'Docker', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'Microdolphin Sandboxes', level: 'Containers' },
+  { name: 'Kubernetes', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'Cluster Management', level: 'Orchestration' },
+  { name: 'CI/CD', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'Automated Deployments', level: 'Pipelines' },
+  { name: 'NVIDIA Jetson', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'Project K Edge Vision', level: 'Hardware Edge' },
 
-  // Systems & Cloud
-  { name: 'AWS', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'Lambda, RDS, SQS, ElastiCache', level: 'Enterprise Serverless' },
-  { name: 'Docker', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'Microservice Containers', level: 'Containerization' },
-  { name: 'Kubernetes', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'Cluster Orchestration', level: 'Distributed Deploy' },
-  { name: 'NVIDIA', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'Jetson Nano / Orin Edge', level: 'CUDA / Hardware Edge' },
-  { name: 'Azure', category: 'systems-cloud', categoryLabel: 'SYSTEMS & CLOUD', provenIn: 'Cloud Compute & Storage', level: 'Cloud Infra' },
-
-  // Tools & Data Engine
-  { name: 'Git', category: 'tools-data', categoryLabel: 'TOOLS & DATA', provenIn: 'Production Workflows', level: 'Version Control' },
-  { name: 'GitHub', category: 'tools-data', categoryLabel: 'TOOLS & DATA', provenIn: 'github.com/narain-karti', level: 'Open Source / CI' },
-  { name: 'Supabase', category: 'tools-data', categoryLabel: 'TOOLS & DATA', provenIn: 'Realtime Backend & Auth', level: 'BaaS' },
-  { name: 'Firebase', category: 'tools-data', categoryLabel: 'TOOLS & DATA', provenIn: 'AXOWEB Client Suite', level: 'Realtime DB' },
-  { name: 'SQLite', category: 'tools-data', categoryLabel: 'TOOLS & DATA', provenIn: 'Quorum Local State DB', level: 'Embedded Storage' },
+  // 5. Tools (From Resume: Git, GitHub, Supabase, REST APIs + Polars, Firebase, SQLite)
+  { name: 'Git & GitHub', category: 'tools-data', categoryLabel: 'TOOLS & DATA', provenIn: 'github.com/narain-karti', level: 'Version Control' },
+  { name: 'Supabase', category: 'tools-data', categoryLabel: 'TOOLS & DATA', provenIn: 'PostgreSQL Backend & Auth', level: 'BaaS' },
+  { name: 'REST APIs', category: 'tools-data', categoryLabel: 'TOOLS & DATA', provenIn: 'Microservices & Webhooks', level: 'Integration' },
+  { name: 'Polars (PyPI)', category: 'tools-data', categoryLabel: 'TOOLS & DATA', provenIn: 'DataDoc 0.42s 1M-Row EDA', level: 'Rust Data Engine' },
+  { name: 'Firebase', category: 'tools-data', categoryLabel: 'TOOLS & DATA', provenIn: 'Tri-App Car-Wash Suite', level: 'Realtime Sync' },
+  { name: 'SQLite', category: 'tools-data', categoryLabel: 'TOOLS & DATA', provenIn: 'Quorum Local Monorepo', level: 'Embedded DB' },
 ];
 
 export function AboutExactSection({ nameMode = 'NARAIN' }: AboutExactSectionProps) {
