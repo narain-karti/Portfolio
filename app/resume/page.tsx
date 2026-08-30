@@ -199,13 +199,26 @@ LinkedIn: linkedin.com/in/narainkarti | GitHub: github.com/narain-karti
 
           {/* 1. HEADER SECTION */}
           <section className="border-b-2 border-black pb-6 space-y-3">
-            <div className="space-y-1">
-              <h1 className="font-pixel text-4xl sm:text-5xl text-black tracking-tight uppercase">
-                NARAIN KARTI
-              </h1>
-              <p className="font-spacemono text-xs sm:text-sm font-bold text-neutral-800 tracking-wide">
-                AI Systems Engineer &bull; Full-Stack Architect &bull; Open-Source Author
-              </p>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-black shrink-0 bg-neutral-100 shadow-[2px_2px_0px_#000]">
+                  <Image
+                    src="/images/hero_avatar.jpg"
+                    alt="Narain Karti"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+                <div className="space-y-1">
+                  <h1 className="font-pixel text-3xl sm:text-4xl md:text-5xl text-black tracking-tight uppercase">
+                    NARAIN KARTI
+                  </h1>
+                  <p className="font-spacemono text-xs sm:text-sm font-bold text-neutral-800 tracking-wide">
+                    AI Systems Engineer &bull; Full-Stack Architect &bull; Open-Source Author
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Contact Pills */}

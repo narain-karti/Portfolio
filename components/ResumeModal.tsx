@@ -20,6 +20,8 @@ import { PORTFOLIO_DATA } from '@/lib/portfolio-data';
 import { StampSeal } from './ScrapbookArtifacts';
 import { VisualResumePoster } from './VisualResumePoster';
 
+import Image from 'next/image';
+
 interface ResumeModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -108,17 +110,27 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
           ) : (
             <div className="p-6 sm:p-8 md:p-10 space-y-6 text-neutral-900 bg-white">
               {/* Header Info */}
-              <div className="border-b-2 border-neutral-900 pb-5 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
-                <div>
-                  <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-950">
-                    NARAIN KARTI
-                  </h1>
-                  <p className="text-sm font-mono text-blue-800 font-bold mt-1">
-                    AI/ML Engineer · Systems Builder · Data Scientist
-                  </p>
-                  <p className="text-xs text-neutral-600 font-mono mt-0.5">
-                    “I build intelligent systems for ambitious problems.”
-                  </p>
+              <div className="border-b-2 border-neutral-900 pb-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-black shrink-0 bg-neutral-100 shadow-xs">
+                    <Image
+                      src="/images/hero_avatar.jpg"
+                      alt="Narain Karti"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-950">
+                      NARAIN KARTI
+                    </h1>
+                    <p className="text-xs sm:text-sm font-mono text-blue-800 font-bold mt-0.5">
+                      AI/ML Engineer · Systems Builder · Data Scientist
+                    </p>
+                    <p className="text-[11px] text-neutral-600 font-mono">
+                      “I build intelligent systems for ambitious problems.”
+                    </p>
+                  </div>
                 </div>
 
                 <div className="font-mono text-xs text-neutral-700 space-y-1 text-left sm:text-right">
