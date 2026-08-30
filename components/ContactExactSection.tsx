@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Send, CheckCircle2, Copy, Sparkles, ExternalLink, Phone, Mail, Globe, Linkedin, Github } from 'lucide-react';
+import { CheckCircle2, Copy, Phone, Mail, Linkedin, Github } from 'lucide-react';
 
 interface ContactExactSectionProps {
   nameMode?: string;
@@ -12,19 +12,36 @@ export function ContactExactSection({}: ContactExactSectionProps) {
   const [message, setMessage] = useState('');
   const [emailInput, setEmailInput] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const directEmail = 'studyusage2008@gmail.com';
   const directPhone = '+91-9176257316';
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!message.trim()) return;
-    setSubmitted(true);
-    setTimeout(() => {
-      setMessage('');
-      setEmailInput('');
-    }, 2000);
+    if (!message.trim() || sending) return;
+    setSending(true);
+    setError('');
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/studyusage2008@gmail.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          email: emailInput,
+          message,
+          _subject: `Portfolio Contact: ${emailInput}`,
+        }),
+      });
+      if (!res.ok) throw new Error('Failed to send');
+      setSubmitted(true);
+      setTimeout(() => { setMessage(''); setEmailInput(''); }, 2000);
+    } catch {
+      setError('Failed to send — try emailing me directly.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleCopyEmail = () => {
@@ -197,11 +214,15 @@ export function ContactExactSection({}: ContactExactSectionProps) {
                       className="w-full bg-white/95 px-3 py-2 text-xs font-typewriter border-2 border-black rounded focus:outline-none focus:ring-2 focus:ring-black resize-none"
                     />
                   </div>
+                  {error && (
+                    <p className="text-xs font-spacemono text-red-600 font-bold">{error}</p>
+                  )}
                   <button
                     type="submit"
-                    className="w-full py-2.5 bg-black text-white font-spacemono text-xs font-bold tracking-widest uppercase rounded border-2 border-black hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2 shadow-[2px_2px_0px_#000]"
+                    disabled={sending}
+                    className="w-full py-2.5 bg-black text-white font-spacemono text-xs font-bold tracking-widest uppercase rounded border-2 border-black hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2 shadow-[2px_2px_0px_#000] disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    <span>SEND IT! &gt;&gt;</span>
+                    <span>{sending ? 'SENDING...' : 'SEND IT! >>'}</span>
                   </button>
                 </form>
               )}

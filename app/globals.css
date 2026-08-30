@@ -42,15 +42,15 @@
 }
 
 .font-silkscreen {
-  font-family: 'Silkscreen', 'Pixelify Sans', monospace;
+  font-family: 'Pixelify Sans', monospace;
 }
 
 .font-vt323 {
-  font-family: 'VT323', monospace;
+  font-family: 'Space Mono', monospace;
 }
 
 .font-typewriter {
-  font-family: 'Courier Prime', Courier, monospace;
+  font-family: 'Space Mono', Courier, monospace;
 }
 
 .font-spacemono {
@@ -58,15 +58,15 @@
 }
 
 .font-handwriting {
-  font-family: 'Caveat', 'Kalam', cursive, sans-serif;
+  font-family: 'Segoe Script', 'Apple Chancery', cursive, sans-serif;
 }
 
 .font-kalam {
-  font-family: 'Kalam', cursive, sans-serif;
+  font-family: 'Segoe Script', 'Apple Chancery', cursive, sans-serif;
 }
 
 .font-tech-mono {
-  font-family: 'Space Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-family: 'Space Mono', ui-monospace, monospace;
 }
 
 /* Retro Hardware Chip / Blueprint card styling */
