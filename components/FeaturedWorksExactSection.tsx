@@ -27,8 +27,8 @@ export function FeaturedWorksExactSection({
             <span className="font-handwriting text-3xl sm:text-4xl text-neutral-900 font-bold -rotate-1 inline-block">
               explore my work! ⚡
             </span>
-            <div className="font-spacemono text-[11px] text-neutral-600 bg-white px-3 py-1 border border-black/20 rounded shadow-2xs">
-              RECRUITER-VERIFIED BUILDS &bull; PRODUCTION PROVEN
+            <div className="hidden sm:block font-spacemono text-[11px] text-neutral-600 bg-white px-3 py-1 border border-black/20 rounded shadow-2xs">
+              RECRUITER-VERIFIED BUILDS • PRODUCTION PROVEN
             </div>
           </div>
 
@@ -37,8 +37,8 @@ export function FeaturedWorksExactSection({
             <h2 className="font-pixel text-4xl sm:text-5xl md:text-6xl text-black tracking-tight">
               FEATURED WORKS
             </h2>
-            <div className="font-spacemono text-xs text-neutral-700 font-bold bg-[#fef08a] px-3 py-1 border border-black rounded shadow-2xs">
-              OPEN SOURCE &bull; MULTI-AGENT AI &bull; STARTUP PLATFORMS
+            <div className="hidden sm:block font-spacemono text-[10px] sm:text-xs text-neutral-700 font-bold bg-[#fef08a] px-3 py-1 border border-black rounded shadow-2xs">
+              OPEN SOURCE • MULTI-AGENT AI • STARTUP PLATFORMS
             </div>
           </div>
 
@@ -51,12 +51,12 @@ export function FeaturedWorksExactSection({
               className="group cursor-pointer bg-white rounded-xl border-2 border-black shadow-[5px_5px_0px_#18181b] hover:shadow-[7px_7px_0px_#10b981] transition-all duration-300 flex flex-col overflow-hidden"
             >
               {/* Folder Tab Header */}
-              <div className="bg-[#faf8f3] px-4 py-2.5 border-b-2 border-black flex items-center justify-between">
-                <div className="flex items-center gap-1.5 font-spacemono text-xs text-neutral-900 font-bold">
+              <div className="bg-[#faf8f3] px-3 sm:px-4 py-2 sm:py-2.5 border-b-2 border-black flex flex-wrap items-center justify-between gap-1">
+                <div className="flex items-center gap-1.5 font-spacemono text-[10px] sm:text-xs text-neutral-900 font-bold">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse border border-black" />
                   <span>PYPI: DATADOC-CLI</span>
                 </div>
-                <span className="text-[11px] font-spacemono font-bold uppercase bg-[#a7f3d0] text-emerald-950 px-2 py-0.5 rounded border border-black shadow-2xs">
+                <span className="text-[9px] sm:text-[11px] font-spacemono font-bold uppercase bg-[#a7f3d0] text-emerald-950 px-2 py-0.5 rounded border border-black shadow-2xs">
                   ⚡ OPEN SOURCE PACKAGE
                 </span>
               </div>
@@ -125,13 +125,13 @@ export function FeaturedWorksExactSection({
               className="group cursor-pointer bg-white rounded-xl border-2 border-black shadow-[5px_5px_0px_#18181b] hover:shadow-[7px_7px_0px_#0f766e] transition-all duration-300 flex flex-col overflow-hidden"
             >
               {/* Folder Tab Header */}
-              <div className="bg-[#faf8f3] px-4 py-2.5 border-b-2 border-black flex items-center justify-between">
-                <div className="flex items-center gap-1.5 font-spacemono text-xs text-neutral-900 font-bold">
+              <div className="bg-[#faf8f3] px-3 sm:px-4 py-2 sm:py-2.5 border-b-2 border-black flex flex-wrap items-center justify-between gap-1">
+                <div className="flex items-center gap-1.5 font-spacemono text-[10px] sm:text-xs text-neutral-900 font-bold">
                   <span className="w-2.5 h-2.5 rounded-full bg-teal-500 border border-black" />
-                  <span>STARTUP CO-FOUNDER &bull; BRAVE WINNER</span>
+                  <span>STARTUP CO-FOUNDER</span>
                 </div>
-                <span className="text-[11px] font-spacemono font-bold uppercase bg-[#ccfbf1] text-teal-950 px-2 py-0.5 rounded border border-black shadow-2xs">
-                  🏆 ₹7L+ REVENUE IN 90 DAYS
+                <span className="text-[9px] sm:text-[11px] font-spacemono font-bold uppercase bg-[#ccfbf1] text-teal-950 px-2 py-0.5 rounded border border-black shadow-2xs">
+                  🏆 ₹7L+ REVENUE
                 </span>
               </div>
 

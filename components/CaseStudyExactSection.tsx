@@ -164,14 +164,14 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
       <div className="max-w-5xl mx-auto space-y-16">
 
         {/* Case Study Switcher Pills */}
-        <div className="flex items-center justify-between flex-wrap gap-3 pb-2 border-b-2 border-black/10">
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="font-spacemono text-xs text-neutral-600 font-bold mr-1">SELECT CASE STUDY:</span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b-2 border-black/10">
+          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 -mb-1">
+            <span className="font-spacemono text-xs text-neutral-600 font-bold mr-1 shrink-0">SELECT:</span>
             
             <button
               type="button"
               onClick={() => setSelectedStudy('datadoc')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border shrink-0 whitespace-nowrap ${
                 selectedStudy === 'datadoc'
                   ? 'bg-[#10b981] text-neutral-950 border-black shadow-xs ring-2 ring-black/20'
                   : 'bg-white text-neutral-800 border-black/20 hover:bg-neutral-100'
@@ -183,7 +183,7 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
             <button
               type="button"
               onClick={() => setSelectedStudy('quorum')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border shrink-0 whitespace-nowrap ${
                 selectedStudy === 'quorum'
                   ? 'bg-[#c084fc] text-neutral-950 border-black shadow-xs'
                   : 'bg-white text-neutral-800 border-black/20 hover:bg-neutral-100'
@@ -195,7 +195,7 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
             <button
               type="button"
               onClick={() => setSelectedStudy('axoweb')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border shrink-0 whitespace-nowrap ${
                 selectedStudy === 'axoweb'
                   ? 'bg-[#2dd4bf] text-neutral-950 border-black shadow-xs'
                   : 'bg-white text-neutral-800 border-black/20 hover:bg-neutral-100'
@@ -207,7 +207,7 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
             <button
               type="button"
               onClick={() => setSelectedStudy('project-k')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border shrink-0 whitespace-nowrap ${
                 selectedStudy === 'project-k'
                   ? 'bg-[#60a5fa] text-neutral-950 border-black shadow-xs'
                   : 'bg-white text-neutral-800 border-black/20 hover:bg-neutral-100'
@@ -219,7 +219,7 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
             <button
               type="button"
               onClick={() => setSelectedStudy('deceptrix')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border shrink-0 whitespace-nowrap ${
                 selectedStudy === 'deceptrix'
                   ? 'bg-[#f59e0b] text-neutral-950 border-black shadow-xs'
                   : 'bg-white text-neutral-800 border-black/20 hover:bg-neutral-100'
@@ -231,7 +231,7 @@ export function CaseStudyExactSection({ onBackToOverview, initialStudy = 'datado
             <button
               type="button"
               onClick={() => setSelectedStudy('beyond-earth')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-spacemono font-bold transition-all border shrink-0 whitespace-nowrap ${
                 selectedStudy === 'beyond-earth'
                   ? 'bg-[#38bdf8] text-neutral-950 border-black shadow-xs'
                   : 'bg-white text-neutral-800 border-black/20 hover:bg-neutral-100'

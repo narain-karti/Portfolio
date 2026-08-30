@@ -71,10 +71,10 @@ export function CaseStudyModal({ project, onClose }: CaseStudyModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-xs p-2 sm:p-4 md:p-6 overflow-y-auto animate-fadeIn select-none">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-xs p-0 sm:p-4 md:p-6 overflow-y-auto animate-fadeIn select-none">
       <div
         id="case-study-modal-container"
-        className="relative w-full max-w-5xl bg-[#faf8f2] border-2 border-neutral-900 rounded-xs shadow-[8px_8px_0px_#121316] my-auto overflow-hidden font-sans select-text max-h-[92vh] flex flex-col"
+        className="relative w-full max-w-5xl bg-[#faf8f2] border-2 border-neutral-900 rounded-t-xl sm:rounded-xs shadow-[8px_8px_0px_#121316] overflow-hidden font-sans select-text max-h-[95vh] sm:max-h-[92vh] flex flex-col"
       >
         {/* Top OS Modal Header Bar */}
         <div className="bg-[#ebe7dc] border-b border-neutral-300 px-4 py-3 flex items-center justify-between gap-3 shrink-0 font-mono text-xs">
@@ -106,11 +106,11 @@ export function CaseStudyModal({ project, onClose }: CaseStudyModalProps) {
         </div>
 
         {/* Modal Navigation Tabs */}
-        <div className="bg-[#f0ede4] border-b border-neutral-300 px-4 py-1.5 flex items-center gap-1 overflow-x-auto text-[11px] font-mono shrink-0">
+        <div className="bg-[#f0ede4] border-b border-neutral-300 px-2 sm:px-4 py-1.5 flex items-center gap-1 overflow-x-auto scrollbar-none text-[10px] sm:text-[11px] font-mono shrink-0">
           <button
             type="button"
             onClick={() => setActiveTab('OVERVIEW')}
-            className={`px-3 py-1 rounded-xs transition-all font-bold ${
+            className={`px-2 sm:px-3 py-1 rounded-xs transition-all font-bold shrink-0 whitespace-nowrap ${
               activeTab === 'OVERVIEW'
                 ? 'bg-neutral-950 text-white shadow-xs'
                 : 'text-neutral-700 hover:bg-neutral-200'
@@ -121,7 +121,7 @@ export function CaseStudyModal({ project, onClose }: CaseStudyModalProps) {
           <button
             type="button"
             onClick={() => setActiveTab('ARCHITECTURE')}
-            className={`px-3 py-1 rounded-xs transition-all font-bold ${
+            className={`px-2 sm:px-3 py-1 rounded-xs transition-all font-bold shrink-0 whitespace-nowrap ${
               activeTab === 'ARCHITECTURE'
                 ? 'bg-neutral-950 text-white shadow-xs'
                 : 'text-neutral-700 hover:bg-neutral-200'
@@ -132,7 +132,7 @@ export function CaseStudyModal({ project, onClose }: CaseStudyModalProps) {
           <button
             type="button"
             onClick={() => setActiveTab('SIMULATOR')}
-            className={`px-3 py-1 rounded-xs transition-all font-bold ${
+            className={`px-2 sm:px-3 py-1 rounded-xs transition-all font-bold shrink-0 whitespace-nowrap ${
               activeTab === 'SIMULATOR'
                 ? 'bg-blue-700 text-white shadow-xs'
                 : 'text-neutral-700 hover:bg-neutral-200'
@@ -143,7 +143,7 @@ export function CaseStudyModal({ project, onClose }: CaseStudyModalProps) {
           <button
             type="button"
             onClick={() => setActiveTab('POSTMORTEM')}
-            className={`px-3 py-1 rounded-xs transition-all font-bold ${
+            className={`px-2 sm:px-3 py-1 rounded-xs transition-all font-bold shrink-0 whitespace-nowrap ${
               activeTab === 'POSTMORTEM'
                 ? 'bg-neutral-950 text-white shadow-xs'
                 : 'text-neutral-700 hover:bg-neutral-200'
@@ -154,7 +154,7 @@ export function CaseStudyModal({ project, onClose }: CaseStudyModalProps) {
           <button
             type="button"
             onClick={() => setActiveTab('METRICS')}
-            className={`px-3 py-1 rounded-xs transition-all font-bold ${
+            className={`px-2 sm:px-3 py-1 rounded-xs transition-all font-bold shrink-0 whitespace-nowrap ${
               activeTab === 'METRICS'
                 ? 'bg-neutral-950 text-white shadow-xs'
                 : 'text-neutral-700 hover:bg-neutral-200'

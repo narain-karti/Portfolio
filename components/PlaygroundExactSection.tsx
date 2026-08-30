@@ -98,7 +98,7 @@ const BOARD_PROJECTS: BoardProject[] = [
     badge: 'BRAVE WINNER · ₹7L+ REVENUE',
     badgeColor: 'bg-blue-100 text-blue-900 border-blue-400',
     tags: ['AWS Lambda', 'RDS Postgres', 'Flutter', 'ElastiCache', 'Cognito'],
-    githubUrl: 'https://github.com/narain-karti',
+    githubUrl: 'https://axoweb.in',
     pinColor: '#3b82f6',
     rotation: 1.5,
   },
@@ -364,9 +364,9 @@ export function PlaygroundExactSection() {
                       rel="noreferrer"
                       className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-2 bg-neutral-900 hover:bg-neutral-800 text-white rounded text-[11px] font-spacemono font-bold border border-black shadow-2xs transition-transform active:scale-95"
                     >
-                      <Github className="w-3 h-3" />
-                      <span>GITHUB</span>
-                      <ExternalLink className="w-2.5 h-2.5 opacity-70" />
+                      {proj.githubUrl.includes('github.com') ? <Github className="w-3 h-3" /> : <ExternalLink className="w-3 h-3" />}
+                      <span>{proj.githubUrl.includes('github.com') ? 'GITHUB' : 'VISIT SITE'}</span>
+                      {proj.githubUrl.includes('github.com') && <ExternalLink className="w-2.5 h-2.5 opacity-70" />}
                     </a>
                   )}
 

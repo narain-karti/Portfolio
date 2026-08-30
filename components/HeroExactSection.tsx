@@ -44,8 +44,8 @@ export function HeroExactSection({
           </span>
         </div>
 
-        {/* 1. TOP ANNOTATION TAGS */}
-        <div className="w-full max-w-xl flex items-end justify-between mb-2 relative px-2">
+        {/* 1. TOP ANNOTATION TAGS - hidden on very small screens */}
+        <div className="w-full max-w-xl hidden sm:flex items-end justify-between mb-2 relative px-2">
           {/* Top-Left Tag: AGENTIC AI & SYSTEMS (Teal + Tape) */}
           <div className="relative -rotate-2 -translate-y-1">
             <div className="absolute -top-2 left-3 w-12 h-3 bg-white/80 border-x border-dashed border-black/20 shadow-2xs -rotate-3 z-10" />

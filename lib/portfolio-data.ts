@@ -423,7 +423,7 @@ export const PORTFOLIO_DATA = {
       status: 'SHIPPED' as const,
       year: '2025–2026',
       summary: 'Co-founded AI/digital solutions startup; won BRAVE National Competition and grew revenue past ₹7L in 3 months. Shipped 3-app car-wash platform (Flutter, React, Firebase) and engineered an AWS microservice architecture for a 5-role university grievance platform.',
-      githubUrl: 'https://github.com/narain-karti',
+      githubUrl: 'https://axoweb.in',
       architectureNodes: ['Tri-App Flutter/React Suite', 'AWS Cognito Auth Gateway', 'Lambda Serverless Microservices', 'SQS Async Booking Queue', 'RDS PostgreSQL & Redis Tier'],
       caseStudy: {
         heroTagline: 'Architecting scalable serverless backends and commercial mobile applications from zero to revenue.',

@@ -77,12 +77,12 @@ export function AboutExactSection({ nameMode = 'NARAIN' }: AboutExactSectionProp
         {/* ========================================================= */}
         <div className="relative">
           {/* Handwritten Annotation: about me! */}
-          <div className="mb-4 flex items-center justify-between">
+          <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <span className="font-handwriting text-3xl sm:text-4xl text-neutral-900 font-bold -rotate-1 inline-block">
               about me! ✎
             </span>
-            <div className="font-spacemono text-[11px] text-neutral-600 bg-white/90 px-3 py-1 border border-black/20 rounded shadow-2xs">
-              LOCATION: CHENNAI, INDIA // DUAL DEGREE 2029
+            <div className="font-spacemono text-[10px] sm:text-[11px] text-neutral-600 bg-white/90 px-3 py-1 border border-black/20 rounded shadow-2xs">
+              CHENNAI, INDIA // DUAL DEGREE 2029
             </div>
           </div>
 
