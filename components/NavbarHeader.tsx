@@ -95,7 +95,7 @@ export function NavbarHeader({
               }`}
             >
               <span className="text-[11px]">✦</span>
-              <span>PLAYGROUND</span>
+              <span>PINBOARD</span>
             </button>
 
           </nav>
