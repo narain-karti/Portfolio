@@ -135,6 +135,38 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
           </RevealBlock>
         )}
 
+        {post.pressLinks && post.pressLinks.length > 0 && (
+          <RevealBlock
+            inView={false}
+            delay={0.135}
+            style={{
+              background: "#131314",
+              border: "1px solid #242427",
+              borderRadius: "12px",
+              padding: "1rem 1.25rem",
+              marginBottom: "2.25rem",
+            }}
+          >
+            <div className="meta-label meta-label-accent" style={{ marginBottom: "8px" }}>
+              PRESS COVERAGE
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 18px" }}>
+              {post.pressLinks.map((item) => (
+                <a
+                  key={item.outlet}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="subtle-link"
+                  style={{ color: "#e5e5e5", display: "inline-flex", alignItems: "center", gap: "4px" }}
+                >
+                  {item.outlet} <ArrowUpRight size={12} />
+                </a>
+              ))}
+            </div>
+          </RevealBlock>
+        )}
+
         <RevealBlock delay={0.14}>
           <ProjectHairlineCard
             projectKey={post.slug}
@@ -157,7 +189,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                 {post.videoTitle || "INTERVIEW"}
               </span>
               <a
-                href="https://www.youtube.com/watch?v=9cr06w31vpY"
+                href={post.videoUrl.replace("youtube-nocookie.com/embed/", "youtube.com/watch?v=")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="subtle-link"

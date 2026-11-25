@@ -147,9 +147,29 @@ export default function AboutPage() {
               </Link>
             </div>
           </div>
-          <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "66ch", marginBottom: "1.4rem", lineHeight: 1.6 }}>
-            At 17, in my first year, our team finished First Runner-Up (₹3,00,000) out of 70,000+ students at the OpenAI Academy × NxtWave GenAI Buildathon in New Delhi with Project K — covered by India Today, LiveChennai, ET Edge Insights, and City Air News — before evolving the system into Project-MELV.
+          <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "66ch", marginBottom: "0.85rem", lineHeight: 1.6 }}>
+            At 17, in my first year, our team finished First Runner-Up (₹3,00,000) out of 70,000+ students at the OpenAI Academy × NxtWave GenAI Buildathon in New Delhi with Project K — before evolving the system into Project-MELV.
           </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginBottom: "1.4rem" }}>
+            <a
+              href="https://www.livechennai.com/detailnews.asp?catid=&newsid=78442"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="subtle-link"
+              style={{ color: "#6ee7b7" }}
+            >
+              LiveChennai Feature ↗
+            </a>
+            <a
+              href="https://expressnews.asia/2026/02/tn-students-shine-as-runner-up-at-indias-largest-genai-student-challenge-openai-academy-x-nxtwave-buildathon-finale/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="subtle-link"
+              style={{ color: "#6ee7b7" }}
+            >
+              Express News Asia ↗
+            </a>
+          </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.15rem" }}>
             {[
               {
@@ -184,42 +204,72 @@ export default function AboutPage() {
           <div
             style={{
               marginTop: "1.25rem",
-              background: "#131314",
-              border: "1px solid #242427",
-              borderRadius: "14px",
-              padding: "1.15rem",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: "1.15rem",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px", marginBottom: "0.75rem", flexWrap: "wrap" }}>
-              <span className="meta-label meta-label-accent">INTERVIEW · PROJECT K AT INDIA AI IMPACT SUMMIT 2026</span>
-              <a
-                href="https://www.youtube.com/watch?v=9cr06w31vpY"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="subtle-link"
+            {[
+              {
+                label: "PROJECT K · NEW DELHI 2026",
+                title: "Project K Interview — India AI Impact Summit 2026",
+                embed: "https://www.youtube-nocookie.com/embed/9cr06w31vpY",
+                watch: "https://www.youtube.com/watch?v=9cr06w31vpY",
+              },
+              {
+                label: "NEWS · STARTUPS & HACKATHONS",
+                title: "Team News Channel Interview — Startups, Internships & Hackathons",
+                embed: "https://www.youtube-nocookie.com/embed/Obu2d_wuzxE",
+                watch: "https://www.youtube.com/watch?v=Obu2d_wuzxE",
+              },
+              {
+                label: "COLLEGE FEATURE · FAMILY INTERVIEW",
+                title: "Family Interview by College on Narain's Journey & Achievements",
+                embed: "https://www.youtube-nocookie.com/embed/QB_RMe7Zx_Y",
+                watch: "https://www.youtube.com/watch?v=QB_RMe7Zx_Y",
+              },
+            ].map((vid) => (
+              <div
+                key={vid.embed}
+                style={{
+                  background: "#131314",
+                  border: "1px solid #242427",
+                  borderRadius: "14px",
+                  padding: "1.15rem",
+                }}
               >
-                Open on YouTube ↗
-              </a>
-            </div>
-            <div
-              style={{
-                position: "relative",
-                width: "100%",
-                aspectRatio: "16 / 9",
-                borderRadius: "10px",
-                overflow: "hidden",
-                border: "1px solid #242427",
-                background: "#0a0a0b",
-              }}
-            >
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/9cr06w31vpY"
-                title="Project K Interview — India AI Impact Summit 2026"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
-              />
-            </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px", marginBottom: "0.75rem", flexWrap: "wrap" }}>
+                  <span className="meta-label meta-label-accent">{vid.label}</span>
+                  <a
+                    href={vid.watch}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="subtle-link"
+                  >
+                    YouTube ↗
+                  </a>
+                </div>
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    aspectRatio: "16 / 9",
+                    borderRadius: "10px",
+                    overflow: "hidden",
+                    border: "1px solid #242427",
+                    background: "#0a0a0b",
+                  }}
+                >
+                  <iframe
+                    src={vid.embed}
+                    title={vid.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </RevealBlock>
 

@@ -267,6 +267,57 @@ export default function BuilderPage() {
           </div>
         </section>
 
+        {/* 3.5. News Channel Team Interview */}
+        <RevealBlock style={{ marginBottom: "4.25rem" }}>
+          <div
+            style={{
+              background: "#131314",
+              border: "1px solid #242427",
+              borderRadius: "14px",
+              padding: "1.35rem",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px", marginBottom: "0.85rem", flexWrap: "wrap" }}>
+              <div>
+                <div className="meta-label meta-label-accent" style={{ marginBottom: "4px" }}>
+                  NEWS CHANNEL INTERVIEW
+                </div>
+                <h2 className="section-heading">
+                  Startups, Internships &amp; Hackathon Journey
+                </h2>
+              </div>
+              <a
+                href="https://www.youtube.com/watch?v=Obu2d_wuzxE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="subtle-link"
+                style={{ color: "#6ee7b7" }}
+              >
+                Watch on YouTube ↗
+              </a>
+            </div>
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "16 / 9",
+                borderRadius: "10px",
+                overflow: "hidden",
+                border: "1px solid #242427",
+                background: "#0a0a0b",
+              }}
+            >
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/Obu2d_wuzxE"
+                title="Team News Channel Interview — Startups, Internships & Hackathons"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+              />
+            </div>
+          </div>
+        </RevealBlock>
+
         {/* 4. Tech Matrix */}
         <section>
           <h2 className="section-heading" style={{ marginBottom: "1.35rem" }}>

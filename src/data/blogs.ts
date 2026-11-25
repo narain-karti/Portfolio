@@ -20,6 +20,7 @@ export interface ProjectBlogPost {
   videoUrl?: string;
   videoTitle?: string;
   team?: { name: string; linkedin: string }[];
+  pressLinks?: { outlet: string; url: string }[];
   sections: {
     heading: string;
     body: string[];
@@ -47,6 +48,10 @@ export const BLOG_POSTS: ProjectBlogPost[] = [
     tags: ["Project K", "Project-MELV", "India AI Impact Summit", "OpenAI Academy", "Edge AI"],
     videoUrl: "https://www.youtube-nocookie.com/embed/9cr06w31vpY",
     videoTitle: "Project K — Team Interview at India AI Impact Summit 2026",
+    pressLinks: [
+      { outlet: "LiveChennai", url: "https://www.livechennai.com/detailnews.asp?catid=&newsid=78442" },
+      { outlet: "Express News Asia", url: "https://expressnews.asia/2026/02/tn-students-shine-as-runner-up-at-indias-largest-genai-student-challenge-openai-academy-x-nxtwave-buildathon-finale/" },
+    ],
     team: [
       { name: "Vishal Raaj DND", linkedin: "https://www.linkedin.com/in/vishalraajdnd/" },
       { name: "TESHA A M", linkedin: "https://www.linkedin.com/in/tesha-a-m-8a8268375/" },
@@ -268,6 +273,10 @@ datadoc evaluate titanic.csv --target survived --ablation`,
     tags: ["NVIDIA Jetson", "YOLOv8", "SUMO MARL", "Three.js", "ESP32-CAM", "MQTT"],
     videoUrl: "https://www.youtube-nocookie.com/embed/9cr06w31vpY",
     videoTitle: "Project K — Team Interview at India AI Impact Summit 2026",
+    pressLinks: [
+      { outlet: "LiveChennai", url: "https://www.livechennai.com/detailnews.asp?catid=&newsid=78442" },
+      { outlet: "Express News Asia", url: "https://expressnews.asia/2026/02/tn-students-shine-as-runner-up-at-indias-largest-genai-student-challenge-openai-academy-x-nxtwave-buildathon-finale/" },
+    ],
     sections: [
       {
         heading: "1. Month 1: Fighting Dependency Hell & Getting Live Video Inference Running",
@@ -430,6 +439,8 @@ datadoc evaluate titanic.csv --target survived --ablation`,
       "How co-founding AXOWEB Technologies paired rapid commercial execution (Ideal Foundation, Swathanthra, SKR, Udaya) with reusable Flutter/Firebase dispatch apps and a 5-role AWS serverless grievance architecture.",
     repoUrl: "https://github.com/narain-karti",
     tags: ["AWS Lambda", "RDS PostgreSQL", "SQS / Redis", "Cognito", "Flutter", "Firebase"],
+    videoUrl: "https://www.youtube-nocookie.com/embed/Obu2d_wuzxE",
+    videoTitle: "News Channel Interview — Startups, Internships & Hackathons",
     sections: [
       {
         heading: "1. Standardizing Commercial Delivery Without Reinventing Every Stack",

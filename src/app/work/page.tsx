@@ -600,6 +600,28 @@ function WorkContent() {
                       GitHub <ArrowUpRight size={15} />
                     </a>
                   )}
+                  {activeStudy.pressLinks?.map((press) => (
+                    <a
+                      key={press.outlet}
+                      href={press.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        background: "#161619",
+                        color: "#6ee7b7",
+                        border: "1px solid #2b2b31",
+                        padding: "0.7rem 1.1rem",
+                        borderRadius: "8px",
+                        fontWeight: 500,
+                        fontSize: "0.86rem",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                    >
+                      {press.outlet} <ArrowUpRight size={14} />
+                    </a>
+                  ))}
                 </div>
               </div>
             </motion.div>

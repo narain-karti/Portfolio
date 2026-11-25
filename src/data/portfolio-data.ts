@@ -27,6 +27,7 @@ export interface WorkProject {
   pypiUrl?: string;
   liveUrl?: string;
   videoUrl?: string;
+  pressLinks?: { outlet: string; url: string }[];
   pipCommand?: string;
   metrics: ProjectMetric[];
   problem: string;
@@ -203,6 +204,10 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
       "Edge ANPR system evolved from Project K for Smart India Hackathon PS #26127, running locally in 14ms and sending 200-byte JSON events instead of raw video.",
     githubUrl: "https://github.com/narain-karti/Project-MELV",
     blogSlug: "project-melv-city-digital-twin",
+    pressLinks: [
+      { outlet: "LiveChennai", url: "https://www.livechennai.com/detailnews.asp?catid=&newsid=78442" },
+      { outlet: "Express News Asia", url: "https://expressnews.asia/2026/02/tn-students-shine-as-runner-up-at-indias-largest-genai-student-challenge-openai-academy-x-nxtwave-buildathon-finale/" },
+    ],
     problem:
       "Streaming raw 1080p CCTV across 100+ junctions burns over 4 TB/day of bandwidth and leaves camera feeds disconnected.",
     whyItMatters:
@@ -313,6 +318,10 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     githubUrl: "https://github.com/narain-karti/Project-K",
     blogSlug: "project-k-openai-buildathon-journey",
     videoUrl: "https://www.youtube-nocookie.com/embed/9cr06w31vpY",
+    pressLinks: [
+      { outlet: "LiveChennai", url: "https://www.livechennai.com/detailnews.asp?catid=&newsid=78442" },
+      { outlet: "Express News Asia", url: "https://expressnews.asia/2026/02/tn-students-shine-as-runner-up-at-indias-largest-genai-student-challenge-openai-academy-x-nxtwave-buildathon-finale/" },
+    ],
     problem:
       "Fixed signal timers trap ambulances in deadlocked intersections while highway collision reporting suffers long human-detection delays.",
     whyItMatters:
