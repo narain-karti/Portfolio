@@ -118,6 +118,111 @@ export default function AboutPage() {
           ))}
         </div>
 
+        {/* National Stage & Project K → Project-MELV Milestone */}
+        <RevealBlock style={{ marginBottom: "4rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "10px",
+              marginBottom: "0.85rem",
+            }}
+          >
+            <h2 className="section-heading">
+              <WordReveal as="span" inView stagger={0.03}>India AI Impact Summit 2026</WordReveal>
+            </h2>
+            <div style={{ display: "flex", gap: "18px", flexWrap: "wrap" }}>
+              <a
+                href="https://www.youtube.com/watch?v=9cr06w31vpY"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="subtle-link"
+              >
+                Watch interview ↗
+              </a>
+              <Link href="/blog/india-ai-impact-summit-2026-project-k-to-melv" className="subtle-link" style={{ color: "#6ee7b7" }}>
+                Read full story →
+              </Link>
+            </div>
+          </div>
+          <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "66ch", marginBottom: "1.4rem", lineHeight: 1.6 }}>
+            At 17, in my first year, our team finished First Runner-Up (₹3,00,000) out of 70,000+ students at the OpenAI Academy × NxtWave GenAI Buildathon in New Delhi with Project K — covered by India Today, LiveChennai, ET Edge Insights, and City Air News — before evolving the system into Project-MELV.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.15rem" }}>
+            {[
+              {
+                src: "/images/projectk_live_pitch.jpg",
+                alt: "Pitching Project K live on stage in New Delhi",
+                caption: "Pitching Project K's 3D intersection twin",
+              },
+              {
+                src: "/images/projectk_solo_award.jpg",
+                alt: "First Runner-Up plaque and ₹3L cheque at India AI Impact Summit 2026",
+                caption: "First Runner-Up · New Delhi 2026",
+              },
+              {
+                src: "/images/projectk_stage_finale.jpg",
+                alt: "Team Project K on the Buildathon Grand Finale stage",
+                caption: "With teammates on the Grand Finale stage",
+              },
+            ].map((photo, idx) => (
+              <RevealBlock key={photo.src} className="portrait-card" delay={idx * 0.07} interactive style={{ aspectRatio: "4 / 3" }}>
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  style={{ objectFit: "cover", objectPosition: "center 20%" }}
+                />
+                <div className="portrait-caption">{photo.caption}</div>
+              </RevealBlock>
+            ))}
+          </div>
+
+          <div
+            style={{
+              marginTop: "1.25rem",
+              background: "#131314",
+              border: "1px solid #242427",
+              borderRadius: "14px",
+              padding: "1.15rem",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px", marginBottom: "0.75rem", flexWrap: "wrap" }}>
+              <span className="meta-label meta-label-accent">INTERVIEW · PROJECT K AT INDIA AI IMPACT SUMMIT 2026</span>
+              <a
+                href="https://www.youtube.com/watch?v=9cr06w31vpY"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="subtle-link"
+              >
+                Open on YouTube ↗
+              </a>
+            </div>
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "16 / 9",
+                borderRadius: "10px",
+                overflow: "hidden",
+                border: "1px solid #242427",
+                background: "#0a0a0b",
+              }}
+            >
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/9cr06w31vpY"
+                title="Project K Interview — India AI Impact Summit 2026"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+              />
+            </div>
+          </div>
+        </RevealBlock>
+
         {/* Interactive Console Rig */}
         <RevealBlock style={{ marginBottom: "4rem" }}>
           <div

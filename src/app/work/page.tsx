@@ -519,6 +519,42 @@ function WorkContent() {
                   </div>
                 </div>
 
+                {activeStudy.videoUrl && (
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                      <h4 className="meta-label">TEAM INTERVIEW</h4>
+                      <a
+                        href="https://www.youtube.com/watch?v=9cr06w31vpY"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="subtle-link"
+                        style={{ color: "#6ee7b7", display: "inline-flex", alignItems: "center", gap: "4px" }}
+                      >
+                        YouTube <ArrowUpRight size={12} />
+                      </a>
+                    </div>
+                    <div
+                      style={{
+                        position: "relative",
+                        width: "100%",
+                        aspectRatio: "16 / 9",
+                        borderRadius: "10px",
+                        overflow: "hidden",
+                        border: "1px solid #26262a",
+                        background: "#0a0a0b",
+                      }}
+                    >
+                      <iframe
+                        src={activeStudy.videoUrl}
+                        title={`${activeStudy.title} Interview`}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+                      />
+                    </div>
+                  </div>
+                )}
+
                 <div style={{ background: "rgba(16, 185, 129, 0.06)", border: "1px solid rgba(16, 185, 129, 0.22)", borderRadius: "10px", padding: "14px" }}>
                   <h4 className="meta-label meta-label-accent" style={{ marginBottom: "4px" }}>WHAT I LEARNED</h4>
                   <p style={{ fontSize: "0.92rem", color: "#e5e5e5", lineHeight: 1.55 }}>{activeStudy.whatILearned}</p>

@@ -87,15 +87,53 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
           style={{
             position: "relative",
             width: "100%",
-            height: "320px",
+            height: "380px",
             borderRadius: "14px",
             overflow: "hidden",
             border: "1px solid #242427",
             marginBottom: "2.75rem",
           }}
         >
-          <Image src={post.coverImage} alt={post.projectTitle} fill style={{ objectFit: "cover" }} priority />
+          <Image
+            src={post.coverImage}
+            alt={post.projectTitle}
+            fill
+            style={{ objectFit: "cover", objectPosition: "center 35%" }}
+            priority
+          />
         </RevealBlock>
+
+        {post.team && post.team.length > 0 && (
+          <RevealBlock
+            inView={false}
+            delay={0.13}
+            style={{
+              background: "#131314",
+              border: "1px solid #242427",
+              borderRadius: "12px",
+              padding: "1rem 1.25rem",
+              marginBottom: "2.25rem",
+            }}
+          >
+            <div className="meta-label meta-label-accent" style={{ marginBottom: "8px" }}>
+              TEAMMATES
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 18px" }}>
+              {post.team.map((member) => (
+                <a
+                  key={member.name}
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="subtle-link"
+                  style={{ color: "#e5e5e5", display: "inline-flex", alignItems: "center", gap: "4px" }}
+                >
+                  {member.name} <ArrowUpRight size={12} />
+                </a>
+              ))}
+            </div>
+          </RevealBlock>
+        )}
 
         <RevealBlock delay={0.14}>
           <ProjectHairlineCard
@@ -103,6 +141,52 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
             label={`${post.projectTitle} · INTERACTIVE ARCHITECTURE`}
           />
         </RevealBlock>
+
+        {post.videoUrl && (
+          <RevealBlock
+            style={{
+              background: "#131314",
+              border: "1px solid #242427",
+              borderRadius: "14px",
+              padding: "1.15rem",
+              marginBottom: "2.5rem",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px", marginBottom: "0.75rem", flexWrap: "wrap" }}>
+              <span className="meta-label meta-label-accent">
+                {post.videoTitle || "INTERVIEW"}
+              </span>
+              <a
+                href="https://www.youtube.com/watch?v=9cr06w31vpY"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="subtle-link"
+                style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
+              >
+                Watch on YouTube <ArrowUpRight size={13} />
+              </a>
+            </div>
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "16 / 9",
+                borderRadius: "10px",
+                overflow: "hidden",
+                border: "1px solid #242427",
+                background: "#0a0a0b",
+              }}
+            >
+              <iframe
+                src={post.videoUrl}
+                title={post.videoTitle || post.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+              />
+            </div>
+          </RevealBlock>
+        )}
 
         {/* Narrative Sections */}
         <article style={{ display: "flex", flexDirection: "column", gap: "2.4rem", marginBottom: "3.25rem" }}>
@@ -117,6 +201,37 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                     </p>
                   ))}
                 </div>
+                {section.image && (
+                  <figure style={{ marginTop: "1.35rem" }}>
+                    <div
+                      style={{
+                        position: "relative",
+                        width: "100%",
+                        height: "420px",
+                        borderRadius: "12px",
+                        overflow: "hidden",
+                        border: "1px solid #242427",
+                        background: "#0f0f11",
+                      }}
+                    >
+                      <Image
+                        src={section.image}
+                        alt={section.imageCaption || section.heading}
+                        fill
+                        sizes="(max-width: 820px) 100vw, 800px"
+                        style={{ objectFit: "cover", objectPosition: "center 22%" }}
+                      />
+                    </div>
+                    {section.imageCaption && (
+                      <figcaption
+                        className="meta-label"
+                        style={{ marginTop: "8px", color: "rgba(255,255,255,0.58)" }}
+                      >
+                        {section.imageCaption}
+                      </figcaption>
+                    )}
+                  </figure>
+                )}
                 {section.codeSnippet && (
                   <pre
                     style={{

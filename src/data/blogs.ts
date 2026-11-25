@@ -17,16 +17,92 @@ export interface ProjectBlogPost {
   summary: string;
   repoUrl: string;
   tags: string[];
+  videoUrl?: string;
+  videoTitle?: string;
+  team?: { name: string; linkedin: string }[];
   sections: {
     heading: string;
     body: string[];
     codeSnippet?: string;
+    image?: string;
+    imageCaption?: string;
   }[];
   timeline: CommitMilestone[];
   lessons: string[];
 }
 
 export const BLOG_POSTS: ProjectBlogPost[] = [
+  {
+    slug: "india-ai-impact-summit-2026-project-k-to-melv",
+    title: "At 17, First Runner-Up in New Delhi: Project K to Project-MELV",
+    projectTitle: "PROJECT K → MELV",
+    dateRange: "February 2026 · New Delhi",
+    commitCount: "90 Finals / 70,000+ Students · ₹3L Prize",
+    readTime: "4 min read",
+    category: "Hackathons & Field Notes",
+    coverImage: "/images/projectk_stage_finale.jpg",
+    summary:
+      "Six months of late nights as a 17-year-old first-year student—shortlisted among 90 teams out of 70,000+ students for the OpenAI Academy × NxtWave GenAI Buildathon Finale at India AI Impact Summit 2026, winning First Runner-Up, and evolving Project K into Project-MELV.",
+    repoUrl: "https://github.com/narain-karti/Project-K",
+    tags: ["Project K", "Project-MELV", "India AI Impact Summit", "OpenAI Academy", "Edge AI"],
+    videoUrl: "https://www.youtube-nocookie.com/embed/9cr06w31vpY",
+    videoTitle: "Project K — Team Interview at India AI Impact Summit 2026",
+    team: [
+      { name: "Vishal Raaj DND", linkedin: "https://www.linkedin.com/in/vishalraajdnd/" },
+      { name: "TESHA A M", linkedin: "https://www.linkedin.com/in/tesha-a-m-8a8268375/" },
+      { name: "Narain Karti", linkedin: "https://www.linkedin.com/in/narainkarti/" },
+      { name: "A. Suriya Prakash", linkedin: "https://www.linkedin.com/in/a-suriya-prakash-323884320/" },
+      { name: "Dinesh A.K", linkedin: "https://www.linkedin.com/in/dinesh-a-k-551651377/" },
+      { name: "Pradeep Kumar S", linkedin: "https://www.linkedin.com/in/iam-pradeepkumar/" },
+    ],
+    sections: [
+      {
+        heading: "1. From Regional Rounds to 90 Finalists out of 70,000+ Students",
+        body: [
+          "At 17 years old, in my first year of college, standing on a national stage in New Delhi felt unreal. Our journey started six months earlier in the regional rounds, where getting selected among thousands of student builders gave us the push to keep iterating.",
+          "By the time we travelled to New Delhi for the OpenAI Academy × NxtWave GenAI Buildathon Grand Finale—held as part of the India AI Impact Summit 2026—only 90 teams remained out of more than 70,000 students mobilized across the country.",
+        ],
+        image: "/images/projectk_team_backdrop.jpg",
+        imageCaption: "With teammates in New Delhi ahead of the India AI Impact Summit 2026 finale.",
+      },
+      {
+        heading: "2. Pitching Project K Live on Stage",
+        body: [
+          "We went up to present Project K: a hybrid edge-cloud traffic intelligence and emergency green-wave platform running real-time vision inference alongside a live 3D intersection simulation and automated emergency responder alerts.",
+          "Waiting as the top five winners were called was the most nerve-racking few minutes of those six months. When our team name was announced as First Runner-Up (₹3,00,000), everything paused for a second before the realization—and plenty of emotion—hit all of us at once.",
+        ],
+        image: "/images/projectk_live_pitch.jpg",
+        imageCaption: "Demonstrating Project K's live 3D intersection simulation and signal switching on stage.",
+      },
+      {
+        heading: "3. National Recognition & Evolving Project K into Project-MELV",
+        body: [
+          "Beyond the stage, seeing Project K featured by India Today, LiveChennai, ET Edge Insights, and City Air News was humbling. Watching a Chennai student project grow into national coverage showed what six months of persistence with the right team can do.",
+          "Those field lessons from Project K didn't stop at the finale—the edge-inference architecture and urban camera ideas directly shaped what we built next as Project-MELV, expanding single-intersection control into a city-wide ANPR trajectory graph and 3D urban mobility digital twin.",
+        ],
+        image: "/images/projectk_solo_award.jpg",
+        imageCaption: "First Runner-Up plaque, medal, and ₹3,00,000 prize at the India AI Impact Summit 2026.",
+      },
+      {
+        heading: "4. Shared With the Whole Team",
+        body: [
+          "Every redesign, bug at 2 AM, and late-night rehearsal paid off because six teammates backed each other through six straight months of pressure.",
+        ],
+        image: "/images/projectk_award_collage.jpg",
+        imageCaption: "Receiving the trophy on stage and celebrating with the Buildathon Grand Finale jury.",
+      },
+    ],
+    timeline: [
+      { date: "2025-09", title: "Regional Selection", detail: "Selected from regional rounds to begin building Project K over a six-month sprint." },
+      { date: "2026-02-18", title: "Delhi National Finale (Top 90 / 70,000+)", detail: "Shortlisted among 90 finalist teams at India AI Impact Summit 2026 in New Delhi." },
+      { date: "2026-02-20", title: "First Runner-Up & ₹3,00,000 Award", detail: "Awarded First Runner-Up at OpenAI Academy × NxtWave GenAI Buildathon; featured in India Today, LiveChennai, ET Edge Insights & City Air News." },
+      { date: "2026-09", title: "Evolved into Project-MELV", detail: "Extended Project K's edge vision foundation into Project-MELV's city-wide 14ms ANPR mesh and 3D digital twin." },
+    ],
+    lessons: [
+      "Six months of steady iteration with a committed team beats last-minute hackathon sprints.",
+      "Every engineering lesson from Project K fed directly into the architecture of Project-MELV.",
+    ],
+  },
   {
     slug: "datadoc-from-script-to-pypi",
     title: "From a Hackathon Script to PyPI: Killing Data Leakage in 0.42 Seconds with Polars",
@@ -190,6 +266,8 @@ datadoc evaluate titanic.csv --target survived --ablation`,
       "The four-month engineering sprint behind Project K — from fighting TensorFlow browser dependencies in November to ESP32-CAM live streams, 3D Three.js signal physics, automated SMTP ambulance dispatch, and a ₹3L national podium.",
     repoUrl: "https://github.com/narain-karti/Project-K",
     tags: ["NVIDIA Jetson", "YOLOv8", "SUMO MARL", "Three.js", "ESP32-CAM", "MQTT"],
+    videoUrl: "https://www.youtube-nocookie.com/embed/9cr06w31vpY",
+    videoTitle: "Project K — Team Interview at India AI Impact Summit 2026",
     sections: [
       {
         heading: "1. Month 1: Fighting Dependency Hell & Getting Live Video Inference Running",

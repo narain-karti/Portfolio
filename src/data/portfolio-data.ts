@@ -26,6 +26,7 @@ export interface WorkProject {
   githubUrl?: string;
   pypiUrl?: string;
   liveUrl?: string;
+  videoUrl?: string;
   pipCommand?: string;
   metrics: ProjectMetric[];
   problem: string;
@@ -199,7 +200,7 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Production Prototype (SIH PS #26127)",
     year: "2026",
     summary:
-      "Edge ANPR system for Smart India Hackathon PS #26127 that runs locally in 14ms and sends 200-byte JSON events instead of raw video.",
+      "Edge ANPR system evolved from Project K for Smart India Hackathon PS #26127, running locally in 14ms and sending 200-byte JSON events instead of raw video.",
     githubUrl: "https://github.com/narain-karti/Project-MELV",
     blogSlug: "project-melv-city-digital-twin",
     problem:
@@ -308,9 +309,10 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Awarded Architecture",
     year: "2025–2026",
     summary:
-      "Edge traffic optimization and emergency green-wave system, awarded ₹3,00,000 National Runner-Up at the OpenAI Academy Buildathon.",
+      "Edge traffic optimization and emergency green-wave system, awarded ₹3,00,000 First Runner-Up at the OpenAI Academy Buildathon in New Delhi before evolving into Project-MELV.",
     githubUrl: "https://github.com/narain-karti/Project-K",
     blogSlug: "project-k-openai-buildathon-journey",
+    videoUrl: "https://www.youtube-nocookie.com/embed/9cr06w31vpY",
     problem:
       "Fixed signal timers trap ambulances in deadlocked intersections while highway collision reporting suffers long human-detection delays.",
     whyItMatters:
