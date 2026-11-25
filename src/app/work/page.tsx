@@ -208,6 +208,14 @@ function WorkContent() {
               <span className="breadcrumb-current">Selected Work</span>
             </div>
             <div style={{ display: "flex", gap: "18px", flexWrap: "wrap" }}>
+              <a
+                href="/Narain_Karti_Resume.pdf"
+                download="Narain_Karti_Resume.pdf"
+                className="subtle-link"
+                style={{ color: "#6ee7b7" }}
+              >
+                Resume PDF ↓
+              </a>
               <Link href="/graph" className="subtle-link">
                 Knowledge Graph →
               </Link>

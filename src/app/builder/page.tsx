@@ -58,9 +58,14 @@ export default function BuilderPage() {
             <span>/</span>
             <span className="breadcrumb-current">Impact &amp; Experience</span>
           </div>
-          <Link href="/downloads" className="subtle-link">
-            Resume PDF →
-          </Link>
+          <a
+            href="/Narain_Karti_Resume.pdf"
+            download="Narain_Karti_Resume.pdf"
+            className="subtle-link"
+            style={{ color: "#6ee7b7" }}
+          >
+            Download Resume PDF ↓
+          </a>
         </nav>
 
         <div

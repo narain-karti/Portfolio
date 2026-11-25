@@ -35,9 +35,19 @@ export default function AboutPage() {
             <span>/</span>
             <span className="breadcrumb-current">About</span>
           </div>
-          <Link href="/graph" className="subtle-link">
-            Knowledge Graph →
-          </Link>
+          <div style={{ display: "flex", gap: "18px", flexWrap: "wrap" }}>
+            <a
+              href="/Narain_Karti_Resume.pdf"
+              download="Narain_Karti_Resume.pdf"
+              className="subtle-link"
+              style={{ color: "#6ee7b7" }}
+            >
+              Resume PDF ↓
+            </a>
+            <Link href="/graph" className="subtle-link">
+              Knowledge Graph →
+            </Link>
+          </div>
         </nav>
 
         {/* Calm, Welcoming Intro */}

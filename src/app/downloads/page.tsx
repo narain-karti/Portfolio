@@ -58,7 +58,7 @@ export default function ResourcesPage() {
               <span className="meta-label">IIT Madras × NIAT · 2026</span>
             </div>
             <p style={{ color: "rgba(255,255,255,0.7)", lineHeight: 1.6, marginBottom: "1.35rem", fontSize: "0.94rem" }}>
-              Dual-degree education, AxoWeb venture delivery, engineering internships, Project K, DATADOC, Project-MELV, Otomo, Quorum, and NASA Space Settlement Zonal Award.
+              IIT Madras B.S. (Data Science) &amp; NIAT B.Tech (CSE AI/ML, CGPA 8.9), Eduvia, AxoWeb Technologies, internships at ThinkersCave &amp; Microdolphin, Project K, DataDoc (PyPI), Quorum, and DECEPTRIX.
             </p>
             <a
               href="/Narain_Karti_Resume.pdf"

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -8,6 +9,29 @@ import { BLOG_POSTS } from "../../../data/blogs";
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  if (!post) return {};
+  const cleanSummary = post.summary.replace(/`/g, "");
+  return {
+    title: post.title,
+    description: cleanSummary,
+    openGraph: {
+      title: `${post.title} — Narain Karti`,
+      description: cleanSummary,
+      type: "article",
+      images: [{ url: post.coverImage, width: 1200, height: 675, alt: post.projectTitle }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: cleanSummary,
+      images: [post.coverImage],
+    },
+  };
 }
 
 function cleanInlineCode(text: string): string {

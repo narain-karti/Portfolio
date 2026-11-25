@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,6 +18,7 @@ const EASE_CINEMATIC = [0.16, 1, 0.3, 1] as const;
 let hasPlayedSiteEntry = false;
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
   const [showIntro, setShowIntro] = useState(false);
   const [introReady, setIntroReady] = useState(false);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -29,6 +31,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    setMounted(true);
     if (hasPlayedSiteEntry || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       hasPlayedSiteEntry = true;
       setIntroReady(true);
@@ -46,8 +49,8 @@ export default function Home() {
     };
     window.addEventListener("pointerdown", unlockSound, { once: true, passive: true });
 
-    // Hold cleanly after cinematic blur-to-text completes, then dissolve into the site
-    const holdTimer = setTimeout(() => dismissIntro(), 2450);
+    // Longer hold so the full centered blur-to-text reveal completes calmly before entering
+    const holdTimer = setTimeout(() => dismissIntro(), 3600);
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
@@ -83,70 +86,74 @@ export default function Home() {
     return () => cleanups.forEach((fn) => fn());
   }, [introReady]);
 
+  const introOverlay = (
+    <AnimatePresence>
+      {showIntro && (
+        <motion.div
+          className="name-intro"
+          onClick={dismissIntro}
+          role="dialog"
+          aria-label="Entrance introduction"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, scale: 1.03, filter: "blur(12px)" }}
+          transition={{ duration: 0.78, ease: EASE_CINEMATIC }}
+        >
+          <div className="name-container">
+            <h1 style={{ display: "flex", alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
+              {INTRO_NAME_CHARS.map((ch, idx) => (
+                <motion.span
+                  key={`${idx}-${ch}`}
+                  initial={{
+                    opacity: 0,
+                    filter: "blur(22px)",
+                    y: 14,
+                    scale: 1.1,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    filter: "blur(0px)",
+                    y: 0,
+                    scale: 1,
+                  }}
+                  transition={{
+                    duration: 1.45,
+                    delay: 0.16 + idx * 0.075,
+                    ease: EASE_CINEMATIC,
+                  }}
+                  style={{
+                    display: "inline-block",
+                    minWidth: ch === " " ? "0.32em" : undefined,
+                  }}
+                >
+                  {ch === " " ? "\u00A0" : ch}
+                </motion.span>
+              ))}
+            </h1>
+          </div>
+          <motion.p
+            className="intro-tagline"
+            initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+            animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            transition={{ duration: 1.1, delay: 1.35, ease: EASE_CINEMATIC }}
+          >
+            AI systems, data science, and practical engineering
+          </motion.p>
+          <motion.span
+            className="intro-skip-hint"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.7 }}
+            transition={{ duration: 0.8, delay: 1.65 }}
+          >
+            Click anywhere or press any key to enter
+          </motion.span>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+
   return (
     <>
-      <AnimatePresence>
-        {showIntro && (
-          <motion.div
-            className="name-intro"
-            onClick={dismissIntro}
-            role="dialog"
-            aria-label="Entrance introduction"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.03, filter: "blur(12px)" }}
-            transition={{ duration: 0.65, ease: EASE_CINEMATIC }}
-          >
-            <div className="name-container">
-              <h1 style={{ display: "flex", alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
-                {INTRO_NAME_CHARS.map((ch, idx) => (
-                  <motion.span
-                    key={`${idx}-${ch}`}
-                    initial={{
-                      opacity: 0,
-                      filter: "blur(20px)",
-                      y: 12,
-                      scale: 1.1,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      filter: "blur(0px)",
-                      y: 0,
-                      scale: 1,
-                    }}
-                    transition={{
-                      duration: 1.15,
-                      delay: 0.12 + idx * 0.055,
-                      ease: EASE_CINEMATIC,
-                    }}
-                    style={{
-                      display: "inline-block",
-                      minWidth: ch === " " ? "0.32em" : undefined,
-                    }}
-                  >
-                    {ch === " " ? "\u00A0" : ch}
-                  </motion.span>
-                ))}
-              </h1>
-            </div>
-            <motion.p
-              className="intro-tagline"
-              initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
-              animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-              transition={{ duration: 0.9, delay: 0.85, ease: EASE_CINEMATIC }}
-            >
-              AI systems, data science, and practical engineering
-            </motion.p>
-            <motion.span
-              className="intro-skip-hint"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.7 }}
-              transition={{ duration: 0.6, delay: 1.1 }}
-            >
-              Click anywhere or press any key to enter
-            </motion.span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {mounted && createPortal(introOverlay, document.body)}
 
       {introReady && (
         <main className="exact-layout">

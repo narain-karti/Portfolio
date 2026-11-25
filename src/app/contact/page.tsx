@@ -113,13 +113,21 @@ export default function ContactPage() {
               ))}
             </RevealBlock>
 
-            <RevealBlock inView={false} delay={0.22} style={{ display: "flex", flexWrap: "wrap", gap: "18px", color: "#8e8e93", fontSize: "0.86rem" }}>
+            <RevealBlock inView={false} delay={0.22} style={{ display: "flex", flexWrap: "wrap", gap: "14px 20px", alignItems: "center", color: "#8e8e93", fontSize: "0.86rem" }}>
               <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
                 <MapPin size={14} /> {NARAIN_PROFILE.location}
               </span>
               <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
                 <Phone size={14} /> {NARAIN_PROFILE.phone}
               </span>
+              <a
+                href="/Narain_Karti_Resume.pdf"
+                download="Narain_Karti_Resume.pdf"
+                className="subtle-link"
+                style={{ color: "#6ee7b7" }}
+              >
+                Resume PDF ↓
+              </a>
             </RevealBlock>
           </div>
 

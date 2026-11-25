@@ -120,7 +120,7 @@ export const NARAIN_PROFILE = {
     {
       institution: "NxtWave Institute of Advanced Technologies (NIAT)",
       short: "NIAT · B.Tech",
-      degree: "B.Tech, Computer Science Engineering (AI/ML Specialization)",
+      degree: "B.Tech, Computer Science Engineering (AI/ML · CGPA 8.9)",
       period: "2025 — 2029",
       focus: "Artificial Intelligence, Machine Learning, Backend Architecture & Product Engineering",
     },
