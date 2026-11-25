@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://portfolio-six-beta-n6wwb2mi5s.vercel.app/sitemap.xml
