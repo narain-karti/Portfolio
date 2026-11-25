@@ -136,7 +136,6 @@ const DockItem = memo(
             }}
             onClick={(e) => {
               e.stopPropagation();
-              item.onClick?.();
             }}
             onFocus={() => setIsHovered(true)}
             onBlur={() => setIsHovered(false)}
@@ -171,10 +170,10 @@ DockItem.displayName = "DockItem";
 const Dock = ({
   items,
   className = "",
-  spring = { mass: 0.1, stiffness: 320, damping: 22 },
+  spring = { mass: 0.1, stiffness: 320, damping: 24 },
   magnification = 58,
   distance = 110,
-  baseItemSize = 42,
+  baseItemSize = 44,
   activeLabel = "NARAIN.OS",
 }: DockProps) => {
   const mouseX = useMotionValue(Infinity);
@@ -193,10 +192,12 @@ const Dock = ({
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const isCompact = viewportWidth <= 720;
+  const isCompact = viewportWidth <= 768;
   const isTiny = viewportWidth <= 440;
-  const adjustedBase = isTiny ? 30 : isCompact ? 34 : baseItemSize;
-  const maxScale = isCompact ? 1.08 : magnification / baseItemSize;
+  const adjustedBase = isTiny ? 32 : isCompact ? 38 : baseItemSize;
+  const itemGap = isTiny ? 8 : isCompact ? 14 : 22;
+  // Keep magnification bounded below the gap so hovered icons never collide with neighbors
+  const maxScale = isCompact ? 1.12 : magnification / baseItemSize;
 
   if (!mounted) return null;
 
@@ -268,9 +269,9 @@ const Dock = ({
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: isTiny ? "4px" : isCompact ? "6px" : "8px",
-              padding: isTiny ? "6px 7px 8px" : isCompact ? "7px 9px 9px" : "8px 12px 10px",
-              borderRadius: "16px",
+              gap: `${itemGap}px`,
+              padding: isTiny ? "7px 10px 9px" : isCompact ? "8px 16px 10px" : "10px 24px 12px",
+              borderRadius: "18px",
               maxWidth: "calc(100vw - 16px)",
               overflowX: isTiny ? "auto" : "visible",
             }}

@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Download, Copy, Check, ArrowUpRight, Layers, FileText, Package, Globe } from "lucide-react";
-import TransitionLink from "../../components/TransitionLink";
+import { Download, Copy, Check, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { WordReveal, RevealBlock } from "../../components/MotionPrimitives";
 import { NARAIN_PROFILE } from "../../data/portfolio-data";
 
 export default function ResourcesPage() {
@@ -19,86 +20,77 @@ export default function ResourcesPage() {
       <div className="subpage-container" style={{ maxWidth: "900px" }}>
         <nav className="breadcrumb-nav">
           <div className="breadcrumb-trail">
-            <TransitionLink href="/">Home</TransitionLink>
+            <Link href="/">Home</Link>
             <span>/</span>
-            <span className="breadcrumb-current">Resources &amp; Tools</span>
+            <span className="breadcrumb-current">Resources</span>
           </div>
-          <TransitionLink href="/website" className="grid-card-pill">
-            Open Research &amp; Labs →
-          </TransitionLink>
+          <Link href="/website" className="subtle-link">
+            Research &amp; Labs →
+          </Link>
         </nav>
 
-        <div style={{ marginBottom: "3rem" }}>
-          <h1 className="hero-manifesto">Resources, Résumé &amp; Developer Tools.</h1>
-          <p className="hero-subcopy">
-            Organized cleanly across downloadable documents, published Python CLI tools, live engineering ventures, and standalone interactive experiments.
-          </p>
-        </div>
+        <header style={{ marginBottom: "2.5rem" }}>
+          <WordReveal as="h1" className="page-title" stagger={0.025}>
+            Resume, packages, and links.
+          </WordReveal>
+          <WordReveal as="p" className="hero-subcopy" delay={0.1} stagger={0.015}>
+            Everything in one place: my PDF resume, the PyPI package, ventures, and standalone interactive experiments.
+          </WordReveal>
+        </header>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.6rem", marginBottom: "3.5rem" }}>
-          {/* Category 1: Official Resume PDF */}
-          <section
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem" }}>
+          <RevealBlock
+            inView={false}
+            delay={0.08}
             style={{
-              background: "#141414",
-              border: "1px solid #2b2b2b",
+              background: "#131314",
+              border: "1px solid #242427",
               borderRadius: "14px",
-              padding: "1.75rem",
+              padding: "1.65rem",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontFamily: "var(--font-mono)", fontSize: "0.74rem", color: "#6ee7b7", marginBottom: "0.75rem" }}>
-              <FileText size={14} /> 01 · RÉSUMÉ &amp; ACADEMIC CREDENTIALS
+            <div className="meta-label meta-label-accent" style={{ marginBottom: "0.5rem" }}>
+              01 · RESUME
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px", marginBottom: "0.9rem" }}>
-              <h2 style={{ fontSize: "1.45rem" }}>Narain Karti — Official Résumé (PDF)</h2>
-              <div style={{ display: "flex", gap: "8px" }}>
-                <span className="grid-card-pill grid-card-pill-live">ATS-Ready · 2026</span>
-                <span className="grid-card-pill">IIT Madras × NIAT</span>
-              </div>
+            <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "10px", marginBottom: "0.75rem" }}>
+              <h2 className="section-heading">Narain Karti — Resume (PDF)</h2>
+              <span className="meta-label">IIT Madras × NIAT · 2026</span>
             </div>
-            <p style={{ color: "rgba(255,255,255,0.7)", lineHeight: 1.6, marginBottom: "1.4rem", fontSize: "0.94rem" }}>
-              Covers concurrent IIT Madras B.S. (Data Science) &amp; NIAT B.Tech (CSE AI/ML), AxoWeb execution (₹7L+ initial 90d → ₹10L+ milestone), Microdolphin &amp; ThinkersCave internships, Project K (₹3L), DATADOC, Project-MELV, Otomo, Quorum, Elio, and NASA Space Settlement Zonal Award.
+            <p style={{ color: "rgba(255,255,255,0.7)", lineHeight: 1.6, marginBottom: "1.35rem", fontSize: "0.94rem" }}>
+              Dual-degree education, AxoWeb venture delivery, engineering internships, Project K, DATADOC, Project-MELV, Otomo, Quorum, and NASA Space Settlement Zonal Award.
             </p>
             <a
               href="/Narain_Karti_Resume.pdf"
               download="Narain_Karti_Resume.pdf"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                background: "#ffffff",
-                color: "#000000",
-                padding: "0.75rem 1.4rem",
-                borderRadius: "8px",
-                fontWeight: 600,
-                fontSize: "0.92rem",
-              }}
+              className="cta-button"
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "0.7rem 1.35rem" }}
             >
-              <Download size={16} />
-              Download Résumé PDF
+              <Download size={15} />
+              Download PDF
             </a>
-          </section>
+          </RevealBlock>
 
-          {/* Category 2: Developer CLI & Packages */}
-          <section
+          <RevealBlock
+            delay={0.1}
             style={{
-              background: "#141414",
-              border: "1px solid #2b2b2b",
+              background: "#131314",
+              border: "1px solid #242427",
               borderRadius: "14px",
-              padding: "1.75rem",
+              padding: "1.65rem",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontFamily: "var(--font-mono)", fontSize: "0.74rem", color: "#6ee7b7", marginBottom: "0.75rem" }}>
-              <Package size={14} /> 02 · DEVELOPER TOOLS &amp; PACKAGES
+            <div className="meta-label meta-label-accent" style={{ marginBottom: "0.5rem" }}>
+              02 · PYTHON CLI
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px", marginBottom: "0.9rem" }}>
-              <h2 style={{ fontSize: "1.45rem" }}>DataDoc CLI (`datadoc-cli`)</h2>
-              <span className="grid-card-pill">PyPI v0.6.1 · 2,500+ Reported Installs*</span>
+            <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "10px", marginBottom: "0.75rem" }}>
+              <h2 className="section-heading">DataDoc CLI (datadoc-cli)</h2>
+              <span className="meta-label">PyPI v0.6.1</span>
             </div>
             <p style={{ color: "rgba(255,255,255,0.7)", lineHeight: 1.6, marginBottom: "1.25rem", fontSize: "0.94rem" }}>
-              Polars-backed dataset diagnostics CLI profiling 1M rows in 0.42s with leakage-safe serialized preprocessing pipelines and LiteLLM auto-research.
+              Polars-backed dataset diagnostics CLI that profiles 1M rows in 0.42s and exports leakage-safe preprocessing pipelines.
             </p>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", alignItems: "center" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "14px", alignItems: "center" }}>
               <button
                 type="button"
                 onClick={copyPip}
@@ -106,66 +98,66 @@ export default function ResourcesPage() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "10px",
-                  background: "#0a0a0a",
-                  border: "1px solid #353535",
+                  background: "#0a0a0b",
+                  border: "1px solid #2d2d32",
                   color: "#e5e5e5",
                   fontFamily: "var(--font-mono)",
-                  fontSize: "0.86rem",
-                  padding: "0.7rem 1.15rem",
+                  fontSize: "0.84rem",
+                  padding: "0.65rem 1.05rem",
                   borderRadius: "8px",
                   cursor: "pointer",
                 }}
               >
                 <span>$ pip install datadoc-cli</span>
-                {copiedPip ? <Check size={15} color="#6ee7b7" /> : <Copy size={15} />}
+                {copiedPip ? <Check size={14} color="#6ee7b7" /> : <Copy size={14} />}
               </button>
 
               <a
                 href={NARAIN_PROFILE.pypi}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="grid-card-pill"
-                style={{ padding: "0.7rem 1.1rem", display: "inline-flex", alignItems: "center", gap: "6px" }}
+                className="subtle-link"
+                style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
               >
-                PyPI Package <ArrowUpRight size={14} />
+                PyPI <ArrowUpRight size={13} />
               </a>
               <a
                 href="https://github.com/narain-karti/DATADOC"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="grid-card-pill"
-                style={{ padding: "0.7rem 1.1rem", display: "inline-flex", alignItems: "center", gap: "6px" }}
+                className="subtle-link"
+                style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
               >
-                GitHub Source <ArrowUpRight size={14} />
+                GitHub <ArrowUpRight size={13} />
               </a>
             </div>
-          </section>
+          </RevealBlock>
 
-          {/* Category 3: Live Ventures & Digital Presence */}
-          <section
+          <RevealBlock
+            delay={0.12}
             style={{
-              background: "#141414",
-              border: "1px solid #2b2b2b",
+              background: "#131314",
+              border: "1px solid #242427",
               borderRadius: "14px",
-              padding: "1.75rem",
+              padding: "1.65rem",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontFamily: "var(--font-mono)", fontSize: "0.74rem", color: "#6ee7b7", marginBottom: "0.9rem" }}>
-              <Globe size={14} /> 03 · LIVE VENTURES &amp; PLATFORMS
+            <div className="meta-label meta-label-accent" style={{ marginBottom: "0.9rem" }}>
+              03 · VENTURES
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1rem" }}>
               <a
                 href={NARAIN_PROFILE.axowebUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ background: "#0e0e10", border: "1px solid #26262a", borderRadius: "10px", padding: "1.1rem" }}
+                style={{ background: "#0e0e10", border: "1px solid #242427", borderRadius: "10px", padding: "1.1rem" }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
                   <strong>AxoWeb Technologies</strong>
                   <ArrowUpRight size={14} color="#6ee7b7" />
                 </div>
-                <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.45 }}>
-                  Systems studio: AWS cloud, AI agents, workflow automation &amp; client delivery (`axoweb.in`).
+                <p style={{ fontSize: "0.86rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.5 }}>
+                  Systems studio building AWS backends, AI agents, and workflow automation (axoweb.in).
                 </p>
               </a>
 
@@ -173,26 +165,26 @@ export default function ResourcesPage() {
                 href={NARAIN_PROFILE.eduviaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ background: "#0e0e10", border: "1px solid #26262a", borderRadius: "10px", padding: "1.1rem" }}
+                style={{ background: "#0e0e10", border: "1px solid #242427", borderRadius: "10px", padding: "1.1rem" }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
                   <strong>Eduvia Cohorts</strong>
                   <ArrowUpRight size={14} color="#6ee7b7" />
                 </div>
-                <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.45 }}>
-                  Student hackathon mentorship, Doomathon &amp; startup cohorts (`IG: @eduviaa · LI: eduvia-x`).
+                <p style={{ fontSize: "0.86rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.5 }}>
+                  Student hackathon mentorship and startup cohorts (IG: @eduviaa · LI: eduvia-x).
                 </p>
               </a>
             </div>
-          </section>
+          </RevealBlock>
 
-          {/* Category 4: Labs & Technical Artifacts */}
-          <section
+          <RevealBlock
+            delay={0.14}
             style={{
-              background: "#121214",
-              border: "1px solid #242426",
+              background: "#131314",
+              border: "1px solid #242427",
               borderRadius: "14px",
-              padding: "1.5rem 1.75rem",
+              padding: "1.45rem 1.65rem",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -200,37 +192,24 @@ export default function ResourcesPage() {
               gap: "12px",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <Layers size={22} color="#9a9a9a" />
-              <div>
-                <h3 style={{ fontSize: "1.08rem" }}>04 · Interactive Labs &amp; Hairline Benchmarks</h3>
-                <p style={{ fontSize: "0.86rem", color: "rgba(255,255,255,0.62)" }}>
-                  Inspect standalone isometric hardware/telemetry HTML scenes or explore research notes.
-                </p>
-              </div>
+            <div>
+              <h3 style={{ fontSize: "1.1rem" }}>Standalone Isometric Experiments</h3>
+              <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.62)" }}>
+                Interactive HTML figures built on the Hairline engine.
+              </p>
             </div>
-            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-              <a
-                href="/hairline-terminal-rig.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="grid-card-pill grid-card-pill-live"
-              >
-                Adopted Rig HTML ↗
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+              <a href="/hairline-terminal-rig.html" target="_blank" rel="noopener noreferrer" className="subtle-link" style={{ color: "#6ee7b7" }}>
+                Terminal Rig ↗
               </a>
-              <a
-                href="/hairline-quorum-ring.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="grid-card-pill"
-              >
-                Quorum Bench ↗
+              <a href="/hairline-quorum-ring.html" target="_blank" rel="noopener noreferrer" className="subtle-link">
+                Quorum Ring ↗
               </a>
-              <TransitionLink href="/website" className="grid-card-pill">
-                Open Research Lab →
-              </TransitionLink>
+              <Link href="/website" className="subtle-link">
+                Research Lab →
+              </Link>
             </div>
-          </section>
+          </RevealBlock>
         </div>
       </div>
     </div>

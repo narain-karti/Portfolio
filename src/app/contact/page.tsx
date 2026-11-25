@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import { ArrowUpRight, Copy, Check, MapPin, Phone } from "lucide-react";
-import TransitionLink from "../../components/TransitionLink";
+import Link from "next/link";
+import { WordReveal, RevealBlock } from "../../components/MotionPrimitives";
 import { NARAIN_PROFILE } from "../../data/portfolio-data";
 
-const COLLABORATION_TRACKS = [
-  { label: "AI & ML Research", note: "Applied ML research, AI infrastructure experiments & reproducible implementations" },
-  { label: "Engineering Roles", note: "AI Systems, ML Engineering, Backend & Developer Tooling internships or builds" },
-  { label: "Open Source", note: "Developer utilities, benchmarks, Python/Rust data pipelines & agent tooling" },
-  { label: "Deep-Tech Startups", note: "Zero-to-one product engineering, founding teams & technical architecture" },
+const COLLABORATION_AREAS = [
+  "AI & ML Research",
+  "Systems Engineering",
+  "Open Source",
+  "Early-Stage Startups",
 ];
 
 export default function ContactPage() {
@@ -22,70 +23,59 @@ export default function ContactPage() {
   };
 
   const socials = [
-    { label: "GitHub", sub: "@narain-karti · Open Source", href: NARAIN_PROFILE.github },
+    { label: "GitHub", sub: "@narain-karti", href: NARAIN_PROFILE.github },
     { label: "LinkedIn", sub: "/in/narainkarti", href: NARAIN_PROFILE.linkedin },
-    { label: "PyPI", sub: "datadoc-cli Package", href: NARAIN_PROFILE.pypi },
-    { label: "AxoWeb Systems", sub: "axoweb.in · Venture Studio", href: NARAIN_PROFILE.axowebUrl },
-    { label: "Eduvia", sub: "Student Cohorts & Mentorship", href: NARAIN_PROFILE.eduviaUrl },
+    { label: "PyPI", sub: "datadoc-cli", href: NARAIN_PROFILE.pypi },
+    { label: "AxoWeb", sub: "axoweb.in", href: NARAIN_PROFILE.axowebUrl },
+    { label: "Eduvia", sub: "Student cohorts", href: NARAIN_PROFILE.eduviaUrl },
   ];
 
   return (
-    <div className="subpage-shell" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-      <div className="subpage-container" style={{ width: "100%" }}>
+    <div className="contact-viewport-shell">
+      <div className="contact-viewport-inner">
         <nav className="breadcrumb-nav">
           <div className="breadcrumb-trail">
-            <TransitionLink href="/">Home</TransitionLink>
+            <Link href="/">Home</Link>
             <span>/</span>
-            <span className="breadcrumb-current">Let&apos;s Connect</span>
+            <span className="breadcrumb-current">Connect</span>
           </div>
-          <span className="grid-card-pill grid-card-pill-live">{NARAIN_PROFILE.availability}</span>
+          <span className="meta-label meta-label-accent">{NARAIN_PROFILE.location} · IST</span>
         </nav>
 
         <div
           style={{
+            flex: 1,
+            minHeight: 0,
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "2.5rem",
-            alignItems: "start",
-            marginTop: "1.5rem",
+            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
+            gap: "clamp(1.25rem, 3vw, 3rem)",
+            alignItems: "center",
           }}
         >
-          <div>
-            <h1
-              style={{
-                fontSize: "clamp(2rem, 4.4vw, 3.4rem)",
-                lineHeight: 1.08,
-                letterSpacing: "-0.035em",
-                marginBottom: "1rem",
-              }}
-            >
-              Have an interesting problem? Let&apos;s build something.
-            </h1>
-            <p style={{ color: "rgba(255,255,255,0.7)", lineHeight: 1.6, marginBottom: "1.75rem", maxWidth: "54ch" }}>
-              I&apos;m actively interested in collaborating on meaningful AI infrastructure, research experiments, developer tools, and early-stage product engineering.
-            </p>
-
-            {/* Open collaboration tracks */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: "0.75rem", marginBottom: "2rem" }}>
-              {COLLABORATION_TRACKS.map((t) => (
-                <div
-                  key={t.label}
-                  style={{
-                    background: "#131315",
-                    border: "1px solid #26262a",
-                    borderRadius: "10px",
-                    padding: "0.9rem 1rem",
-                  }}
-                >
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "#6ee7b7", marginBottom: "4px" }}>
-                    {t.label}
-                  </div>
-                  <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.64)", lineHeight: 1.4 }}>{t.note}</p>
-                </div>
-              ))}
+          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(0.85rem, 2vh, 1.35rem)" }}>
+            <div>
+              <WordReveal as="h1" className="page-title" style={{ marginBottom: "0.65rem" }} stagger={0.025}>
+                Let&apos;s build something.
+              </WordReveal>
+              <WordReveal
+                as="p"
+                delay={0.1}
+                stagger={0.015}
+                style={{ color: "rgba(255,255,255,0.68)", lineHeight: 1.55, maxWidth: "46ch", fontSize: "0.96rem" }}
+              >
+                If you&apos;re working on an interesting engineering problem, a research idea, or an early product, I&apos;d love to talk.
+              </WordReveal>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "1.75rem" }}>
+            <RevealBlock inView={false} delay={0.14} style={{ display: "flex", flexWrap: "wrap", gap: "8px 18px" }}>
+              {COLLABORATION_AREAS.map((area) => (
+                <span key={area} className="meta-label" style={{ color: "rgba(255,255,255,0.72)" }}>
+                  · {area}
+                </span>
+              ))}
+            </RevealBlock>
+
+            <RevealBlock inView={false} delay={0.18} style={{ display: "flex", flexDirection: "column", gap: "10px", maxWidth: "440px" }}>
               {[NARAIN_PROFILE.email, NARAIN_PROFILE.secondaryEmail].map((email) => (
                 <div
                   key={email}
@@ -93,44 +83,53 @@ export default function ContactPage() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    flexWrap: "wrap",
                     gap: "10px",
-                    background: "#141414",
-                    border: "1px solid #282828",
+                    background: "#131314",
+                    border: "1px solid #242427",
                     borderRadius: "10px",
-                    padding: "12px 16px",
-                    maxWidth: "460px",
+                    padding: "10px 14px",
                   }}
                 >
-                  <a href={`mailto:${email}`} style={{ fontSize: "0.98rem", fontWeight: 500, color: "#fff" }}>
+                  <a href={`mailto:${email}`} style={{ fontSize: "0.94rem", fontWeight: 500, color: "#fff" }}>
                     {email}
                   </a>
                   <button
                     type="button"
                     onClick={() => handleCopy(email)}
-                    className="grid-card-pill"
-                    style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "5px" }}
+                    className="subtle-link"
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
                   >
-                    {copiedEmail === email ? <Check size={12} color="#6ee7b7" /> : <Copy size={12} />}
+                    {copiedEmail === email ? <Check size={13} color="#6ee7b7" /> : <Copy size={13} />}
                     {copiedEmail === email ? "Copied" : "Copy"}
                   </button>
                 </div>
               ))}
-            </div>
+            </RevealBlock>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "18px", color: "#9a9a9a", fontSize: "0.88rem" }}>
+            <RevealBlock inView={false} delay={0.22} style={{ display: "flex", flexWrap: "wrap", gap: "18px", color: "#8e8e93", fontSize: "0.86rem" }}>
               <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-                <MapPin size={15} /> {NARAIN_PROFILE.location} (IST UTC+05:30)
+                <MapPin size={14} /> {NARAIN_PROFILE.location}
               </span>
               <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-                <Phone size={15} /> {NARAIN_PROFILE.phone}
+                <Phone size={14} /> {NARAIN_PROFILE.phone}
               </span>
-            </div>
+            </RevealBlock>
           </div>
 
-          <aside style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px" }}>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "#888", marginBottom: "4px" }}>
-              PROFILES, PACKAGES &amp; VENTURES
+          <RevealBlock
+            inView={false}
+            delay={0.2}
+            style={{ display: "flex", flexDirection: "column", gap: "clamp(6px, 1.1vh, 10px)" }}
+          >
+            <span className="meta-label" style={{ marginBottom: "2px" }}>
+              ELSEWHERE
             </span>
             {socials.map((s) => (
               <a
@@ -143,22 +142,24 @@ export default function ContactPage() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  background: "#141414",
-                  border: "1px solid #262626",
+                  background: "#131314",
+                  border: "1px solid #242427",
                   borderRadius: "12px",
-                  padding: "14px 18px",
-                  transition: "transform 0.2s ease, border-color 0.2s ease",
+                  padding: "clamp(10px, 1.4vh, 14px) 16px",
+                  transition: "transform 0.18s ease, border-color 0.18s ease",
                 }}
               >
                 <div>
-                  <div style={{ fontSize: "1.18rem", fontWeight: 600 }}>{s.label}</div>
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "#888" }}>{s.sub}</div>
+                  <div style={{ fontSize: "1.08rem", fontWeight: 600 }}>{s.label}</div>
+                  <div className="meta-label">{s.sub}</div>
                 </div>
-                <ArrowUpRight size={19} color="#fff" />
+                <ArrowUpRight size={17} color="#9a9aa2" />
               </a>
             ))}
-          </aside>
+          </RevealBlock>
         </div>
+
+        <div style={{ height: "4px" }} />
       </div>
     </div>
   );

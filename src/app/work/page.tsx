@@ -5,41 +5,53 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, BookOpen, Copy, Check, X, Layers, Terminal } from "lucide-react";
-import TransitionLink from "../../components/TransitionLink";
+import { ArrowUpRight, BookOpen, Copy, Check, X, ArrowRight } from "lucide-react";
 import HairlineFigure from "../../components/HairlineFigure";
+import { WordReveal, RevealBlock } from "../../components/MotionPrimitives";
 import { pipelineLayersFigure } from "../../data/hairline-figures";
 import { FLAGSHIP_PROJECTS, OTHER_REPOS, type WorkProject } from "../../data/portfolio-data";
 
 const CATEGORIES = [
-  { id: "ALL", label: "All Systems" },
+  { id: "ALL", label: "All" },
   { id: "AI_ML", label: "Edge AI & LLMs" },
-  { id: "DATA_ENGINE", label: "Data Kernels" },
+  { id: "DATA_ENGINE", label: "Data Engines" },
   { id: "AGENTS", label: "Multi-Agent" },
-  { id: "VISION", label: "Vision & Forensics" },
-  { id: "FULL_STACK", label: "Venture & Cloud" },
-  { id: "SPACE", label: "Space Systems" },
+  { id: "VISION", label: "Vision" },
+  { id: "FULL_STACK", label: "Ventures" },
+  { id: "SPACE", label: "Space" },
 ] as const;
 
 const ProjectCard = memo(
-  ({ project, onInspect }: { project: WorkProject; onInspect: (p: WorkProject) => void }) => {
-    const [copied, setCopied] = useState(false);
-
-    const copyPip = (e: React.MouseEvent) => {
-      e.stopPropagation();
-      if (!project.pipCommand) return;
-      navigator.clipboard.writeText(project.pipCommand);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    };
+  ({
+    project,
+    index,
+    onInspect,
+  }: {
+    project: WorkProject;
+    index: number;
+    onInspect: (p: WorkProject) => void;
+  }) => {
+    const primaryMetric = project.metrics[0];
+    const topTags = project.tags.slice(0, 3).join(" · ");
 
     return (
-      <article
+      <motion.article
         className="project-card"
-        style={{ backgroundColor: "#141414", border: "1px solid #262626", borderRadius: "14px" }}
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.08 }}
+        transition={{ duration: 0.36, delay: (index % 3) * 0.05, ease: [0.22, 1, 0.36, 1] }}
+        style={{ backgroundColor: "#131314", border: "1px solid #242427", borderRadius: "14px" }}
       >
         <div
-          style={{ position: "relative", width: "100%", height: "215px", backgroundColor: "#0e0e0e", cursor: "pointer" }}
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "200px",
+            backgroundColor: "#0e0e10",
+            cursor: "pointer",
+            overflow: "hidden",
+          }}
           onClick={() => onInspect(project)}
         >
           <Image
@@ -53,179 +65,77 @@ const ProjectCard = memo(
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(180deg, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0.85) 100%)",
+              background: "linear-gradient(180deg, rgba(10,10,10,0.08) 0%, rgba(19,19,20,0.92) 100%)",
             }}
           />
-          <div
-            style={{
-              position: "absolute",
-              top: "14px",
-              left: "14px",
-              fontFamily: "var(--font-mono), monospace",
-              fontSize: "0.72rem",
-              padding: "4px 10px",
-              borderRadius: "999px",
-              background: "rgba(10,10,10,0.78)",
-              border: "1px solid rgba(255,255,255,0.16)",
-              color: "#f5f5f5",
-            }}
-          >
-            {project.number} · {project.year}
-          </div>
-          {project.badge && (
-            <div
-              style={{
-                position: "absolute",
-                top: "14px",
-                right: "14px",
-                fontFamily: "var(--font-mono), monospace",
-                fontSize: "0.68rem",
-                padding: "4px 10px",
-                borderRadius: "999px",
-                background: "rgba(16, 185, 129, 0.16)",
-                border: "1px solid rgba(16, 185, 129, 0.45)",
-                color: "#6ee7b7",
-              }}
-            >
-              {project.badge}
+          <div style={{ position: "absolute", bottom: "14px", left: "18px", right: "18px" }}>
+            <div className="meta-label" style={{ marginBottom: "4px" }}>
+              {project.number} · {project.year}
+              {primaryMetric ? ` · ${primaryMetric.value}` : ""}
             </div>
-          )}
-          <div style={{ position: "absolute", bottom: "14px", left: "16px", right: "16px" }}>
-            <h3 style={{ fontSize: "1.45rem", fontWeight: 700, color: "#fff" }}>{project.title}</h3>
+            <h3 style={{ fontSize: "1.42rem", fontWeight: 600, color: "#fff" }}>{project.title}</h3>
           </div>
         </div>
 
-        <div style={{ padding: "1.35rem", display: "flex", flexDirection: "column", flex: 1, gap: "0.9rem" }}>
-          <p style={{ fontSize: "0.86rem", color: "#e5e5e5", fontWeight: 500, lineHeight: 1.4 }}>{project.subtitle}</p>
-          <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.68)", lineHeight: 1.55, flex: 1 }}>
+        <div style={{ padding: "1.25rem 1.35rem 1.35rem", display: "flex", flexDirection: "column", flex: 1, gap: "0.75rem" }}>
+          <p style={{ fontSize: "0.94rem", color: "rgba(255,255,255,0.74)", lineHeight: 1.56, flex: 1 }}>
             {project.summary}
           </p>
 
-          {/* Verified 3-Stat Micro Strip */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px" }}>
-            {project.metrics.map((m) => (
-              <div
-                key={m.label}
-                style={{
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  borderRadius: "8px",
-                  padding: "8px",
-                }}
-              >
-                <div style={{ fontSize: "0.92rem", fontWeight: 700, color: "#fff" }}>{m.value}</div>
-                <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.55)", marginTop: "2px" }}>{m.label}</div>
-              </div>
-            ))}
+          <div className="meta-label" style={{ color: "rgba(255,255,255,0.52)" }}>
+            {topTags}
           </div>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                style={{
-                  fontFamily: "var(--font-mono), monospace",
-                  fontSize: "0.72rem",
-                  padding: "3px 8px",
-                  borderRadius: "5px",
-                  background: "rgba(255,255,255,0.06)",
-                  color: "rgba(255,255,255,0.8)",
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          {project.pipCommand && (
-            <button
-              type="button"
-              onClick={copyPip}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                background: "#0b0b0b",
-                border: "1px solid #303030",
-                borderRadius: "8px",
-                padding: "8px 12px",
-                color: "#d4d4d4",
-                fontFamily: "var(--font-mono), monospace",
-                fontSize: "0.78rem",
-                cursor: "pointer",
-              }}
-            >
-              <span>$ {project.pipCommand}</span>
-              {copied ? <Check size={14} color="#6ee7b7" /> : <Copy size={14} />}
-            </button>
-          )}
-
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", paddingTop: "6px" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "12px",
+              paddingTop: "0.65rem",
+              borderTop: "1px solid #202024",
+            }}
+          >
             <button
               type="button"
               onClick={() => onInspect(project)}
               style={{
-                background: "#fff",
-                color: "#000",
+                background: "transparent",
+                color: "#fff",
                 border: "none",
-                borderRadius: "7px",
-                padding: "0.6rem 1rem",
-                fontSize: "0.84rem",
-                fontWeight: 600,
+                padding: 0,
+                fontSize: "0.88rem",
+                fontWeight: 500,
                 cursor: "pointer",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
               }}
             >
-              <Layers size={15} />
-              Architecture Dossier
+              Read architecture <ArrowRight size={14} />
             </button>
 
-            {project.blogSlug && (
-              <Link
-                href={`/blog/${project.blogSlug}`}
-                style={{
-                  background: "rgba(255,255,255,0.08)",
-                  color: "#fff",
-                  border: "1px solid rgba(255,255,255,0.14)",
-                  borderRadius: "7px",
-                  padding: "0.6rem 0.9rem",
-                  fontSize: "0.84rem",
-                  fontWeight: 500,
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
-              >
-                <BookOpen size={14} />
-                Read Journey
-              </Link>
-            )}
-
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  background: "transparent",
-                  color: "rgba(255,255,255,0.8)",
-                  border: "1px solid rgba(255,255,255,0.14)",
-                  borderRadius: "7px",
-                  padding: "0.6rem 0.85rem",
-                  fontSize: "0.84rem",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "4px",
-                }}
-              >
-                Repo <ArrowUpRight size={14} />
-              </a>
-            )}
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              {project.blogSlug && (
+                <Link href={`/blog/${project.blogSlug}`} className="subtle-link">
+                  Story
+                </Link>
+              )}
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="subtle-link"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "3px" }}
+                >
+                  Code <ArrowUpRight size={13} />
+                </a>
+              )}
+            </div>
           </div>
         </div>
-      </article>
+      </motion.article>
     );
   }
 );
@@ -237,8 +147,8 @@ function WorkContent() {
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [activeStudy, setActiveStudy] = useState<WorkProject | null>(null);
   const [hoveredStep, setHoveredStep] = useState<number>(-1);
+  const [copiedPip, setCopiedPip] = useState(false);
 
-  // Allow direct deep-links like /work?project=datadoc from the Knowledge Graph
   useEffect(() => {
     const pid = searchParams.get("project");
     if (pid) {
@@ -252,7 +162,14 @@ function WorkContent() {
 
   const openStudy = (study: WorkProject) => {
     setHoveredStep(-1);
+    setCopiedPip(false);
     setActiveStudy(study);
+  };
+
+  const copyPip = (cmd: string) => {
+    navigator.clipboard.writeText(cmd);
+    setCopiedPip(true);
+    setTimeout(() => setCopiedPip(false), 1800);
   };
 
   const filtered =
@@ -266,31 +183,31 @@ function WorkContent() {
         <div className="subpage-container">
           <nav className="breadcrumb-nav">
             <div className="breadcrumb-trail">
-              <TransitionLink href="/">Home</TransitionLink>
+              <Link href="/">Home</Link>
               <span>/</span>
-              <span className="breadcrumb-current">Work</span>
+              <span className="breadcrumb-current">Selected Work</span>
             </div>
-            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-              <TransitionLink href="/graph" className="grid-card-pill grid-card-pill-live">
+            <div style={{ display: "flex", gap: "18px", flexWrap: "wrap" }}>
+              <Link href="/graph" className="subtle-link">
                 Knowledge Graph →
-              </TransitionLink>
-              <TransitionLink href="/blog" className="grid-card-pill">
-                Read Build Logs →
-              </TransitionLink>
+              </Link>
+              <Link href="/blog" className="subtle-link">
+                Engineering Journal →
+              </Link>
             </div>
           </nav>
 
-          <div style={{ marginBottom: "3rem" }}>
-            <h1 className="hero-manifesto">
-              Engineering systems across Edge AI, data kernels, privacy agents, and cloud infrastructure.
-            </h1>
-            <p className="hero-subcopy">
-              Each system began with a concrete constraint — offline offshore turbines, target leakage in Pandas scripts, or cutting 99.82% off traffic telemetry. Open any dossier for problem context, contribution, architecture, and benchmarks.
-            </p>
-          </div>
+          <header style={{ marginBottom: "2.25rem" }}>
+            <WordReveal as="h1" className="page-title" stagger={0.025}>
+              Selected engineering work.
+            </WordReveal>
+            <WordReveal as="p" className="hero-subcopy" delay={0.1} stagger={0.015}>
+              A collection of AI tools, edge vision systems, and backend products I built from scratch. Click any card to look inside the architecture.
+            </WordReveal>
+          </header>
 
-          {/* Category Filter Pills */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "2.5rem" }}>
+          {/* Clean Underline Filter Tabs */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "18px", marginBottom: "2.25rem", borderBottom: "1px solid #1e1e22", paddingBottom: "8px" }}>
             {CATEGORIES.map((cat) => {
               const active = selectedCategory === cat.id;
               return (
@@ -298,18 +215,7 @@ function WorkContent() {
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCategory(cat.id)}
-                  style={{
-                    fontFamily: "var(--font-mono), monospace",
-                    fontSize: "0.78rem",
-                    padding: "8px 14px",
-                    borderRadius: "999px",
-                    cursor: "pointer",
-                    border: active ? "1px solid #fff" : "1px solid #2b2b2b",
-                    backgroundColor: active ? "#fff" : "#151515",
-                    color: active ? "#000" : "#b3b3b3",
-                    fontWeight: active ? 600 : 400,
-                    transition: "all 0.2s ease",
-                  }}
+                  className={`filter-tab ${active ? "filter-tab-active" : ""}`}
                 >
                   {cat.label}
                 </button>
@@ -321,26 +227,25 @@ function WorkContent() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
-              gap: "1.6rem",
-              marginBottom: "5rem",
+              gridTemplateColumns: "repeat(auto-fill, minmax(330px, 1fr))",
+              gap: "1.4rem",
+              marginBottom: "4.5rem",
             }}
           >
-            {filtered.map((project) => (
-              <ProjectCard key={project.id} project={project} onInspect={openStudy} />
+            {filtered.map((project, idx) => (
+              <ProjectCard key={project.id} project={project} index={idx} onInspect={openStudy} />
             ))}
           </div>
 
-          {/* Other Repositories */}
-          <section style={{ marginBottom: "5rem" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "1.5rem" }}>
-              <Terminal size={18} color="#9a9a9a" />
-              <h2 style={{ fontSize: "1.4rem", fontWeight: 600 }}>Additional Open-Source &amp; Client Builds</h2>
-            </div>
+          {/* Additional Builds */}
+          <RevealBlock style={{ marginBottom: "4.5rem" }}>
+            <h2 className="section-heading" style={{ marginBottom: "1.25rem" }}>
+              Other Open-Source &amp; Client Builds
+            </h2>
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
                 gap: "1rem",
               }}
             >
@@ -350,58 +255,51 @@ function WorkContent() {
                   href={repo.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bento-card"
                   style={{
-                    background: "#131313",
-                    border: "1px solid #262626",
+                    background: "#131314",
+                    border: "1px solid #242427",
                     borderRadius: "12px",
                     padding: "1.25rem",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
                     gap: "12px",
+                    transition: "border-color 0.2s ease, transform 0.2s ease",
                   }}
                 >
                   <div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                      <h3 style={{ fontSize: "1.05rem", color: "#fff" }}>{repo.name}</h3>
-                      <ArrowUpRight size={16} color="#888" />
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                      <h3 style={{ fontSize: "1.06rem", color: "#fff" }}>{repo.name}</h3>
+                      <ArrowUpRight size={15} color="#888" />
                     </div>
-                    <p style={{ fontSize: "0.86rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.5 }}>{repo.desc}</p>
+                    <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.5 }}>{repo.desc}</p>
                   </div>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                    {repo.tech.map((t) => (
-                      <span key={t} className="mini-tag">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
+                  <div className="meta-label">{repo.tech.join(" · ")}</div>
                 </a>
               ))}
             </div>
-          </section>
+          </RevealBlock>
 
-          {/* CTA Block */}
-          <div
+          {/* Clean Footer CTA */}
+          <RevealBlock
             style={{
-              padding: "3rem 2rem",
+              padding: "2.5rem 1.75rem",
               textAlign: "center",
-              background: "#131313",
-              borderRadius: "16px",
-              border: "1px solid #262626",
+              background: "#131314",
+              borderRadius: "14px",
+              border: "1px solid #242427",
             }}
           >
-            <h2 style={{ fontSize: "1.85rem", marginBottom: "0.9rem" }}>Want to work on hard problems together?</h2>
-            <p style={{ color: "rgba(255,255,255,0.68)", maxWidth: "560px", margin: "0 auto 1.75rem", lineHeight: 1.6 }}>
-              I&apos;m open to AI systems engineering roles, applied ML internships, and serious product builds.
+            <h2 className="section-heading" style={{ marginBottom: "0.75rem" }}>
+              Want to build something together?
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.68)", maxWidth: "50ch", margin: "0 auto 1.5rem" }}>
+              I&apos;m open to AI systems roles, applied ML internships, and serious product engineering.
             </p>
-            <TransitionLink
-              href="/contact"
-              className="cta-button"
-            >
-              Get in Touch →
-            </TransitionLink>
-          </div>
+            <Link href="/contact" className="cta-button">
+              Get in touch →
+            </Link>
+          </RevealBlock>
         </div>
       </div>
 
@@ -416,7 +314,7 @@ function WorkContent() {
             style={{
               position: "fixed",
               inset: 0,
-              background: "rgba(0, 0, 0, 0.86)",
+              background: "rgba(0, 0, 0, 0.85)",
               zIndex: 200000,
               display: "flex",
               justifyContent: "flex-end",
@@ -430,123 +328,136 @@ function WorkContent() {
               onClick={(e) => e.stopPropagation()}
               style={{
                 width: "100%",
-                maxWidth: "680px",
+                maxWidth: "660px",
                 height: "100%",
-                background: "#111",
-                borderLeft: "1px solid #2b2b2b",
+                background: "#111112",
+                borderLeft: "1px solid #26262a",
                 overflowY: "auto",
                 padding: "2rem",
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-                <span className="grid-card-pill">{activeStudy.number} · ARCHITECTURE DOSSIER</span>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
+                <span className="meta-label meta-label-accent">
+                  {activeStudy.number} · {activeStudy.year}
+                </span>
                 <button
                   type="button"
                   onClick={() => setActiveStudy(null)}
                   style={{
-                    background: "#202020",
-                    border: "1px solid #333",
+                    background: "#1d1d20",
+                    border: "1px solid #303035",
                     color: "#fff",
                     borderRadius: "8px",
-                    padding: "8px",
+                    padding: "7px",
                     cursor: "pointer",
                   }}
                   aria-label="Close dossier"
                 >
-                  <X size={18} />
+                  <X size={17} />
                 </button>
               </div>
 
-              <h2 style={{ fontSize: "2.1rem", marginBottom: "0.4rem" }}>{activeStudy.title}</h2>
-              <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "1.5rem", fontSize: "1rem" }}>
+              <h2 style={{ fontSize: "2rem", marginBottom: "0.35rem" }}>{activeStudy.title}</h2>
+              <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "1.4rem", fontSize: "0.98rem" }}>
                 {activeStudy.subtitle}
               </p>
 
-              <div style={{ position: "relative", width: "100%", height: "230px", borderRadius: "12px", overflow: "hidden", marginBottom: "1.75rem", border: "1px solid #2a2a2a" }}>
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  height: "220px",
+                  borderRadius: "12px",
+                  overflow: "hidden",
+                  marginBottom: "1.5rem",
+                  border: "1px solid #26262a",
+                }}
+              >
                 <Image src={activeStudy.image} alt={activeStudy.title} fill style={{ objectFit: "cover" }} />
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px", marginBottom: "2rem" }}>
+              {activeStudy.pipCommand && (
+                <button
+                  type="button"
+                  onClick={() => copyPip(activeStudy.pipCommand!)}
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    background: "#0b0b0c",
+                    border: "1px solid #2a2a2e",
+                    borderRadius: "8px",
+                    padding: "10px 14px",
+                    color: "#d4d4d4",
+                    fontFamily: "var(--font-mono), monospace",
+                    fontSize: "0.8rem",
+                    cursor: "pointer",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  <span>$ {activeStudy.pipCommand}</span>
+                  {copiedPip ? <Check size={14} color="#6ee7b7" /> : <Copy size={14} />}
+                </button>
+              )}
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px", marginBottom: "1.75rem" }}>
                 {activeStudy.metrics.map((m) => (
-                  <div key={m.label} style={{ background: "#181818", border: "1px solid #2a2a2a", borderRadius: "10px", padding: "12px" }}>
-                    <div style={{ fontSize: "1.15rem", fontWeight: 700, color: "#fff" }}>{m.value}</div>
-                    <div style={{ fontSize: "0.75rem", color: "#9a9a9a", marginTop: "2px" }}>{m.label}</div>
+                  <div key={m.label} style={{ background: "#171719", border: "1px solid #26262a", borderRadius: "10px", padding: "11px" }}>
+                    <div style={{ fontSize: "1.1rem", fontWeight: 600, color: "#fff" }}>{m.value}</div>
+                    <div style={{ fontSize: "0.75rem", color: "#9a9aa2", marginTop: "2px" }}>{m.label}</div>
                     <div style={{ fontSize: "0.7rem", color: "#6ee7b7", marginTop: "4px" }}>{m.note}</div>
                   </div>
                 ))}
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem" }}>
                 <div>
-                  <h4 style={{ fontSize: "0.8rem", fontFamily: "var(--font-mono)", color: "#888", textTransform: "uppercase", marginBottom: "6px" }}>
-                    Problem Statement
-                  </h4>
-                  <p style={{ color: "rgba(255,255,255,0.86)", lineHeight: 1.65 }}>{activeStudy.problem}</p>
+                  <h4 className="meta-label" style={{ marginBottom: "6px" }}>WHAT IT SOLVES</h4>
+                  <p style={{ color: "rgba(255,255,255,0.84)", lineHeight: 1.65 }}>{activeStudy.problem}</p>
                 </div>
 
                 <div>
-                  <h4 style={{ fontSize: "0.8rem", fontFamily: "var(--font-mono)", color: "#888", textTransform: "uppercase", marginBottom: "6px" }}>
-                    Why It Matters
-                  </h4>
-                  <p style={{ color: "rgba(255,255,255,0.8)", lineHeight: 1.65 }}>{activeStudy.whyItMatters}</p>
+                  <h4 className="meta-label" style={{ marginBottom: "6px" }}>MY WORK ON IT</h4>
+                  <p style={{ color: "rgba(255,255,255,0.82)", lineHeight: 1.65 }}>{activeStudy.contribution}</p>
                 </div>
 
                 <div>
-                  <h4 style={{ fontSize: "0.8rem", fontFamily: "var(--font-mono)", color: "#888", textTransform: "uppercase", marginBottom: "6px" }}>
-                    Specific Contribution
-                  </h4>
-                  <p style={{ color: "rgba(255,255,255,0.84)", lineHeight: 1.65 }}>{activeStudy.contribution}</p>
+                  <h4 className="meta-label" style={{ marginBottom: "6px" }}>KEY IDEA</h4>
+                  <p style={{ color: "rgba(255,255,255,0.84)", lineHeight: 1.65 }}>{activeStudy.insight}</p>
                 </div>
 
                 <div>
-                  <h4 style={{ fontSize: "0.8rem", fontFamily: "var(--font-mono)", color: "#888", textTransform: "uppercase", marginBottom: "6px" }}>
-                    Architectural Insight
-                  </h4>
-                  <p style={{ color: "rgba(255,255,255,0.86)", lineHeight: 1.65 }}>{activeStudy.insight}</p>
-                </div>
-
-                <div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                      gap: "10px",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <h4 style={{ fontSize: "0.8rem", fontFamily: "var(--font-mono)", color: "#888", textTransform: "uppercase" }}>
-                      Interactive System Pipeline (Hover Tiers or Steps)
-                    </h4>
-                    <span className="mini-tag" style={{ color: hoveredStep >= 0 ? "#6ee7b7" : "#888" }}>
-                      {hoveredStep >= 0 ? `Inspecting Tier 0${hoveredStep + 1}` : "Hairline Stack"}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+                    <h4 className="meta-label">SYSTEM PIPELINE</h4>
+                    <span className="meta-label meta-label-accent">
+                      {hoveredStep >= 0 ? `Tier 0${hoveredStep + 1}` : "Hover tiers"}
                     </span>
                   </div>
 
                   <div
                     style={{
-                      background: "#141414",
-                      border: "1px solid #262626",
+                      background: "#131314",
+                      border: "1px solid #242427",
                       borderRadius: "12px",
                       padding: "8px",
                       marginBottom: "12px",
-                      maxHeight: "235px",
+                      maxHeight: "220px",
                       display: "flex",
                       justifyContent: "center",
                     }}
                   >
                     <HairlineFigure
                       figure={pipelineLayersFigure}
-                      plateColor="#141414"
+                      plateColor="#131314"
                       activeStep={hoveredStep}
                       onStepHover={setHoveredStep}
-                      labelPrefix="tier"
-                      style={{ maxWidth: "285px", aspectRatio: "5 / 4" }}
+                      showReadout={false}
+                      style={{ maxWidth: "270px", aspectRatio: "5 / 4" }}
                     />
                   </div>
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                     {activeStudy.architectureSteps.map((step, i) => {
                       const highlighted = hoveredStep === i;
                       return (
@@ -556,51 +467,49 @@ function WorkContent() {
                           onMouseLeave={() => setHoveredStep(-1)}
                           onClick={() => setHoveredStep(highlighted ? -1 : i)}
                           style={{
-                            background: highlighted ? "#1b2420" : "#171717",
-                            border: highlighted ? "1px solid rgba(110, 231, 183, 0.55)" : "1px solid #292929",
+                            background: highlighted ? "#1a231f" : "#161618",
+                            border: highlighted ? "1px solid rgba(110, 231, 183, 0.5)" : "1px solid #26262a",
                             borderRadius: "10px",
-                            padding: "12px 14px",
+                            padding: "11px 14px",
                             cursor: "pointer",
                             transition: "border-color 0.2s ease, background-color 0.2s ease",
                           }}
                         >
                           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
-                            <strong style={{ fontSize: "0.95rem", color: highlighted ? "#6ee7b7" : "#fff" }}>
+                            <strong style={{ fontSize: "0.94rem", color: highlighted ? "#6ee7b7" : "#fff" }}>
                               0{i + 1}. {step.title}
                             </strong>
-                            <span className="mini-tag">{step.tech}</span>
+                            <span className="meta-label">{step.tech}</span>
                           </div>
-                          <p style={{ fontSize: "0.86rem", color: "rgba(255,255,255,0.68)", lineHeight: 1.45 }}>{step.desc}</p>
+                          <p style={{ fontSize: "0.86rem", color: "rgba(255,255,255,0.68)", lineHeight: 1.48 }}>{step.desc}</p>
                         </div>
                       );
                     })}
                   </div>
                 </div>
 
-                <div style={{ background: "rgba(16, 185, 129, 0.08)", border: "1px solid rgba(16, 185, 129, 0.25)", borderRadius: "10px", padding: "14px" }}>
-                  <h4 style={{ fontSize: "0.78rem", fontFamily: "var(--font-mono)", color: "#6ee7b7", marginBottom: "4px" }}>
-                    KEY TAKEAWAY
-                  </h4>
+                <div style={{ background: "rgba(16, 185, 129, 0.06)", border: "1px solid rgba(16, 185, 129, 0.22)", borderRadius: "10px", padding: "14px" }}>
+                  <h4 className="meta-label meta-label-accent" style={{ marginBottom: "4px" }}>WHAT I LEARNED</h4>
                   <p style={{ fontSize: "0.92rem", color: "#e5e5e5", lineHeight: 1.55 }}>{activeStudy.whatILearned}</p>
                 </div>
 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", paddingTop: "8px", paddingBottom: "2rem" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", paddingTop: "6px", paddingBottom: "1.5rem" }}>
                   {activeStudy.blogSlug && (
                     <Link
                       href={`/blog/${activeStudy.blogSlug}`}
                       style={{
                         background: "#fff",
                         color: "#000",
-                        padding: "0.75rem 1.25rem",
+                        padding: "0.7rem 1.2rem",
                         borderRadius: "8px",
                         fontWeight: 600,
-                        fontSize: "0.9rem",
+                        fontSize: "0.88rem",
                         display: "inline-flex",
                         alignItems: "center",
                         gap: "6px",
                       }}
                     >
-                      <BookOpen size={16} /> Read Commit-History Journey
+                      <BookOpen size={15} /> Read Build Log
                     </Link>
                   )}
                   {activeStudy.githubUrl && (
@@ -609,19 +518,19 @@ function WorkContent() {
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
-                        background: "#1e1e1e",
+                        background: "#1c1c1f",
                         color: "#fff",
-                        border: "1px solid #333",
-                        padding: "0.75rem 1.25rem",
+                        border: "1px solid #303035",
+                        padding: "0.7rem 1.2rem",
                         borderRadius: "8px",
                         fontWeight: 500,
-                        fontSize: "0.9rem",
+                        fontSize: "0.88rem",
                         display: "inline-flex",
                         alignItems: "center",
                         gap: "6px",
                       }}
                     >
-                      GitHub Repository <ArrowUpRight size={16} />
+                      GitHub <ArrowUpRight size={15} />
                     </a>
                   )}
                 </div>

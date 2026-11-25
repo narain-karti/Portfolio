@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, Play, Pause, FlaskConical, GitBranch } from "lucide-react";
-import TransitionLink from "../../components/TransitionLink";
+import { ArrowUpRight, Play, Pause } from "lucide-react";
+import Link from "next/link";
 import HairlineFigure from "../../components/HairlineFigure";
+import { WordReveal, RevealBlock } from "../../components/MotionPrimitives";
 import {
   quorumRingFigure,
   edgeFieldFigure,
@@ -13,22 +14,11 @@ import {
 import { NARAIN_PROFILE, RESEARCH_DIRECTIONS } from "../../data/portfolio-data";
 
 const FIGURES = [
-  { id: "quorum", label: "01 · Quorum Ring", spec: quorumRingFigure, note: "6-seat council ring synced to pointer proximity." },
-  { id: "field", label: "02 · Edge Tensor Field", spec: edgeFieldFigure, note: "36-pillar compute matrix rising on independent springs." },
-  { id: "pipeline", label: "03 · Pipeline Stack", spec: pipelineLayersFigure, note: "4-tier exploded stack eased on cubic-bezier lifts." },
-  { id: "terminal", label: "04 · Terminal Rig (Adopted)", spec: terminalRigFigure, note: "Adopted from terminal_profile.svg via /hairline-adopt." },
+  { id: "quorum", label: "Quorum Ring", spec: quorumRingFigure, note: "Six council plinths responding to pointer proximity." },
+  { id: "field", label: "Tensor Field", spec: edgeFieldFigure, note: "36 isometric compute pillars on independent springs." },
+  { id: "pipeline", label: "Pipeline Stack", spec: pipelineLayersFigure, note: "Four exploded layers lifting smoothly on inspection." },
+  { id: "terminal", label: "Terminal Rig", spec: terminalRigFigure, note: "Dual-pane isometric console adapted from SVG telemetry." },
 ] as const;
-
-const WORKFLOW_STAGES = [
-  "Problem Discovery",
-  "Literature Review",
-  "Hypothesis",
-  "Experimentation",
-  "Technical Results",
-  "Research Paper",
-  "Real Product",
-  "Open Source",
-];
 
 export default function ResearchLabPage() {
   const [selectedId, setSelectedId] = useState<(typeof FIGURES)[number]["id"]>("quorum");
@@ -42,60 +32,34 @@ export default function ResearchLabPage() {
       <div className="subpage-container" style={{ maxWidth: "1060px" }}>
         <nav className="breadcrumb-nav">
           <div className="breadcrumb-trail">
-            <TransitionLink href="/">Home</TransitionLink>
+            <Link href="/">Home</Link>
             <span>/</span>
-            <span className="breadcrumb-current">Research, Open Source &amp; Lab</span>
+            <span className="breadcrumb-current">Research &amp; Open Source</span>
           </div>
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-            <TransitionLink href="/downloads" className="grid-card-pill">
-              Resources &amp; Résumé →
-            </TransitionLink>
-            <TransitionLink href="/graph" className="grid-card-pill grid-card-pill-live">
+          <div style={{ display: "flex", gap: "18px", flexWrap: "wrap" }}>
+            <Link href="/downloads" className="subtle-link">
+              Resources &amp; Resume →
+            </Link>
+            <Link href="/graph" className="subtle-link">
               Knowledge Graph →
-            </TransitionLink>
+            </Link>
           </div>
         </nav>
 
-        <div style={{ marginBottom: "2.5rem" }}>
-          <h1 className="hero-manifesto">Research Tracks, Open Source &amp; Interactive Lab.</h1>
-          <p className="hero-subcopy">
-            Exploring AI infrastructure, leakage-free data kernels, offline industrial models, and adversarial agents — paired with the live isometric Hairline figures built across this site.
-          </p>
-        </div>
-
-        {/* Research-to-Product Workflow */}
-        <section
-          style={{
-            background: "#131315",
-            border: "1px solid #26262a",
-            borderRadius: "14px",
-            padding: "1.25rem 1.4rem",
-            marginBottom: "2.5rem",
-          }}
-        >
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.74rem", color: "#6ee7b7", marginBottom: "10px" }}>
-            RESEARCH-TO-PRODUCT METHODOLOGY
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center" }}>
-            {WORKFLOW_STAGES.map((stage, i) => (
-              <span key={stage} style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-                <span className="mini-tag" style={{ color: "#f5f5f5" }}>
-                  {stage}
-                </span>
-                {i < WORKFLOW_STAGES.length - 1 && (
-                  <span style={{ color: "#555", fontFamily: "var(--font-mono)", fontSize: "0.75rem" }}>→</span>
-                )}
-              </span>
-            ))}
-          </div>
-        </section>
+        <header style={{ marginBottom: "2.5rem" }}>
+          <WordReveal as="h1" className="page-title" stagger={0.025}>
+            Research tracks and open source.
+          </WordReveal>
+          <WordReveal as="p" className="hero-subcopy" delay={0.1} stagger={0.015}>
+            Exploring local model serving, zero-copy data pipelines, adversarial multi-agent setups, and interactive geometric tools.
+          </WordReveal>
+        </header>
 
         {/* Active Research Directions */}
         <section style={{ marginBottom: "3.25rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "1.25rem" }}>
-            <FlaskConical size={18} color="#6ee7b7" />
-            <h2 style={{ fontSize: "1.4rem" }}>Investigation Tracks &amp; Experiments</h2>
-          </div>
+          <h2 className="section-heading" style={{ marginBottom: "1.25rem" }}>
+            Current Focus Areas
+          </h2>
 
           <div
             style={{
@@ -104,64 +68,57 @@ export default function ResearchLabPage() {
               gap: "1.1rem",
             }}
           >
-            {RESEARCH_DIRECTIONS.map((dir) => (
-              <TransitionLink
-                key={dir.id}
-                href={dir.linkedHref}
-                style={{
-                  background: "#141414",
-                  border: "1px solid #262626",
-                  borderRadius: "14px",
-                  padding: "1.35rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  gap: "12px",
-                }}
-              >
-                <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
-                    <span
-                      className={
-                        dir.status === "Validated System"
-                          ? "grid-card-pill grid-card-pill-live"
-                          : "grid-card-pill"
-                      }
-                    >
-                      {dir.status}
-                    </span>
-                    <ArrowUpRight size={15} color="#888" />
+            {RESEARCH_DIRECTIONS.map((dir, idx) => (
+              <RevealBlock key={dir.id} delay={idx * 0.05}>
+                <Link
+                  href={dir.linkedHref}
+                  style={{
+                    background: "#131314",
+                    border: "1px solid #242427",
+                    borderRadius: "14px",
+                    padding: "1.35rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    height: "100%",
+                    gap: "12px",
+                    transition: "transform 0.18s ease, border-color 0.18s ease",
+                  }}
+                >
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+                      <span className={`meta-label ${dir.status === "Validated System" ? "meta-label-accent" : ""}`}>
+                        {dir.status}
+                      </span>
+                      <ArrowUpRight size={15} color="#888" />
+                    </div>
+                    <h3 style={{ fontSize: "1.14rem", marginBottom: "8px" }}>{dir.title}</h3>
+                    <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.68)", lineHeight: 1.56 }}>
+                      {dir.summary}
+                    </p>
                   </div>
-                  <h3 style={{ fontSize: "1.12rem", marginBottom: "8px" }}>{dir.title}</h3>
-                  <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.68)", lineHeight: 1.55 }}>
-                    {dir.summary}
-                  </p>
-                </div>
 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-                  {dir.focusAreas.map((f) => (
-                    <span key={f} className="mini-tag">
-                      {f}
-                    </span>
-                  ))}
-                </div>
-              </TransitionLink>
+                  <div className="meta-label" style={{ color: "rgba(255,255,255,0.52)" }}>
+                    {dir.focusAreas.join(" · ")}
+                  </div>
+                </Link>
+              </RevealBlock>
             ))}
           </div>
         </section>
 
         {/* Interactive Hairline Workbench */}
-        <section
+        <RevealBlock
           style={{
-            background: "#141414",
-            border: "1px solid #2a2a2a",
+            background: "#131314",
+            border: "1px solid #242427",
             borderRadius: "16px",
             padding: "1.5rem",
-            marginBottom: "3rem",
+            marginBottom: "3.25rem",
           }}
         >
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "12px", marginBottom: "1rem" }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "14px", marginBottom: "1.15rem" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
               {FIGURES.map((f) => {
                 const on = f.id === selectedId;
                 return (
@@ -169,16 +126,7 @@ export default function ResearchLabPage() {
                     key={f.id}
                     type="button"
                     onClick={() => setSelectedId(f.id)}
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "0.75rem",
-                      padding: "7px 12px",
-                      borderRadius: "999px",
-                      border: on ? "1px solid #6ee7b7" : "1px solid #2f2f2f",
-                      background: on ? "rgba(110, 231, 183, 0.14)" : "#0e0e0e",
-                      color: on ? "#6ee7b7" : "#a3a3a3",
-                      cursor: "pointer",
-                    }}
+                    className={`filter-tab ${on ? "filter-tab-active" : ""}`}
                   >
                     {f.label}
                   </button>
@@ -186,33 +134,33 @@ export default function ResearchLabPage() {
               })}
             </div>
 
-            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
               <button
                 type="button"
                 onClick={() => setTouring((t) => !t)}
-                className="grid-card-pill"
-                style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px" }}
+                className="subtle-link"
+                style={{ background: "transparent", border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px" }}
               >
                 {touring ? <Pause size={13} /> : <Play size={13} />}
-                {touring ? "Stop Tour" : "Auto Tour"}
+                {touring ? "Pause tour" : "Auto tour"}
               </button>
               <a
                 href="/hairline-terminal-rig.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="grid-card-pill grid-card-pill-live"
-                style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}
+                className="subtle-link"
+                style={{ color: "#6ee7b7", display: "inline-flex", alignItems: "center", gap: "4px" }}
               >
-                Standalone HTML <ArrowUpRight size={13} />
+                Standalone view <ArrowUpRight size={13} />
               </a>
             </div>
           </div>
 
           <div
             style={{
-              background: "#101010",
-              border: "1px solid #242424",
-              borderRadius: "14px",
+              background: "#0f0f10",
+              border: "1px solid #222226",
+              borderRadius: "12px",
               padding: "1rem",
               display: "flex",
               justifyContent: "center",
@@ -220,11 +168,11 @@ export default function ResearchLabPage() {
           >
             <HairlineFigure
               figure={activeFig.spec}
-              plateColor="#101010"
+              plateColor="#0f0f10"
               intensity={intensity}
               autoTour={touring}
-              labelPrefix={activeFig.id}
-              style={{ maxWidth: "540px", aspectRatio: "5 / 4" }}
+              showReadout={false}
+              style={{ maxWidth: "520px", aspectRatio: "5 / 4" }}
             />
           </div>
 
@@ -235,22 +183,20 @@ export default function ResearchLabPage() {
               alignItems: "center",
               justifyContent: "space-between",
               gap: "16px",
-              marginTop: "1.1rem",
+              marginTop: "1rem",
             }}
           >
-            <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.7)" }}>{activeFig.note}</p>
+            <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.68)" }}>{activeFig.note}</p>
 
             <label
+              className="meta-label"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "10px",
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.74rem",
-                color: "#9a9a9a",
               }}
             >
-              <span>Reach / Spread</span>
+              <span>Spread</span>
               <input
                 type="range"
                 min={0}
@@ -258,19 +204,18 @@ export default function ResearchLabPage() {
                 step={0.01}
                 value={intensity}
                 onChange={(e) => setIntensity(Number(e.target.value))}
-                style={{ width: "140px", accentColor: "#6ee7b7", cursor: "pointer" }}
+                style={{ width: "130px", accentColor: "#6ee7b7", cursor: "pointer" }}
               />
               <span style={{ color: "#fff", minWidth: "3ch" }}>{Math.round(intensity * 100)}%</span>
             </label>
           </div>
-        </section>
+        </RevealBlock>
 
         {/* Open Source & Live Links */}
         <section>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "1.1rem" }}>
-            <GitBranch size={18} color="#9a9a9a" />
-            <h2 style={{ fontSize: "1.35rem" }}>Open Source, PyPI &amp; Ventures</h2>
-          </div>
+          <h2 className="section-heading" style={{ marginBottom: "1.15rem" }}>
+            Open Source &amp; Public Packages
+          </h2>
           <div
             style={{
               display: "grid",
@@ -280,34 +225,36 @@ export default function ResearchLabPage() {
           >
             {[
               { name: "GitHub Repositories", desc: "DATADOC, MECH-G, Project-MELV, Quorum, DECEPTRIX, Elio & Walkthrough.", href: NARAIN_PROFILE.github },
-              { name: "PyPI: datadoc-cli", desc: "Reported 2,500+ installs — Polars zero-copy dataset curation CLI.", href: NARAIN_PROFILE.pypi },
-              { name: "AxoWeb Technologies", desc: "“We don't build websites. We build systems.” Commercial engineering studio.", href: NARAIN_PROFILE.axowebUrl },
-              { name: "Eduvia Platform", desc: "Student cohorts, Doomathon & hackathon MVP mentorship.", href: NARAIN_PROFILE.eduviaUrl },
-            ].map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  background: "#141414",
-                  border: "1px solid #262626",
-                  borderRadius: "12px",
-                  padding: "1.25rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  gap: "10px",
-                }}
-              >
-                <div>
-                  <h3 style={{ fontSize: "1.06rem", marginBottom: "6px" }}>{item.name}</h3>
-                  <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.66)", lineHeight: 1.5 }}>{item.desc}</p>
-                </div>
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.74rem", color: "#6ee7b7", display: "inline-flex", alignItems: "center", gap: "4px" }}>
-                  Visit <ArrowUpRight size={13} />
-                </span>
-              </a>
+              { name: "PyPI: datadoc-cli", desc: "Polars zero-copy dataset curation CLI.", href: NARAIN_PROFILE.pypi },
+              { name: "AxoWeb Technologies", desc: "Systems studio building cloud backends, AI agents & automation.", href: NARAIN_PROFILE.axowebUrl },
+              { name: "Eduvia Platform", desc: "Student cohorts, Doomathon & hackathon mentorship.", href: NARAIN_PROFILE.eduviaUrl },
+            ].map((item, idx) => (
+              <RevealBlock key={item.name} delay={idx * 0.04}>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    background: "#131314",
+                    border: "1px solid #242427",
+                    borderRadius: "12px",
+                    padding: "1.25rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    height: "100%",
+                    gap: "10px",
+                  }}
+                >
+                  <div>
+                    <h3 style={{ fontSize: "1.06rem", marginBottom: "6px" }}>{item.name}</h3>
+                    <p style={{ fontSize: "0.86rem", color: "rgba(255,255,255,0.66)", lineHeight: 1.5 }}>{item.desc}</p>
+                  </div>
+                  <span className="meta-label meta-label-accent" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                    Visit <ArrowUpRight size={13} />
+                  </span>
+                </a>
+              </RevealBlock>
             ))}
           </div>
         </section>

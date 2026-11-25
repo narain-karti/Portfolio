@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { TransitionProvider } from "../context/TransitionContext";
 import PortfolioDock from "../components/PortfolioDock";
 
 export const metadata: Metadata = {
@@ -50,7 +49,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <TransitionProvider>{children}</TransitionProvider>
+        {children}
         <PortfolioDock />
       </body>
     </html>

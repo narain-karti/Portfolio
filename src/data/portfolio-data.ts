@@ -82,9 +82,9 @@ export const NARAIN_PROFILE = {
   name: "Narain Karti",
   callsign: "NARAIN.OS",
   role: "AI/ML Engineer · Data Science Student · Deep-Tech Builder · Entrepreneur",
-  headline: "Building intelligent systems. Exploring what's next.",
+  headline: "AI systems, data science, and practical engineering.",
   positioningStatement:
-    "I don't want to just use technology. I want to understand it, improve it, and build what comes next.",
+    "Hi, I'm Narain. Welcome in. I enjoy taking ideas apart to see how they work, then building quiet, reliable software around them.",
   location: "Chennai, India",
   email: "narainkarti.work@gmail.com",
   secondaryEmail: "studyusage2008@gmail.com",
@@ -96,12 +96,12 @@ export const NARAIN_PROFILE = {
   eduviaUrl: "https://eduvia-topaz.vercel.app",
   eduviaInstagram: "eduviaa",
   eduviaLinkedin: "eduvia-x",
-  availability: "OPEN FOR AI SYSTEMS, RESEARCH & ENGINEERING ROLES",
+  availability: "Open to AI research, engineering roles & collaborations",
   domains: ["AI / ML", "Data Science", "AI Infrastructure", "Product Engineering"],
   bioParagraphs: [
-    "I am pursuing a B.Tech in Computer Science & Engineering (AI/ML specialization) at NIAT (NxtWave Institute of Advanced Technologies) alongside a B.S. in Data Science and Applications from IIT Madras (expected 2029) — bridging formal statistical rigor with production software systems.",
-    "Through AxoWeb Technologies ('We don't build websites. We build systems.'), I went from 200+ local business and 100+ startup outreach conversations to shipping production client platforms, AWS serverless microservices, and AI workflow automation — growing past ₹7L+ in our initial 90 days to a reported ₹10L+ revenue milestone across 20+ active clients and 15+ delivered builds.",
-    "Beyond product engineering, I mentor student builders through Eduvia (55+ early registrations in 4 days) and serve as Joint Secretary at AMET Incubation Centre (ACEII) after previously serving as Vice President of the NIAT Advanced Technology Club. Long term, I aim to build an AI research & infrastructure company that connects original research, real-world products, and open source.",
+    "I'm studying Computer Science & AI/ML at NIAT alongside a B.S. in Data Science from IIT Madras (expected 2029). Most of my time goes into connecting statistical foundations with software that actually runs on real hardware.",
+    "Outside classes, I started AxoWeb Technologies to build backend systems, mobile apps, and workflow tools for real clients. That grew from cold outreach with local businesses into 20+ active clients, 15+ shipped builds, and a ₹10L+ revenue milestone.",
+    "I also mentor student builders through Eduvia and serve as Joint Secretary at AMET Incubation Centre (ACEII), after serving as Vice President of the NIAT Advanced Technology Club. Long term, I want to build an AI research and infrastructure company where research, products, and open source sit under one roof.",
   ],
   academicAchievements: [
     "National Science Olympiad (NSO) — Zonal-level selection",
@@ -162,18 +162,18 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Open Source (v0.6.1)",
     year: "2026",
     summary:
-      "Developer-focused dataset diagnostics CLI powered by Polars Rust LazyFrames and LiteLLM auto-research. Replaces fragile Pandas cleaning boilerplate with deterministic, train-split-fitted preprocessing pipelines.",
+      "Polars-backed dataset diagnostics CLI that profiles 1M rows in 0.42s and saves leakage-safe preprocessing pipelines.",
     githubUrl: "https://github.com/narain-karti/DATADOC",
     pypiUrl: "https://pypi.org/project/datadoc-cli/",
     blogSlug: "datadoc-from-script-to-pypi",
     problem:
-      "ML engineers lose hours rewriting Pandas scripts that suffer from target leakage, schema drift, and multi-gigabyte RAM blowups.",
+      "ML engineers spend too much time rewriting Pandas cleaning scripts that silently leak validation data or run out of RAM on larger files.",
     whyItMatters:
-      "Silent test-set leakage invalidates model benchmarks in production and academic experiments alike; fast, deterministic data validation fixes quality before training begins.",
+      "Silent test-set leakage invalidates model benchmarks in production and research alike. Validating splits early fixes data quality before training starts.",
     contribution:
-      "Architected the Polars LazyFrame profiling core, designed the strict train/test fit-transform ladder, integrated LiteLLM benchmark loops, and shipped the PyPI package & CI pipeline.",
+      "Built the Polars LazyFrame profiling core, strict train/test fit-transform ladder, LiteLLM benchmark loop, and PyPI release pipeline.",
     insight:
-      "Pairing zero-copy Arrow LazyFrames with an ordered priority ladder turns preprocessing into an auditable, serializable `pipeline.json` artifact.",
+      "Pairing zero-copy Arrow LazyFrames with an ordered priority ladder turns preprocessing into an auditable pipeline.json artifact.",
     metrics: [
       { label: "1M-Row Benchmark", value: "0.42s", note: "vs ~5.9s Pandas eager profiling" },
       { label: "Package Adoption", value: "2,500+*", note: "Reported pip installs (*verify live on PyPI)" },
@@ -199,15 +199,15 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Production Prototype (SIH PS #26127)",
     year: "2026",
     summary:
-      "Two-tier Edge-to-Central ANPR architecture built for Smart India Hackathon PS #26127. Processes frames locally in 14ms and transmits ~200-byte structured JSON packets instead of raw RTSP video feeds.",
+      "Edge ANPR system for Smart India Hackathon PS #26127 that runs locally in 14ms and sends 200-byte JSON events instead of raw video.",
     githubUrl: "https://github.com/narain-karti/Project-MELV",
     blogSlug: "project-melv-city-digital-twin",
     problem:
-      "Centralized streaming of raw 1080p CCTV feeds across 100+ municipal junctions saturates backhaul bandwidth (>4 TB/day) and leaves cross-camera trajectories disconnected.",
+      "Streaming raw 1080p CCTV across 100+ junctions burns over 4 TB/day of bandwidth and leaves camera feeds disconnected.",
     whyItMatters:
-      "Smart-city analytics only scale beyond lab demos when cellular backhaul costs and inference latency stay near zero on pole hardware.",
+      "City-scale traffic analytics only works when inference runs on the pole and cellular backhaul stays minimal.",
     contribution:
-      "Engineered the dual YOLOv8 + ByteTrack inference pipeline, Indian RTO grammar repair regex AST for noisy OCR, trajectory graph linking, and React Three Fiber 3D twin.",
+      "Built the dual YOLOv8 and ByteTrack pipeline, Indian RTO regex repair for noisy OCR, trajectory graph linking, and React Three Fiber 3D twin.",
     insight:
       "Running plate detection and Indian RTO syntax correction directly at the edge shrinks per-event network payloads to ~200 bytes.",
     metrics: [
@@ -236,7 +236,7 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Award-Recognized Concept",
     year: "2026",
     summary:
-      "AI-focused relationship-memory CRM designed around preventing context loss in professional interactions — capturing commitments, follow-ups, and shared history across fragmented channels.",
+      "An AI relationship-memory CRM that keeps track of commitments, follow-ups, and context across scattered chats and meetings.",
     githubUrl: "https://github.com/narain-karti",
     problem:
       "Conventional CRMs act as passive spreadsheets of names and emails, losing interaction context, promises, and timing nuances across chats and meetings.",
@@ -271,7 +271,7 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Shipped Architecture",
     year: "2026",
     summary:
-      "Industrial AI diagnostic workspace for zero-connectivity environments like offshore wind turbines. Compiles 4,000-page OEM manuals into Open Knowledge Format (OKF) graphs traversed locally by Gemma 4 (26B).",
+      "Offline diagnostic workspace for zero-connectivity sites. Compiles 4,000-page OEM manuals into NetworkX graphs queried locally by Gemma 4.",
     githubUrl: "https://github.com/narain-karti/MECH-G",
     blogSlug: "mech-g-offline-industrial-gemma",
     problem:
@@ -308,7 +308,7 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Awarded Architecture",
     year: "2025–2026",
     summary:
-      "Hybrid edge-cloud traffic intelligence initiative explored in Puducherry & MHA contexts and awarded a ₹3,00,000 National Runner-Up grant at the OpenAI Academy Buildathon.",
+      "Edge traffic optimization and emergency green-wave system, awarded ₹3,00,000 National Runner-Up at the OpenAI Academy Buildathon.",
     githubUrl: "https://github.com/narain-karti/Project-K",
     blogSlug: "project-k-openai-buildathon-journey",
     problem:
@@ -344,7 +344,7 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Open Source Prototype",
     year: "2025–2026",
     summary:
-      "Intelligent browser privacy agent explored in an ISRO Smart India Hackathon problem context, focusing on automated tracking resistance, privacy checks, and resilient agent execution.",
+      "Browser privacy agent explored for an ISRO SIH problem, built around tracking protection and resilient automated execution.",
     githubUrl: "https://github.com/narain-karti/ELIO---Private-Browser-Agent.",
     problem:
       "Automated browser agents and day-to-day browsing expose user fingerprints, scripts, and session telemetry without clear visibility or guardrails.",
@@ -380,7 +380,7 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Award Winner",
     year: "2026",
     summary:
-      "6-persona adversarial C-suite boardroom (CEO, CFO, CTO, CMO, COO + Contrarian) over a 4-package TypeScript monorepo that streams structured debate graphs in real time.",
+      "Six-persona adversarial executive boardroom over a TypeScript monorepo that streams structured debate graphs in real time.",
     githubUrl: "https://github.com/narain-karti/Quorum",
     blogSlug: "quorum-adversarial-boardroom",
     problem:
@@ -416,7 +416,7 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Enterprise v1.1 / Pipeline v4",
     year: "2026",
     summary:
-      "Explainable media verification platform fusing 7 orthogonal forensic signals — calibrated ViT, 2D-FFT spectral checks, 468-pt facial landmarks, lip-sync, frozen-face, and audio spoof — into a 5-page PDF audit dossier.",
+      "Explainable deepfake verification tool combining seven forensic checks (ViT, 2D-FFT, landmarks, lip-sync, audio) into a 5-page PDF audit report.",
     githubUrl: "https://github.com/narain-karti/DECEPTRIX",
     blogSlug: "deceptrix-fixing-050-baseline-to-7-signal-fusion",
     problem:
@@ -453,7 +453,7 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Zonal Award Dossier",
     year: "2024–2025",
     summary:
-      "Comprehensive space-habitat blueprint engineering a rotational 1.0g orbital settlement with lunar/asteroid ISRU, closed-loop hydroponic & oxygen regeneration systems, and off-Earth governance & economics.",
+      "Orbital 1.0g space-habitat blueprint covering lunar/asteroid ISRU, closed-loop life support, and settlement economics.",
     metrics: [
       { label: "NASA Contest", value: "Zonal Award", note: "Independently designed settlement" },
       { label: "Habitat Gravity", value: "1.0g Torus", note: "224m radius rotational spin" },
@@ -489,7 +489,7 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     status: "Active Venture (axoweb.in)",
     year: "2025–2026",
     summary:
-      "“We don't build websites. We build systems.” Founded and led AxoWeb Technologies across 15+ delivered systems and 20+ active clients — progressing from ₹7L+ in our initial 90 days to a ₹10L+ reported revenue milestone.",
+      "Systems studio delivering AWS backends, mobile apps, and workflow automation across 20+ clients and 15+ builds.",
     githubUrl: "https://github.com/narain-karti",
     blogSlug: "axoweb-zero-to-7l-and-aws-microservices",
     problem:

@@ -3,8 +3,9 @@
 import React, { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Sparkles, Compass, Filter } from "lucide-react";
-import TransitionLink from "../../components/TransitionLink";
+import { ArrowUpRight, Compass } from "lucide-react";
+import Link from "next/link";
+import { WordReveal, RevealBlock } from "../../components/MotionPrimitives";
 import { BLOG_POSTS } from "../../data/blogs";
 
 type NodeKind = "page" | "project" | "domain";
@@ -23,38 +24,34 @@ interface GraphNode {
 }
 
 const NODES: GraphNode[] = [
-  // Core Navigation Tabs (top + outer orbit)
-  { id: "tab-home", label: "Home", sub: "Bento Portal", kind: "page", x: 560, y: 82, r: 22, href: "/" },
-  { id: "tab-work", label: "Work", sub: "9 Systems & Dossiers", kind: "page", x: 350, y: 158, r: 26, href: "/work" },
-  { id: "tab-blog", label: "Blogs", sub: "8 Build Logs", kind: "page", x: 770, y: 158, r: 25, href: "/blog" },
-  { id: "tab-builder", label: "Builder", sub: "Experience & Stack", kind: "page", x: 210, y: 340, r: 24, href: "/builder" },
-  { id: "tab-about", label: "About", sub: "IITM × NxtWave", kind: "page", x: 915, y: 335, r: 24, href: "/about" },
-  { id: "tab-lab", label: "Hairline Lab", sub: "Isometric Figures", kind: "page", x: 750, y: 548, r: 21, href: "/website" },
-  { id: "tab-downloads", label: "Downloads", sub: "Resume & CLI", kind: "page", x: 375, y: 548, r: 21, href: "/downloads" },
-  { id: "tab-contact", label: "Contact", sub: "Get in Touch", kind: "page", x: 560, y: 572, r: 21, href: "/contact" },
+  { id: "tab-home", label: "Home", sub: "Portal", kind: "page", x: 560, y: 82, r: 22, href: "/" },
+  { id: "tab-work", label: "Work", sub: "10 Systems", kind: "page", x: 350, y: 158, r: 26, href: "/work" },
+  { id: "tab-blog", label: "Journal", sub: "Build Logs", kind: "page", x: 770, y: 158, r: 25, href: "/blog" },
+  { id: "tab-builder", label: "Impact", sub: "Roles & Awards", kind: "page", x: 210, y: 340, r: 24, href: "/builder" },
+  { id: "tab-about", label: "About", sub: "IITM × NIAT", kind: "page", x: 915, y: 335, r: 24, href: "/about" },
+  { id: "tab-lab", label: "Research", sub: "Lab & Diagrams", kind: "page", x: 750, y: 548, r: 21, href: "/website" },
+  { id: "tab-downloads", label: "Resources", sub: "Resume & CLI", kind: "page", x: 375, y: 548, r: 21, href: "/downloads" },
+  { id: "tab-contact", label: "Connect", sub: "Contact", kind: "page", x: 560, y: 572, r: 21, href: "/contact" },
 
-  // Domain Hubs (inner ring anchors)
-  { id: "dom-edge", label: "Edge AI & Vision", sub: "Jetson · YOLO · FFT", kind: "domain", x: 385, y: 292, r: 20, href: "/work" },
-  { id: "dom-agents", label: "Multi-Agent Systems", sub: "Tools · Dialectic · RAG", kind: "domain", x: 735, y: 292, r: 20, href: "/builder" },
-  { id: "dom-data", label: "Polars & Data", sub: "Arrow · Leakage-Safe", kind: "domain", x: 560, y: 238, r: 20, href: "/work?project=datadoc" },
-  { id: "dom-cloud", label: "AWS & Full-Stack", sub: "Lambda · Next.js · Flutter", kind: "domain", x: 560, y: 422, r: 20, href: "/builder" },
+  { id: "dom-edge", label: "Edge AI & Vision", sub: "Jetson · YOLO", kind: "domain", x: 385, y: 292, r: 20, href: "/work" },
+  { id: "dom-agents", label: "Multi-Agent", sub: "Debate · RAG", kind: "domain", x: 735, y: 292, r: 20, href: "/builder" },
+  { id: "dom-data", label: "Polars & Data", sub: "Arrow · Pipelines", kind: "domain", x: 560, y: 238, r: 20, href: "/work?project=datadoc" },
+  { id: "dom-cloud", label: "AWS & Apps", sub: "Lambda · Flutter", kind: "domain", x: 560, y: 422, r: 20, href: "/builder" },
 
-  // All 10 Flagship Projects + Leadership/Venture Initiatives
-  { id: "datadoc", label: "DATADOC", sub: "PyPI · 0.42s / 1M", kind: "project", x: 560, y: 152, r: 20, href: "/work?project=datadoc", secondaryHref: "/blog/datadoc-from-script-to-pypi", secondaryLabel: "Read Commit Log" },
-  { id: "mech-g", label: "MECH-G", sub: "Offline Gemma 4", kind: "project", x: 878, y: 238, r: 19, href: "/work?project=mech-g", secondaryHref: "/blog/mech-g-offline-industrial-gemma", secondaryLabel: "Read Commit Log" },
-  { id: "project-melv", label: "Project-MELV", sub: "14ms · 99.82% Cut", kind: "project", x: 245, y: 228, r: 19, href: "/work?project=project-melv", secondaryHref: "/blog/project-melv-city-digital-twin", secondaryLabel: "Read Commit Log" },
-  { id: "otomo", label: "OTOMO", sub: "AI Memory CRM · BRAVE", kind: "project", x: 642, y: 312, r: 18, href: "/work?project=otomo" },
-  { id: "elio", label: "ELIO", sub: "Privacy Agent · SIH", kind: "project", x: 472, y: 312, r: 18, href: "/work?project=elio" },
-  { id: "quorum", label: "Quorum", sub: "TakeOver'26 #1", kind: "project", x: 878, y: 432, r: 20, href: "/work?project=quorum", secondaryHref: "/blog/quorum-adversarial-boardroom", secondaryLabel: "Read Commit Log" },
-  { id: "project-k", label: "Project K", sub: "OpenAI ₹3L Winner", kind: "project", x: 156, y: 446, r: 21, href: "/work?project=project-k", secondaryHref: "/blog/project-k-openai-buildathon-journey", secondaryLabel: "Read Commit Log" },
-  { id: "deceptrix", label: "DECEPTRIX", sub: "7-Signal Forensics", kind: "project", x: 332, y: 442, r: 19, href: "/work?project=deceptrix", secondaryHref: "/blog/deceptrix-fixing-050-baseline-to-7-signal-fusion", secondaryLabel: "Read Commit Log" },
-  { id: "axoweb", label: "AxoWeb", sub: "₹10L+* · 20+ Clients", kind: "project", x: 486, y: 492, r: 20, href: "/work?project=axoweb", secondaryHref: "/blog/axoweb-zero-to-7l-and-aws-microservices", secondaryLabel: "Read Venture Log" },
-  { id: "beyond-earth", label: "BEYOND EARTH", sub: "NASA Zonal Award", kind: "project", x: 960, y: 500, r: 18, href: "/work?project=beyond-earth" },
-  { id: "eduvia", label: "Eduvia", sub: "55+ Signups · Cohorts", kind: "domain", x: 750, y: 422, r: 18, href: "/builder" },
+  { id: "datadoc", label: "DATADOC", sub: "PyPI · 0.42s", kind: "project", x: 560, y: 152, r: 20, href: "/work?project=datadoc", secondaryHref: "/blog/datadoc-from-script-to-pypi", secondaryLabel: "Read log" },
+  { id: "mech-g", label: "MECH-G", sub: "Offline Gemma 4", kind: "project", x: 878, y: 238, r: 19, href: "/work?project=mech-g", secondaryHref: "/blog/mech-g-offline-industrial-gemma", secondaryLabel: "Read log" },
+  { id: "project-melv", label: "Project-MELV", sub: "14ms ANPR", kind: "project", x: 245, y: 228, r: 19, href: "/work?project=project-melv", secondaryHref: "/blog/project-melv-city-digital-twin", secondaryLabel: "Read log" },
+  { id: "otomo", label: "OTOMO", sub: "Memory CRM", kind: "project", x: 642, y: 312, r: 18, href: "/work?project=otomo" },
+  { id: "elio", label: "ELIO", sub: "Privacy Agent", kind: "project", x: 472, y: 312, r: 18, href: "/work?project=elio" },
+  { id: "quorum", label: "Quorum", sub: "TakeOver'26 #1", kind: "project", x: 878, y: 432, r: 20, href: "/work?project=quorum", secondaryHref: "/blog/quorum-adversarial-boardroom", secondaryLabel: "Read log" },
+  { id: "project-k", label: "Project K", sub: "OpenAI ₹3L", kind: "project", x: 156, y: 446, r: 21, href: "/work?project=project-k", secondaryHref: "/blog/project-k-openai-buildathon-journey", secondaryLabel: "Read log" },
+  { id: "deceptrix", label: "DECEPTRIX", sub: "7-Signal Audit", kind: "project", x: 332, y: 442, r: 19, href: "/work?project=deceptrix", secondaryHref: "/blog/deceptrix-fixing-050-baseline-to-7-signal-fusion", secondaryLabel: "Read log" },
+  { id: "axoweb", label: "AxoWeb", sub: "20+ Clients", kind: "project", x: 486, y: 492, r: 20, href: "/work?project=axoweb", secondaryHref: "/blog/axoweb-zero-to-7l-and-aws-microservices", secondaryLabel: "Read log" },
+  { id: "beyond-earth", label: "BEYOND EARTH", sub: "NASA Zonal", kind: "project", x: 960, y: 500, r: 18, href: "/work?project=beyond-earth" },
+  { id: "eduvia", label: "Eduvia", sub: "Student Cohorts", kind: "domain", x: 750, y: 422, r: 18, href: "/builder" },
 ];
 
 const EDGES: [string, string][] = [
-  // Home hub links
   ["tab-home", "tab-work"],
   ["tab-home", "tab-blog"],
   ["tab-home", "dom-data"],
@@ -81,8 +78,6 @@ const EDGES: [string, string][] = [
   ["tab-lab", "elio"],
   ["tab-lab", "otomo"],
   ["tab-lab", "tab-contact"],
-
-  // Project <-> Domain cross links
   ["dom-data", "datadoc"],
   ["dom-data", "deceptrix"],
   ["dom-data", "otomo"],
@@ -135,30 +130,30 @@ export default function KnowledgeGraphPage() {
       <div className="subpage-container">
         <nav className="breadcrumb-nav">
           <div className="breadcrumb-trail">
-            <TransitionLink href="/">Home</TransitionLink>
+            <Link href="/">Home</Link>
             <span>/</span>
             <span className="breadcrumb-current">Knowledge Graph</span>
           </div>
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-            <TransitionLink href="/work" className="grid-card-pill">
-              Open All Projects →
-            </TransitionLink>
-            <TransitionLink href="/blog" className="grid-card-pill">
-              All {BLOG_POSTS.length} Essays →
-            </TransitionLink>
+          <div style={{ display: "flex", gap: "18px", flexWrap: "wrap" }}>
+            <Link href="/work" className="subtle-link">
+              All Projects →
+            </Link>
+            <Link href="/blog" className="subtle-link">
+              {BLOG_POSTS.length} Essays →
+            </Link>
           </div>
         </nav>
 
-        <div style={{ marginBottom: "1.75rem" }}>
-          <h1 className="hero-manifesto" style={{ marginBottom: "0.75rem" }}>
-            Interactive Portfolio Knowledge Graph
-          </h1>
-          <p className="hero-subcopy">
-            Hover any node to trace how projects, engineering write-ups, technical stacks, and site tabs connect. Click any project or tab node to jump straight to its page or architecture dossier.
-          </p>
-        </div>
+        <header style={{ marginBottom: "1.75rem" }}>
+          <WordReveal as="h1" className="page-title" stagger={0.025}>
+            Portfolio Knowledge Graph
+          </WordReveal>
+          <WordReveal as="p" className="hero-subcopy" delay={0.1} stagger={0.015}>
+            Hover any node to see how projects, domains, and pages connect. Click a node to open it directly.
+          </WordReveal>
+        </header>
 
-        {/* Filter & HUD strip */}
+        {/* Filter strip */}
         <div
           style={{
             display: "flex",
@@ -169,14 +164,11 @@ export default function KnowledgeGraphPage() {
             marginBottom: "1rem",
           }}
         >
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center" }}>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.74rem", color: "#888", display: "inline-flex", alignItems: "center", gap: "5px" }}>
-              <Filter size={13} /> Highlight:
-            </span>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "center" }}>
             {[
-              { id: "all", label: `Everything (${NODES.length} Nodes)` },
+              { id: "all", label: `All (${NODES.length})` },
               { id: "project", label: `Projects (${NODES.filter((n) => n.kind === "project").length})` },
-              { id: "page", label: `Site Tabs (${NODES.filter((n) => n.kind === "page").length})` },
+              { id: "page", label: `Pages (${NODES.filter((n) => n.kind === "page").length})` },
               { id: "domain", label: `Domains (${NODES.filter((n) => n.kind === "domain").length})` },
             ].map((f) => {
               const active = filterKind === f.id;
@@ -185,16 +177,7 @@ export default function KnowledgeGraphPage() {
                   key={f.id}
                   type="button"
                   onClick={() => setFilterKind(f.id as "all" | NodeKind)}
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.74rem",
-                    padding: "6px 12px",
-                    borderRadius: "999px",
-                    border: active ? "1px solid #6ee7b7" : "1px solid #2a2a2a",
-                    background: active ? "rgba(110, 231, 183, 0.14)" : "#141414",
-                    color: active ? "#6ee7b7" : "#a3a3a3",
-                    cursor: "pointer",
-                  }}
+                  className={`filter-tab ${active ? "filter-tab-active" : ""}`}
                 >
                   {f.label}
                 </button>
@@ -202,21 +185,23 @@ export default function KnowledgeGraphPage() {
             })}
           </div>
 
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: activeNode ? "#6ee7b7" : "#888", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+          <div className="meta-label" style={{ color: activeNode ? "#6ee7b7" : "#8e8e93", display: "inline-flex", alignItems: "center", gap: "6px" }}>
             <Compass size={14} />
-            {activeNode ? `${activeNode.label} → Click to open ${activeNode.href}` : "Hover or tap any node to inspect links"}
+            {activeNode ? `${activeNode.label} → ${activeNode.href}` : "Hover a node to trace links"}
           </div>
         </div>
 
-        {/* Interactive Graph Stage */}
-        <div
+        {/* Graph Stage */}
+        <RevealBlock
+          inView={false}
+          delay={0.1}
           style={{
             position: "relative",
-            background: "#111111",
-            border: "1px solid #262626",
+            background: "#111112",
+            border: "1px solid #242427",
             borderRadius: "16px",
             overflow: "hidden",
-            marginBottom: "2rem",
+            marginBottom: "2.25rem",
           }}
         >
           <svg
@@ -228,7 +213,7 @@ export default function KnowledgeGraphPage() {
               setHoveredId(null);
             }}
             role="img"
-            aria-label="Interactive Knowledge Graph connecting all portfolio pages and projects"
+            aria-label="Interactive Knowledge Graph connecting portfolio pages and projects"
           >
             <defs>
               <radialGradient id="kgCursorGlow" cx="50%" cy="50%" r="50%">
@@ -237,12 +222,10 @@ export default function KnowledgeGraphPage() {
               </radialGradient>
             </defs>
 
-            {/* Subtle architectural dot backdrop */}
             {cursorSvg && (
               <circle cx={cursorSvg.x} cy={cursorSvg.y} r="150" fill="url(#kgCursorGlow)" pointerEvents="none" />
             )}
 
-            {/* Edges */}
             {EDGES.map(([aId, bId]) => {
               const a = NODES.find((n) => n.id === aId);
               const b = NODES.find((n) => n.id === bId);
@@ -261,21 +244,19 @@ export default function KnowledgeGraphPage() {
                   x2={b.x}
                   y2={b.y}
                   className={connectedToHover ? "knowledge-edge-flow" : undefined}
-                  stroke={connectedToHover ? "#6ee7b7" : "#2c2c2c"}
+                  stroke={connectedToHover ? "#6ee7b7" : "#2c2c30"}
                   strokeWidth={connectedToHover ? 1.8 : 1}
                   strokeOpacity={dimmed ? 0.16 : connectedToHover ? 0.95 : 0.72}
                 />
               );
             })}
 
-            {/* Nodes */}
             {NODES.map((node) => {
               const isHovered = hoveredId === node.id;
               const isNeighbor = hoveredId ? adjacency.get(hoveredId)?.has(node.id) ?? false : false;
               const matchesFilter = filterKind === "all" || node.kind === filterKind;
               const dimmed = hoveredId ? !isHovered && !isNeighbor : !matchesFilter;
 
-              // Subtle magnetic pull toward cursor within 115 viewBox units
               let dx = 0,
                 dy = 0;
               if (cursorSvg) {
@@ -288,7 +269,7 @@ export default function KnowledgeGraphPage() {
               }
 
               const fill =
-                node.kind === "page" ? "#16201c" : node.kind === "project" ? "#161616" : "#1c1a16";
+                node.kind === "page" ? "#16201c" : node.kind === "project" ? "#161618" : "#1c1a16";
               const stroke = isHovered
                 ? "#ffffff"
                 : isNeighbor
@@ -297,7 +278,7 @@ export default function KnowledgeGraphPage() {
                 ? "#4a5d54"
                 : node.kind === "domain"
                 ? "#595243"
-                : "#383838";
+                : "#38383d";
 
               return (
                 <g
@@ -353,7 +334,7 @@ export default function KnowledgeGraphPage() {
                   <text
                     y={node.r + 26}
                     textAnchor="middle"
-                    fill="#7e7e7e"
+                    fill="#7e7e86"
                     fontSize="9.2"
                     fontFamily="var(--font-mono), monospace"
                   >
@@ -364,12 +345,11 @@ export default function KnowledgeGraphPage() {
             })}
           </svg>
 
-          {/* Bottom Inspector Bar inside Graph */}
           <div
             style={{
-              borderTop: "1px solid #222",
-              background: "#141414",
-              padding: "0.9rem 1.25rem",
+              borderTop: "1px solid #202024",
+              background: "#131314",
+              padding: "0.85rem 1.25rem",
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "space-between",
@@ -380,38 +360,35 @@ export default function KnowledgeGraphPage() {
             {activeNode ? (
               <>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-                  <span className="grid-card-pill grid-card-pill-live">{activeNode.kind.toUpperCase()}</span>
+                  <span className="meta-label meta-label-accent">{activeNode.kind.toUpperCase()}</span>
                   <strong style={{ fontSize: "1rem", color: "#fff" }}>{activeNode.label}</strong>
-                  <span style={{ fontSize: "0.86rem", color: "#9a9a9a" }}>{activeNode.sub}</span>
+                  <span style={{ fontSize: "0.86rem", color: "#8e8e93" }}>{activeNode.sub}</span>
                 </div>
-                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
                   {activeNode.secondaryHref && (
-                    <TransitionLink href={activeNode.secondaryHref} className="grid-card-pill">
+                    <Link href={activeNode.secondaryHref} className="subtle-link">
                       {activeNode.secondaryLabel} →
-                    </TransitionLink>
+                    </Link>
                   )}
-                  <TransitionLink href={activeNode.href} className="grid-card-pill grid-card-pill-live">
-                    Open Node <ArrowUpRight size={12} style={{ display: "inline" }} />
-                  </TransitionLink>
+                  <Link href={activeNode.href} className="subtle-link" style={{ color: "#6ee7b7" }}>
+                    Open <ArrowUpRight size={12} style={{ display: "inline" }} />
+                  </Link>
                 </div>
               </>
             ) : (
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", color: "#8a8a8a", fontSize: "0.86rem" }}>
-                <Sparkles size={15} color="#6ee7b7" />
-                <span>
-                  Click any node to navigate directly — project nodes open straight into their Work Architecture Dossier.
-                </span>
-              </div>
+              <span className="meta-label">
+                Click any node to jump directly to its page or architecture dossier.
+              </span>
             )}
           </div>
-        </div>
+        </RevealBlock>
 
-        {/* Accessible Quick Directory Cards (also ideal on narrow phones) */}
-        <h2 style={{ fontSize: "1.25rem", marginBottom: "1rem" }}>Direct Node Directory</h2>
+        {/* Directory */}
+        <h2 className="section-heading" style={{ marginBottom: "1rem" }}>Directory</h2>
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
             gap: "0.9rem",
           }}
         >
@@ -422,33 +399,33 @@ export default function KnowledgeGraphPage() {
               onMouseEnter={() => setHoveredId(n.id)}
               onMouseLeave={() => setHoveredId(null)}
               style={{
-                background: "#141414",
-                border: hoveredId === n.id ? "1px solid #6ee7b7" : "1px solid #262626",
+                background: "#131314",
+                border: hoveredId === n.id ? "1px solid #6ee7b7" : "1px solid #242427",
                 borderRadius: "12px",
                 padding: "1rem",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                gap: "10px",
+                gap: "8px",
               }}
             >
               <div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", color: n.kind === "page" ? "#6ee7b7" : "#888" }}>
-                    {n.kind.toUpperCase()}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
+                  <span className={`meta-label ${n.kind === "page" ? "meta-label-accent" : ""}`}>
+                    {n.kind}
                   </span>
                   <ArrowUpRight size={14} color="#888" />
                 </div>
-                <TransitionLink href={n.href} style={{ fontWeight: 600, fontSize: "1rem", color: "#fff", display: "block" }}>
+                <Link href={n.href} style={{ fontWeight: 600, fontSize: "1rem", color: "#fff", display: "block" }}>
                   {n.label}
-                </TransitionLink>
-                <div style={{ fontSize: "0.8rem", color: "#8e8e8e", marginTop: "3px" }}>{n.sub}</div>
+                </Link>
+                <div style={{ fontSize: "0.82rem", color: "#8e8e93", marginTop: "2px" }}>{n.sub}</div>
               </div>
 
               {n.secondaryHref && (
-                <TransitionLink href={n.secondaryHref} style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem", color: "#6ee7b7" }}>
+                <Link href={n.secondaryHref} className="subtle-link" style={{ color: "#6ee7b7" }}>
                   {n.secondaryLabel} →
-                </TransitionLink>
+                </Link>
               )}
             </motion.div>
           ))}

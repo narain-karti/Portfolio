@@ -2,10 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, GitCommit } from "lucide-react";
+import { WordReveal, RevealBlock } from "../../../components/MotionPrimitives";
 import { BLOG_POSTS } from "../../../data/blogs";
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }));
+}
+
+function cleanInlineCode(text: string): string {
+  return text.replace(/`/g, "");
 }
 
 export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -17,159 +22,158 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
   const nextPost = BLOG_POSTS[(currentIdx + 1) % BLOG_POSTS.length];
 
   return (
-    <>
-      <div className="subpage-shell">
-        <div style={{ maxWidth: "820px", margin: "0 auto" }}>
-          <nav className="breadcrumb-nav" style={{ marginBottom: "2.5rem" }}>
-            <Link
-              href="/blog"
-              style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "#9a9a9a", fontSize: "0.9rem" }}
-            >
-              <ArrowLeft size={16} /> Back to All Project Blogs
-            </Link>
-            <a
-              href={post.repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="grid-card-pill"
-              style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}
-            >
-              GitHub Repo <ArrowUpRight size={13} />
-            </a>
-          </nav>
-
-          <header style={{ marginBottom: "2.25rem" }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "1rem" }}>
-              <span className="grid-card-pill grid-card-pill-live">{post.projectTitle}</span>
-              <span className="grid-card-pill">{post.commitCount}</span>
-              <span className="grid-card-pill">{post.readTime}</span>
-            </div>
-
-            <h1 style={{ fontSize: "clamp(1.85rem, 4vw, 2.85rem)", lineHeight: 1.15, marginBottom: "1rem" }}>
-              {post.title}
-            </h1>
-            <p style={{ fontSize: "1.1rem", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>{post.summary}</p>
-          </header>
-
-          <div
-            style={{
-              position: "relative",
-              width: "100%",
-              height: "340px",
-              borderRadius: "14px",
-              overflow: "hidden",
-              border: "1px solid #262626",
-              marginBottom: "3rem",
-            }}
+    <div className="subpage-shell">
+      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+        <nav className="breadcrumb-nav" style={{ marginBottom: "2.25rem" }}>
+          <Link
+            href="/blog"
+            className="subtle-link"
+            style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
           >
-            <Image src={post.coverImage} alt={post.projectTitle} fill style={{ objectFit: "cover" }} priority />
+            <ArrowLeft size={15} /> All build logs
+          </Link>
+          <a
+            href={post.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="subtle-link"
+            style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
+          >
+            GitHub <ArrowUpRight size={13} />
+          </a>
+        </nav>
+
+        <header style={{ marginBottom: "2rem" }}>
+          <div className="meta-label meta-label-accent" style={{ marginBottom: "0.75rem" }}>
+            {post.projectTitle} · {post.commitCount} · {post.readTime}
           </div>
 
-          {/* Narrative Sections */}
-          <article style={{ display: "flex", flexDirection: "column", gap: "2.5rem", marginBottom: "3.5rem" }}>
-            {post.sections.map((section) => (
-              <section key={section.heading}>
-                <h2 style={{ fontSize: "1.55rem", marginBottom: "1rem", color: "#fff" }}>{section.heading}</h2>
-                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <WordReveal as="h1" className="page-title" stagger={0.024}>
+            {post.title}
+          </WordReveal>
+          <WordReveal as="p" delay={0.1} stagger={0.012} style={{ fontSize: "1.04rem", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+            {cleanInlineCode(post.summary)}
+          </WordReveal>
+        </header>
+
+        <RevealBlock
+          inView={false}
+          delay={0.12}
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "320px",
+            borderRadius: "14px",
+            overflow: "hidden",
+            border: "1px solid #242427",
+            marginBottom: "2.75rem",
+          }}
+        >
+          <Image src={post.coverImage} alt={post.projectTitle} fill style={{ objectFit: "cover" }} priority />
+        </RevealBlock>
+
+        {/* Narrative Sections */}
+        <article style={{ display: "flex", flexDirection: "column", gap: "2.4rem", marginBottom: "3.25rem" }}>
+          {post.sections.map((section) => (
+            <RevealBlock key={section.heading}>
+              <section>
+                <h2 className="section-heading" style={{ marginBottom: "0.9rem" }}>{section.heading}</h2>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.95rem" }}>
                   {section.body.map((para, i) => (
-                    <p key={i} style={{ fontSize: "1.02rem", lineHeight: 1.75, color: "rgba(255,255,255,0.82)" }}>
-                      {para}
+                    <p key={i} style={{ fontSize: "1rem", lineHeight: 1.74, color: "rgba(255,255,255,0.82)" }}>
+                      {cleanInlineCode(para)}
                     </p>
                   ))}
                 </div>
                 {section.codeSnippet && (
                   <pre
                     style={{
-                      marginTop: "1.25rem",
-                      background: "#121212",
-                      border: "1px solid #2b2b2b",
+                      marginTop: "1.15rem",
+                      background: "#121214",
+                      border: "1px solid #26262a",
                       borderRadius: "10px",
-                      padding: "1.15rem",
+                      padding: "1.1rem",
                       overflowX: "auto",
-                      fontSize: "0.86rem",
+                      fontSize: "0.85rem",
                       lineHeight: 1.6,
-                      color: "#d4d4d4",
+                      color: "#d4d4d8",
                     }}
                   >
                     <code>{section.codeSnippet}</code>
                   </pre>
                 )}
               </section>
-            ))}
-          </article>
+            </RevealBlock>
+          ))}
+        </article>
 
-          {/* Verified Commit History Rail */}
-          <section
-            style={{
-              background: "#131313",
-              border: "1px solid #262626",
-              borderRadius: "14px",
-              padding: "1.75rem",
-              marginBottom: "2.5rem",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "1.25rem" }}>
-              <GitCommit size={18} color="#6ee7b7" />
-              <h3 style={{ fontSize: "1.2rem" }}>Verified Commit History Timeline</h3>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", borderLeft: "1px solid #2e2e2e", paddingLeft: "1.25rem" }}>
-              {post.timeline.map((m) => (
-                <div key={`${m.date}-${m.title}`} style={{ position: "relative" }}>
-                  <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "#6ee7b7" }}>{m.date}</span>
-                    {m.sha && (
-                      <span className="mini-tag" style={{ fontSize: "0.7rem" }}>
-                        {m.sha}
-                      </span>
-                    )}
-                    <strong style={{ fontSize: "0.95rem", color: "#fff" }}>{m.title}</strong>
-                  </div>
-                  <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.68)", lineHeight: 1.5 }}>{m.detail}</p>
+        {/* Commit History Rail */}
+        <RevealBlock
+          style={{
+            background: "#131314",
+            border: "1px solid #242427",
+            borderRadius: "14px",
+            padding: "1.6rem",
+            marginBottom: "2rem",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "1.15rem" }}>
+            <GitCommit size={17} color="#6ee7b7" />
+            <h3 style={{ fontSize: "1.18rem" }}>Commit History</h3>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.95rem", borderLeft: "1px solid #2a2a2e", paddingLeft: "1.2rem" }}>
+            {post.timeline.map((m) => (
+              <div key={`${m.date}-${m.title}`}>
+                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginBottom: "3px" }}>
+                  <span className="meta-label meta-label-accent">{m.date}</span>
+                  {m.sha && <span className="meta-label">{m.sha}</span>}
+                  <strong style={{ fontSize: "0.95rem", color: "#fff" }}>{m.title}</strong>
                 </div>
-              ))}
-            </div>
-          </section>
+                <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.68)", lineHeight: 1.5 }}>{cleanInlineCode(m.detail)}</p>
+              </div>
+            ))}
+          </div>
+        </RevealBlock>
 
-          {/* Engineering Takeaways */}
-          <section
-            style={{
-              background: "rgba(16, 185, 129, 0.06)",
-              border: "1px solid rgba(16, 185, 129, 0.22)",
-              borderRadius: "14px",
-              padding: "1.5rem",
-              marginBottom: "3rem",
-            }}
-          >
-            <h3 style={{ fontSize: "1rem", fontFamily: "var(--font-mono)", color: "#6ee7b7", marginBottom: "0.75rem" }}>
-              ARCHITECTURAL LESSONS
-            </h3>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-              {post.lessons.map((lesson) => (
-                <li key={lesson} style={{ color: "#e5e5e5", fontSize: "0.95rem", lineHeight: 1.55 }}>
-                  → {lesson}
-                </li>
-              ))}
-            </ul>
-          </section>
+        {/* Lessons */}
+        <RevealBlock
+          style={{
+            background: "rgba(16, 185, 129, 0.05)",
+            border: "1px solid rgba(16, 185, 129, 0.2)",
+            borderRadius: "14px",
+            padding: "1.4rem",
+            marginBottom: "2.5rem",
+          }}
+        >
+          <h3 className="meta-label meta-label-accent" style={{ marginBottom: "0.75rem" }}>
+            KEY LESSONS
+          </h3>
+          <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+            {post.lessons.map((lesson) => (
+              <li key={lesson} style={{ color: "#e5e5e5", fontSize: "0.94rem", lineHeight: 1.55 }}>
+                → {cleanInlineCode(lesson)}
+              </li>
+            ))}
+          </ul>
+        </RevealBlock>
 
-          {/* Next Essay */}
-          <Link
-            href={`/blog/${nextPost.slug}`}
-            style={{
-              display: "block",
-              background: "#141414",
-              border: "1px solid #2a2a2a",
-              borderRadius: "12px",
-              padding: "1.35rem",
-            }}
-          >
-            <div style={{ fontSize: "0.75rem", fontFamily: "var(--font-mono)", color: "#888", marginBottom: "6px" }}>
-              NEXT ENGINEERING JOURNEY →
-            </div>
-            <div style={{ fontSize: "1.15rem", fontWeight: 600, color: "#fff" }}>{nextPost.title}</div>
-          </Link>
-        </div>
+        {/* Next Essay */}
+        <Link
+          href={`/blog/${nextPost.slug}`}
+          style={{
+            display: "block",
+            background: "#131314",
+            border: "1px solid #242427",
+            borderRadius: "12px",
+            padding: "1.3rem",
+          }}
+        >
+          <div className="meta-label" style={{ marginBottom: "5px" }}>
+            NEXT ENTRY →
+          </div>
+          <div style={{ fontSize: "1.14rem", fontWeight: 600, color: "#fff" }}>{nextPost.title}</div>
+        </Link>
       </div>
-    </>
+    </div>
   );
 }
