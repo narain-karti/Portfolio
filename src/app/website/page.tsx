@@ -23,7 +23,7 @@ const FIGURES = [
 export default function ResearchLabPage() {
   const [selectedId, setSelectedId] = useState<(typeof FIGURES)[number]["id"]>("quorum");
   const [intensity, setIntensity] = useState(0.5);
-  const [touring, setTouring] = useState(false);
+  const [touring, setTouring] = useState(true);
 
   const activeFig = FIGURES.find((f) => f.id === selectedId) ?? FIGURES[0];
 
@@ -69,7 +69,7 @@ export default function ResearchLabPage() {
             }}
           >
             {RESEARCH_DIRECTIONS.map((dir, idx) => (
-              <RevealBlock key={dir.id} delay={idx * 0.05}>
+              <RevealBlock key={dir.id} delay={idx * 0.06} interactive>
                 <Link
                   href={dir.linkedHref}
                   style={{

@@ -17,8 +17,7 @@ interface WordRevealProps {
 }
 
 /**
- * Subtle word-by-word entrance animation.
- * Keeps total stagger bounded so long sentences stay crisp and readable.
+ * Word-by-word entrance with subtle rise and blur-to-crisp focus.
  */
 export function WordReveal({
   children,
@@ -26,14 +25,14 @@ export function WordReveal({
   className,
   style,
   delay = 0,
-  stagger = 0.02,
-  duration = 0.32,
+  stagger = 0.024,
+  duration = 0.38,
   inView = false,
 }: WordRevealProps) {
   const words = useMemo(() => children.trim().split(/\s+/), [children]);
   const Tag = as;
 
-  const capDelay = Math.min(words.length * stagger, 0.42);
+  const capDelay = Math.min(words.length * stagger, 0.52);
   const step = words.length > 1 ? capDelay / words.length : stagger;
 
   return (
@@ -42,9 +41,9 @@ export function WordReveal({
         inView ? (
           <motion.span
             key={`${idx}-${word}`}
-            initial={{ opacity: 0, y: 7 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
+            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.12 }}
             transition={{
               duration,
               delay: delay + idx * step,
@@ -57,8 +56,8 @@ export function WordReveal({
         ) : (
           <motion.span
             key={`${idx}-${word}`}
-            initial={{ opacity: 0, y: 7 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{
               duration,
               delay: delay + idx * step,
@@ -81,28 +80,41 @@ interface RevealBlockProps {
   delay?: number;
   y?: number;
   inView?: boolean;
+  interactive?: boolean;
 }
 
 /**
- * Subtle section / card fade-and-rise reveal.
+ * Section or card entrance with optional spring hover lift.
  */
 export function RevealBlock({
   children,
   className,
   style,
   delay = 0,
-  y = 12,
+  y = 16,
   inView = true,
+  interactive = false,
 }: RevealBlockProps) {
+  const hoverProps = interactive
+    ? {
+        whileHover: {
+          y: -3,
+          transition: { type: "spring" as const, stiffness: 360, damping: 26 },
+        },
+        whileTap: { scale: 0.992 },
+      }
+    : {};
+
   if (inView) {
     return (
       <motion.div
         className={className}
         style={style}
-        initial={{ opacity: 0, y }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y, scale: 0.99 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.08 }}
-        transition={{ duration: 0.38, delay, ease: EASE_OUT_CUBIC }}
+        transition={{ duration: 0.44, delay, ease: EASE_OUT_CUBIC }}
+        {...hoverProps}
       >
         {children}
       </motion.div>
@@ -113,9 +125,38 @@ export function RevealBlock({
     <motion.div
       className={className}
       style={style}
-      initial={{ opacity: 0, y }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.38, delay, ease: EASE_OUT_CUBIC }}
+      initial={{ opacity: 0, y, scale: 0.99 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.44, delay, ease: EASE_OUT_CUBIC }}
+      {...hoverProps}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/**
+ * Gentle continuous ambient levitation for focal elements.
+ */
+export function FloatingElement({
+  children,
+  className,
+  style,
+  amplitude = 4,
+  duration = 5.2,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  style?: MotionStyle;
+  amplitude?: number;
+  duration?: number;
+}) {
+  return (
+    <motion.div
+      className={className}
+      style={style}
+      animate={{ y: [0, -amplitude, 0] }}
+      transition={{ duration, repeat: Infinity, ease: "easeInOut" }}
     >
       {children}
     </motion.div>

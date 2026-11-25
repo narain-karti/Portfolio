@@ -42,6 +42,7 @@ export default function ResourcesPage() {
           <RevealBlock
             inView={false}
             delay={0.08}
+            interactive
             style={{
               background: "#131314",
               border: "1px solid #242427",

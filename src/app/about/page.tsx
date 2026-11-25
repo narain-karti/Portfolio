@@ -51,9 +51,9 @@ export default function AboutPage() {
         </header>
 
         {/* 3 Distinct Theme-Matched Images */}
-        <RevealBlock className="portrait-grid" inView={false} delay={0.12}>
-          {ABOUT_PANELS.map((panel) => (
-            <div key={panel.src} className="portrait-card">
+        <div className="portrait-grid">
+          {ABOUT_PANELS.map((panel, idx) => (
+            <RevealBlock key={panel.src} className="portrait-card" inView={false} delay={0.1 + idx * 0.08} interactive>
               <Image
                 src={panel.src}
                 alt={panel.alt}
@@ -63,9 +63,9 @@ export default function AboutPage() {
                 priority
               />
               <div className="portrait-caption">{panel.caption}</div>
-            </div>
+            </RevealBlock>
           ))}
-        </RevealBlock>
+        </div>
 
         <RevealBlock className="spectrum-line" delay={0.1}>
           Usually somewhere between sketching an architecture at midnight and{" "}
@@ -84,7 +84,8 @@ export default function AboutPage() {
           {NARAIN_PROFILE.bioParagraphs.map((para, idx) => (
             <RevealBlock
               key={idx}
-              delay={idx * 0.06}
+              delay={idx * 0.07}
+              interactive
               style={{
                 background: "#131314",
                 border: "1px solid #242427",
@@ -119,7 +120,9 @@ export default function AboutPage() {
               marginBottom: "1rem",
             }}
           >
-            <h2 className="section-heading">Interactive Profile Rig</h2>
+            <h2 className="section-heading">
+              <WordReveal as="span" inView stagger={0.03}>Interactive Profile Rig</WordReveal>
+            </h2>
             <a
               href="/hairline-terminal-rig.html"
               target="_blank"
@@ -152,6 +155,7 @@ export default function AboutPage() {
               <HairlineFigure
                 figure={terminalRigFigure}
                 plateColor="#131314"
+                autoTour={true}
                 showReadout={false}
                 style={{ maxWidth: "420px", margin: "0 auto" }}
               />

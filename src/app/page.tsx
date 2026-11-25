@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import HairlineFigure from "../components/HairlineFigure";
-import { WordReveal } from "../components/MotionPrimitives";
+import { WordReveal, FloatingElement } from "../components/MotionPrimitives";
 import { edgeFieldFigure, pipelineLayersFigure } from "../data/hairline-figures";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
@@ -47,9 +47,9 @@ export default function Home() {
       setTypedName(INTRO_FULL_NAME.slice(0, idx));
       if (idx >= INTRO_FULL_NAME.length) {
         clearInterval(typeTimer);
-        holdTimer = setTimeout(() => dismissIntro(), 480);
+        holdTimer = setTimeout(() => dismissIntro(), 460);
       }
-    }, 55);
+    }, 52);
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
@@ -87,21 +87,33 @@ export default function Home() {
 
   return (
     <>
-      {showIntro && (
-        <div
-          className="name-intro"
-          onClick={dismissIntro}
-          role="dialog"
-          aria-label="Entrance introduction"
-        >
-          <div className="name-container">
-            <h1>{typedName || "\u00A0"}</h1>
-            <div className="animated-cursor" aria-hidden="true" />
-          </div>
-          <p className="intro-tagline">AI systems, data science, and practical engineering</p>
-          <span className="intro-skip-hint">Click anywhere or press any key to enter</span>
-        </div>
-      )}
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            className="name-intro"
+            onClick={dismissIntro}
+            role="dialog"
+            aria-label="Entrance introduction"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 1.02, filter: "blur(6px)" }}
+            transition={{ duration: 0.35, ease: EASE_OUT }}
+          >
+            <div className="name-container">
+              <h1>{typedName || "\u00A0"}</h1>
+              <div className="animated-cursor" aria-hidden="true" />
+            </div>
+            <motion.p
+              className="intro-tagline"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.12 }}
+            >
+              AI systems, data science, and practical engineering
+            </motion.p>
+            <span className="intro-skip-hint">Click anywhere or press any key to enter</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <main className="exact-layout">
         <div className="exact-grid">
@@ -109,9 +121,11 @@ export default function Home() {
           <Link href="/about" className="grid-area-about">
             <motion.div
               className="grid-card"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.04, ease: EASE_OUT }}
+              initial={{ opacity: 0, y: 18, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              whileHover={{ y: -3, transition: { type: "spring", stiffness: 360, damping: 26 } }}
+              whileTap={{ scale: 0.992 }}
+              transition={{ duration: 0.45, delay: 0.04, ease: EASE_OUT }}
               ref={(el) => {
                 cardRefs.current[0] = el;
               }}
@@ -123,19 +137,28 @@ export default function Home() {
 
               <div className="hero-tile-body">
                 <div className="hero-wrap-flow">
-                  {/* Transparent portrait floated cleanly so heading & intro wrap around it */}
-                  <Image
-                    src="/assets/sticker_portrait.png"
-                    alt="Narain Karti"
-                    width={92}
-                    height={92}
-                    className="hero-portrait-float"
-                    priority
-                  />
-                  <WordReveal as="h2" className="hero-tile-heading" delay={0.1} stagger={0.04}>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: 8 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.16, ease: EASE_OUT }}
+                    style={{ display: "inline" }}
+                  >
+                    <FloatingElement amplitude={3.5} duration={5.6} style={{ display: "contents" }}>
+                      <Image
+                        src="/assets/sticker_portrait.png"
+                        alt="Narain Karti"
+                        width={260}
+                        height={260}
+                        className="hero-portrait-float"
+                        priority
+                      />
+                    </FloatingElement>
+                  </motion.div>
+
+                  <WordReveal as="h2" className="hero-tile-heading" delay={0.12} stagger={0.045}>
                     Narain Karti
                   </WordReveal>
-                  <WordReveal as="p" className="grid-card-desc" delay={0.16} stagger={0.015}>
+                  <WordReveal as="p" className="grid-card-desc" delay={0.18} stagger={0.018}>
                     AI systems engineer studying Data Science at IIT Madras and AI/ML at NIAT. Building offline models, data tools, and software that lasts.
                   </WordReveal>
                 </div>
@@ -151,9 +174,11 @@ export default function Home() {
           <Link href="/work" className="grid-area-work">
             <motion.div
               className="grid-card"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.09, ease: EASE_OUT }}
+              initial={{ opacity: 0, y: 18, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              whileHover={{ y: -3, transition: { type: "spring", stiffness: 360, damping: 26 } }}
+              whileTap={{ scale: 0.992 }}
+              transition={{ duration: 0.45, delay: 0.1, ease: EASE_OUT }}
               ref={(el) => {
                 cardRefs.current[1] = el;
               }}
@@ -165,10 +190,10 @@ export default function Home() {
 
               <div className="bento-card-split">
                 <div className="grid-card-bottom">
-                  <WordReveal as="h2" delay={0.14} stagger={0.04}>
+                  <WordReveal as="h2" delay={0.16} stagger={0.045}>
                     Featured Engineering Systems
                   </WordReveal>
-                  <WordReveal as="p" className="grid-card-desc" delay={0.2} stagger={0.015}>
+                  <WordReveal as="p" className="grid-card-desc" delay={0.22} stagger={0.018}>
                     DATADOC on PyPI, Project-MELV edge vision, MECH-G offline diagnostics, and Quorum multi-agent debates.
                   </WordReveal>
                   <span className="grid-card-cta">
@@ -177,7 +202,7 @@ export default function Home() {
                 </div>
 
                 <div className="bento-hairline-box" aria-hidden="true">
-                  <HairlineFigure figure={edgeFieldFigure} plateColor="#131314" showReadout={false} />
+                  <HairlineFigure figure={edgeFieldFigure} plateColor="#131314" autoTour={true} showReadout={false} />
                 </div>
               </div>
             </motion.div>
@@ -187,9 +212,11 @@ export default function Home() {
           <Link href="/builder" className="grid-area-builder">
             <motion.div
               className="grid-card"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.14, ease: EASE_OUT }}
+              initial={{ opacity: 0, y: 18, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              whileHover={{ y: -3, transition: { type: "spring", stiffness: 360, damping: 26 } }}
+              whileTap={{ scale: 0.992 }}
+              transition={{ duration: 0.45, delay: 0.16, ease: EASE_OUT }}
               ref={(el) => {
                 cardRefs.current[2] = el;
               }}
@@ -200,10 +227,10 @@ export default function Home() {
               </div>
 
               <div className="grid-card-bottom">
-                <WordReveal as="h2" delay={0.18} stagger={0.04}>
+                <WordReveal as="h2" delay={0.2} stagger={0.045}>
                   Entrepreneurship & Leadership
                 </WordReveal>
-                <WordReveal as="p" className="grid-card-desc" delay={0.24} stagger={0.015}>
+                <WordReveal as="p" className="grid-card-desc" delay={0.26} stagger={0.018}>
                   AxoWeb studio across 20+ clients, Eduvia cohorts, ACEII Joint Secretary, internships, and national hackathon wins.
                 </WordReveal>
                 <span className="grid-card-cta">
@@ -217,9 +244,11 @@ export default function Home() {
           <Link href="/website" className="grid-area-research">
             <motion.div
               className="grid-card"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.19, ease: EASE_OUT }}
+              initial={{ opacity: 0, y: 18, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              whileHover={{ y: -3, transition: { type: "spring", stiffness: 360, damping: 26 } }}
+              whileTap={{ scale: 0.992 }}
+              transition={{ duration: 0.45, delay: 0.22, ease: EASE_OUT }}
               ref={(el) => {
                 cardRefs.current[3] = el;
               }}
@@ -231,10 +260,10 @@ export default function Home() {
 
               <div className="bento-card-split bento-card-split-compact">
                 <div className="grid-card-bottom">
-                  <WordReveal as="h2" delay={0.22} stagger={0.04}>
+                  <WordReveal as="h2" delay={0.24} stagger={0.045}>
                     Research & Open Source
                   </WordReveal>
-                  <WordReveal as="p" className="grid-card-desc" delay={0.27} stagger={0.015}>
+                  <WordReveal as="p" className="grid-card-desc" delay={0.29} stagger={0.018}>
                     Notes and experiments on local serving, zero-copy data engines, interactive diagrams, and open-source packages.
                   </WordReveal>
                   <span className="grid-card-cta">
@@ -243,7 +272,7 @@ export default function Home() {
                 </div>
 
                 <div className="bento-hairline-box bento-hairline-box-compact" aria-hidden="true">
-                  <HairlineFigure figure={pipelineLayersFigure} plateColor="#131314" showReadout={false} />
+                  <HairlineFigure figure={pipelineLayersFigure} plateColor="#131314" autoTour={true} showReadout={false} />
                 </div>
               </div>
             </motion.div>
@@ -254,9 +283,11 @@ export default function Home() {
             <Link href="/blog">
               <motion.div
                 className="grid-card"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.24, ease: EASE_OUT }}
+                initial={{ opacity: 0, y: 18, scale: 0.985 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ y: -3, transition: { type: "spring", stiffness: 360, damping: 26 } }}
+                whileTap={{ scale: 0.992 }}
+                transition={{ duration: 0.45, delay: 0.28, ease: EASE_OUT }}
                 ref={(el) => {
                   cardRefs.current[4] = el;
                 }}
@@ -267,10 +298,10 @@ export default function Home() {
                 </div>
 
                 <div className="grid-card-bottom">
-                  <WordReveal as="h2" delay={0.26} stagger={0.04}>
+                  <WordReveal as="h2" delay={0.3} stagger={0.045}>
                     Build Logs & Writing
                   </WordReveal>
-                  <WordReveal as="p" className="grid-card-desc" delay={0.31} stagger={0.015}>
+                  <WordReveal as="p" className="grid-card-desc" delay={0.34} stagger={0.018}>
                     Engineering decisions, debugging stories, and architectural breakdowns.
                   </WordReveal>
                   <span className="grid-card-cta">
@@ -283,9 +314,11 @@ export default function Home() {
             <Link href="/contact">
               <motion.div
                 className="grid-card"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.29, ease: EASE_OUT }}
+                initial={{ opacity: 0, y: 18, scale: 0.985 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ y: -3, transition: { type: "spring", stiffness: 360, damping: 26 } }}
+                whileTap={{ scale: 0.992 }}
+                transition={{ duration: 0.45, delay: 0.34, ease: EASE_OUT }}
                 ref={(el) => {
                   cardRefs.current[5] = el;
                 }}
@@ -296,10 +329,10 @@ export default function Home() {
                 </div>
 
                 <div className="grid-card-bottom">
-                  <WordReveal as="h2" delay={0.31} stagger={0.04}>
+                  <WordReveal as="h2" delay={0.35} stagger={0.045}>
                     Let&apos;s Build Something
                   </WordReveal>
-                  <WordReveal as="p" className="grid-card-desc" delay={0.35} stagger={0.015}>
+                  <WordReveal as="p" className="grid-card-desc" delay={0.39} stagger={0.018}>
                     Collaboration, research opportunities, startup discussions, and contact details.
                   </WordReveal>
                   <span className="grid-card-cta">

@@ -37,10 +37,12 @@ const ProjectCard = memo(
     return (
       <motion.article
         className="project-card"
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 16, scale: 0.99 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        whileHover={{ y: -4, transition: { type: "spring", stiffness: 360, damping: 26 } }}
+        whileTap={{ scale: 0.992 }}
         viewport={{ once: true, amount: 0.08 }}
-        transition={{ duration: 0.36, delay: (index % 3) * 0.05, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.4, delay: (index % 3) * 0.06, ease: [0.22, 1, 0.36, 1] }}
         style={{ backgroundColor: "#131314", border: "1px solid #242427", borderRadius: "14px" }}
       >
         <div

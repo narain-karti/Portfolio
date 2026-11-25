@@ -132,29 +132,30 @@ export default function ContactPage() {
               ELSEWHERE
             </span>
             {socials.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  background: "#131314",
-                  border: "1px solid #242427",
-                  borderRadius: "12px",
-                  padding: "clamp(10px, 1.4vh, 14px) 16px",
-                  transition: "transform 0.18s ease, border-color 0.18s ease",
-                }}
-              >
-                <div>
-                  <div style={{ fontSize: "1.08rem", fontWeight: 600 }}>{s.label}</div>
-                  <div className="meta-label">{s.sub}</div>
-                </div>
-                <ArrowUpRight size={17} color="#9a9aa2" />
-              </a>
+              <RevealBlock key={s.label} inView={false} delay={0.22} interactive>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    background: "#131314",
+                    border: "1px solid #242427",
+                    borderRadius: "12px",
+                    padding: "clamp(10px, 1.4vh, 14px) 16px",
+                    transition: "border-color 0.18s ease",
+                  }}
+                >
+                  <div>
+                    <div style={{ fontSize: "1.08rem", fontWeight: 600 }}>{s.label}</div>
+                    <div className="meta-label">{s.sub}</div>
+                  </div>
+                  <ArrowUpRight size={17} color="#9a9aa2" />
+                </a>
+              </RevealBlock>
             ))}
           </RevealBlock>
         </div>

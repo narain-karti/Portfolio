@@ -101,6 +101,7 @@ export default function BuilderPage() {
               figure={quorumRingFigure}
               plateColor="#131314"
               activeStep={activeSeat}
+              autoTour={activeSeat < 0}
               onStepHover={setActiveSeat}
               showReadout={false}
               style={{ maxWidth: "290px", margin: "0 auto", aspectRatio: "5 / 4" }}
@@ -132,10 +133,11 @@ export default function BuilderPage() {
             {BUILDER_PRINCIPLES.map((p, idx) => (
               <motion.div
                 key={p.number}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 14, scale: 0.99 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ y: -3, transition: { type: "spring", stiffness: 360, damping: 26 } }}
                 viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.35, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.38, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
                 style={{
                   background: "#131314",
                   border: "1px solid #242427",
@@ -164,6 +166,7 @@ export default function BuilderPage() {
               <RevealBlock
                 key={exp.id}
                 delay={Math.min(idx * 0.04, 0.2)}
+                interactive
                 style={{
                   background: "#131314",
                   border: "1px solid #242427",

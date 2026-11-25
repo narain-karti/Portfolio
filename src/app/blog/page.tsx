@@ -56,7 +56,7 @@ export default function BlogIndexPage() {
         {/* Blog Cards Grid */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: "1.4rem" }}>
           {posts.map((post, idx) => (
-            <RevealBlock key={post.slug} delay={(idx % 3) * 0.05}>
+            <RevealBlock key={post.slug} delay={(idx % 3) * 0.06} interactive>
               <Link
                 href={`/blog/${post.slug}`}
                 className="project-card"

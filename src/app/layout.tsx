@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import PortfolioDock from "../components/PortfolioDock";
+import PageTransition from "../components/PageTransition";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -49,7 +50,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {children}
+        <PageTransition>{children}</PageTransition>
         <PortfolioDock />
       </body>
     </html>
