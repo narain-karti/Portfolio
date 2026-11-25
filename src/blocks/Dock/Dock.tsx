@@ -11,7 +11,8 @@ import {
 import Link from "next/link";
 import React, { useEffect, useRef, useState, memo } from "react";
 import { createPortal } from "react-dom";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, LayoutGrid, Volume2, VolumeX } from "lucide-react";
+import { isSoundMuted, setSoundMuted, playToggle } from "../../lib/sound-fx";
 
 export type DockItemData = {
   icon: React.ReactNode;
@@ -39,6 +40,8 @@ const DockItem = memo(
     maxScale,
     distance,
     springConfig,
+    isMobile,
+    onNavigate,
   }: {
     item: DockItemData;
     mouseX: ReturnType<typeof useMotionValue<number>>;
@@ -46,11 +49,12 @@ const DockItem = memo(
     maxScale: number;
     distance: number;
     springConfig: SpringOptions;
+    isMobile: boolean;
+    onNavigate?: () => void;
   }) => {
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState(false);
 
-    // Pure GPU transform magnification (zero CSS width/height reflow at 60fps!)
     const mouseDistance = useTransform(mouseX, (val: number) => {
       if (!Number.isFinite(val)) return distance * 2;
       const rect = ref.current?.getBoundingClientRect();
@@ -76,12 +80,12 @@ const DockItem = memo(
         }}
       >
         <AnimatePresence>
-          {isHovered && (
+          {isHovered && !isMobile && (
             <motion.div
-              initial={{ opacity: 0, y: 4 }}
+              initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.1 }}
+              transition={{ duration: 0.14 }}
               style={{
                 position: "absolute",
                 bottom: "calc(100% + 14px)",
@@ -111,8 +115,8 @@ const DockItem = memo(
           style={{
             width: "100%",
             height: "100%",
-            scale,
-            y: liftY,
+            scale: isMobile ? 1 : scale,
+            y: isMobile ? 0 : liftY,
             transformOrigin: "bottom center",
             willChange: "transform",
           }}
@@ -136,6 +140,8 @@ const DockItem = memo(
             }}
             onClick={(e) => {
               e.stopPropagation();
+              item.onClick?.();
+              onNavigate?.();
             }}
             onFocus={() => setIsHovered(true)}
             onBlur={() => setIsHovered(false)}
@@ -150,7 +156,7 @@ const DockItem = memo(
               <span
                 style={{
                   position: "absolute",
-                  bottom: "-6px",
+                  bottom: isMobile ? "3px" : "-6px",
                   width: "4px",
                   height: "4px",
                   borderRadius: "999px",
@@ -170,7 +176,7 @@ DockItem.displayName = "DockItem";
 const Dock = ({
   items,
   className = "",
-  spring = { mass: 0.1, stiffness: 320, damping: 24 },
+  spring = { mass: 0.1, stiffness: 300, damping: 24 },
   magnification = 58,
   distance = 110,
   baseItemSize = 44,
@@ -180,24 +186,48 @@ const Dock = ({
   const [mounted, setMounted] = useState(false);
   const [viewportWidth, setViewportWidth] = useState(1200);
   const [collapsed, setCollapsed] = useState(false);
+  const [muted, setMuted] = useState(false);
 
   useEffect(() => {
     const w = window.innerWidth;
     setViewportWidth(w);
-    // Keep narrow phones uncluttered by starting dock collapsed into compact menu pill
-    if (w <= 560) setCollapsed(true);
-    const onResize = () => setViewportWidth(window.innerWidth);
+    setMuted(isSoundMuted());
+    // Mobile viewports start collapsed into a compact floating bubble
+    if (w <= 680) setCollapsed(true);
+
+    const onResize = () => {
+      const nextW = window.innerWidth;
+      setViewportWidth(nextW);
+      if (nextW <= 680) {
+        setCollapsed(true);
+      } else {
+        setCollapsed(false);
+      }
+    };
     window.addEventListener("resize", onResize, { passive: true });
     setMounted(true);
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const isCompact = viewportWidth <= 768;
-  const isTiny = viewportWidth <= 440;
-  const adjustedBase = isTiny ? 32 : isCompact ? 38 : baseItemSize;
-  const itemGap = isTiny ? 8 : isCompact ? 14 : 22;
-  // Keep magnification bounded below the gap so hovered icons never collide with neighbors
-  const maxScale = isCompact ? 1.12 : magnification / baseItemSize;
+  const isMobile = viewportWidth <= 680;
+  const isTablet = viewportWidth > 680 && viewportWidth <= 920;
+  const adjustedBase = isMobile ? 42 : isTablet ? 38 : baseItemSize;
+  const itemGap = isMobile ? 8 : isTablet ? 14 : 22;
+  const maxScale = isMobile ? 1 : isTablet ? 1.24 : magnification / baseItemSize;
+
+  const toggleCollapse = (next: boolean) => {
+    setCollapsed(next);
+    playToggle(!next);
+  };
+
+  const toggleSound = () => {
+    const next = !muted;
+    setMuted(next);
+    setSoundMuted(next);
+    if (!next) {
+      playToggle(true);
+    }
+  };
 
   if (!mounted) return null;
 
@@ -207,74 +237,97 @@ const Dock = ({
         position: "fixed",
         left: 0,
         right: 0,
-        bottom: isCompact ? "10px" : "16px",
+        bottom: isMobile ? "14px" : "16px",
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-end",
         pointerEvents: "none",
         zIndex: 90000,
-        padding: "0 8px",
+        padding: "0 10px",
       }}
     >
       <AnimatePresence mode="wait" initial={false}>
         {collapsed ? (
           <motion.button
-            key="dock-collapsed"
+            key="dock-bubble"
             type="button"
-            initial={{ opacity: 0, y: 10, scale: 0.94 }}
+            initial={{ opacity: 0, y: 12, scale: 0.85 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.94 }}
-            transition={{ duration: 0.14 }}
-            onClick={() => setCollapsed(false)}
+            exit={{ opacity: 0, y: 8, scale: 0.85 }}
+            whileTap={{ scale: 0.92 }}
+            transition={{ type: "spring", stiffness: 360, damping: 24 }}
+            onClick={() => toggleCollapse(false)}
             className="site-dock-panel"
             style={{
               pointerEvents: "auto",
+              width: isMobile ? "52px" : "auto",
+              height: isMobile ? "52px" : "auto",
+              padding: isMobile ? 0 : "9px 16px",
+              borderRadius: "999px",
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: "8px",
-              padding: "8px 15px",
-              borderRadius: "999px",
               color: "#f5f5f5",
               cursor: "pointer",
+              position: "relative",
               fontFamily: "var(--font-mono), monospace",
               fontSize: "0.75rem",
             }}
-            aria-label="Expand navigation dock"
+            aria-label={`Open navigation menu (${activeLabel})`}
+            title={`Menu · ${activeLabel}`}
           >
+            <LayoutGrid size={19} strokeWidth={1.8} />
+            {!isMobile && <span>{activeLabel}</span>}
             <span
               style={{
+                position: isMobile ? "absolute" : "static",
+                top: isMobile ? "10px" : undefined,
+                right: isMobile ? "10px" : undefined,
                 width: "6px",
                 height: "6px",
                 borderRadius: "999px",
                 backgroundColor: "#6ee7b7",
               }}
             />
-            <span>Menu · {activeLabel}</span>
-            <ChevronUp size={14} style={{ opacity: 0.78 }} />
           </motion.button>
         ) : (
           <motion.nav
             key="dock-expanded"
-            initial={{ opacity: 0, y: 10, scale: 0.96 }}
+            initial={{ opacity: 0, y: 14, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.96 }}
-            transition={{ duration: 0.14 }}
+            exit={{ opacity: 0, y: 10, scale: 0.92 }}
+            transition={{ type: "spring", stiffness: 340, damping: 26 }}
             onMouseMove={(e) => {
-              if (!isCompact) mouseX.set(e.clientX);
+              if (!isMobile) mouseX.set(e.clientX);
             }}
             onMouseLeave={() => mouseX.set(Infinity)}
             className={`site-dock-panel ${className}`}
-            style={{
-              pointerEvents: "auto",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: `${itemGap}px`,
-              padding: isTiny ? "7px 10px 9px" : isCompact ? "8px 16px 10px" : "10px 24px 12px",
-              borderRadius: "18px",
-              maxWidth: "calc(100vw - 16px)",
-              overflowX: isTiny ? "auto" : "visible",
-            }}
+            style={
+              isMobile
+                ? {
+                    pointerEvents: "auto",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(6, minmax(0, 1fr))",
+                    gap: "8px",
+                    padding: "10px 12px",
+                    borderRadius: "20px",
+                    width: "fit-content",
+                    maxWidth: "calc(100vw - 20px)",
+                    justifyItems: "center",
+                    alignItems: "center",
+                  }
+                : {
+                    pointerEvents: "auto",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: `${itemGap}px`,
+                    padding: isTablet ? "8px 16px 10px" : "10px 24px 12px",
+                    borderRadius: "18px",
+                    maxWidth: "calc(100vw - 16px)",
+                  }
+            }
             aria-label="Portfolio navigation dock"
           >
             {items.map((item) => (
@@ -286,22 +339,49 @@ const Dock = ({
                 maxScale={maxScale}
                 distance={distance}
                 springConfig={spring}
+                isMobile={isMobile}
+                onNavigate={isMobile ? () => setCollapsed(true) : undefined}
               />
             ))}
 
-            <div
-              style={{
-                width: "1px",
-                height: `${Math.round(adjustedBase * 0.58)}px`,
-                backgroundColor: "#2e2e2e",
-                margin: "0 2px",
-                flexShrink: 0,
-              }}
-            />
+            {!isMobile && (
+              <div
+                style={{
+                  width: "1px",
+                  height: `${Math.round(adjustedBase * 0.56)}px`,
+                  backgroundColor: "#2e2e32",
+                  margin: "0 2px",
+                  flexShrink: 0,
+                }}
+              />
+            )}
 
             <motion.button
               type="button"
-              onClick={() => setCollapsed(true)}
+              onClick={toggleSound}
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.9 }}
+              title={muted ? "Unmute sound FX" : "Mute sound FX"}
+              aria-label={muted ? "Unmute sound effects" : "Mute sound effects"}
+              className="site-dock-item"
+              style={{
+                width: adjustedBase,
+                height: adjustedBase,
+                borderRadius: "11px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: muted ? "#6b7280" : "#6ee7b7",
+                cursor: "pointer",
+                flexShrink: 0,
+              }}
+            >
+              {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+            </motion.button>
+
+            <motion.button
+              type="button"
+              onClick={() => toggleCollapse(true)}
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.9 }}
               title="Minimize dock"
@@ -319,7 +399,7 @@ const Dock = ({
                 flexShrink: 0,
               }}
             >
-              <ChevronDown size={isTiny ? 14 : 16} />
+              <ChevronDown size={16} />
             </motion.button>
           </motion.nav>
         )}

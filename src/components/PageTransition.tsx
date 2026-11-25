@@ -14,9 +14,9 @@ export default function PageTransition({ children }: { children: React.ReactNode
       <motion.div
         key={pathname}
         className="transition-wrapper"
-        initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+        initial={{ opacity: 0, y: 14, filter: "blur(5px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.36, ease: EASE_OUT_CUBIC }}
+        transition={{ duration: 0.54, ease: EASE_OUT_CUBIC }}
       >
         {children}
       </motion.div>

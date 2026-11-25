@@ -17,7 +17,7 @@ interface WordRevealProps {
 }
 
 /**
- * Word-by-word entrance with subtle rise and blur-to-crisp focus.
+ * Word-by-word entrance with unhurried rise and blur-to-crisp focus.
  */
 export function WordReveal({
   children,
@@ -25,14 +25,14 @@ export function WordReveal({
   className,
   style,
   delay = 0,
-  stagger = 0.024,
-  duration = 0.38,
+  stagger = 0.036,
+  duration = 0.55,
   inView = false,
 }: WordRevealProps) {
   const words = useMemo(() => children.trim().split(/\s+/), [children]);
   const Tag = as;
 
-  const capDelay = Math.min(words.length * stagger, 0.52);
+  const capDelay = Math.min(words.length * stagger, 0.85);
   const step = words.length > 1 ? capDelay / words.length : stagger;
 
   return (
@@ -41,7 +41,7 @@ export function WordReveal({
         inView ? (
           <motion.span
             key={`${idx}-${word}`}
-            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+            initial={{ opacity: 0, y: 11, filter: "blur(4px)" }}
             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, amount: 0.12 }}
             transition={{
@@ -56,7 +56,7 @@ export function WordReveal({
         ) : (
           <motion.span
             key={`${idx}-${word}`}
-            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+            initial={{ opacity: 0, y: 11, filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{
               duration,
@@ -84,14 +84,14 @@ interface RevealBlockProps {
 }
 
 /**
- * Section or card entrance with optional spring hover lift.
+ * Section or card entrance with deliberate easing and optional spring hover lift.
  */
 export function RevealBlock({
   children,
   className,
   style,
   delay = 0,
-  y = 16,
+  y = 20,
   inView = true,
   interactive = false,
 }: RevealBlockProps) {
@@ -99,7 +99,7 @@ export function RevealBlock({
     ? {
         whileHover: {
           y: -3,
-          transition: { type: "spring" as const, stiffness: 360, damping: 26 },
+          transition: { type: "spring" as const, stiffness: 320, damping: 24 },
         },
         whileTap: { scale: 0.992 },
       }
@@ -113,7 +113,7 @@ export function RevealBlock({
         initial={{ opacity: 0, y, scale: 0.99 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.08 }}
-        transition={{ duration: 0.44, delay, ease: EASE_OUT_CUBIC }}
+        transition={{ duration: 0.62, delay, ease: EASE_OUT_CUBIC }}
         {...hoverProps}
       >
         {children}
@@ -127,7 +127,7 @@ export function RevealBlock({
       style={style}
       initial={{ opacity: 0, y, scale: 0.99 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.44, delay, ease: EASE_OUT_CUBIC }}
+      transition={{ duration: 0.62, delay, ease: EASE_OUT_CUBIC }}
       {...hoverProps}
     >
       {children}
@@ -143,7 +143,7 @@ export function FloatingElement({
   className,
   style,
   amplitude = 4,
-  duration = 5.2,
+  duration = 5.6,
 }: {
   children: React.ReactNode;
   className?: string;

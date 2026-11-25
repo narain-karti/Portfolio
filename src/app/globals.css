@@ -563,6 +563,27 @@ a {
   color: #6ee7b7;
 }
 
+/* Subtle bottom atmospheric blur across the entire site */
+.bottom-blur-scrim {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 88px;
+  pointer-events: none;
+  z-index: 80000;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.8) 0%,
+    rgba(10, 10, 10, 0.28) 54%,
+    rgba(10, 10, 10, 0) 100%
+  );
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 18%, rgba(0, 0, 0, 0.55) 60%, transparent 100%);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 18%, rgba(0, 0, 0, 0.55) 60%, transparent 100%);
+}
+
 /* =========================================================
    Shared Subpage Shell & Global Heading Scale
    ========================================================= */

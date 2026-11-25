@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import PortfolioDock from "../components/PortfolioDock";
 import PageTransition from "../components/PageTransition";
+import SoundFXController from "../components/SoundFXController";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -50,7 +51,9 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <SoundFXController />
         <PageTransition>{children}</PageTransition>
+        <div className="bottom-blur-scrim" aria-hidden="true" />
         <PortfolioDock />
       </body>
     </html>
