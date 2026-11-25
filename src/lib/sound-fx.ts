@@ -153,3 +153,32 @@ export function playToggle(open: boolean): void {
     // ignore
   }
 }
+
+/**
+ * Cinematic harmonic chord swell for the initial name blur-to-text entrance.
+ */
+export function playIntroChime(): boolean {
+  const ctx = getCtx();
+  if (!ctx || ctx.state !== "running") return false;
+  try {
+    const now = ctx.currentTime;
+    const freqs = [196, 293.66, 392, 587.33]; // G3 - D4 - G4 - D5 calm open fifth chord
+    freqs.forEach((f, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = idx === 0 ? "triangle" : "sine";
+      osc.frequency.setValueAtTime(f * 0.985, now + idx * 0.055);
+      osc.frequency.exponentialRampToValueAtTime(f, now + idx * 0.055 + 0.45);
+      gain.gain.setValueAtTime(0.0001, now + idx * 0.055);
+      gain.gain.linearRampToValueAtTime(0.022 / (idx * 0.35 + 1), now + idx * 0.055 + 0.18);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.15 + idx * 0.08);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + idx * 0.055);
+      osc.stop(now + 1.35 + idx * 0.08);
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}

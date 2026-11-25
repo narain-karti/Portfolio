@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, GitCommit } from "lucide-react";
 import { WordReveal, RevealBlock } from "../../../components/MotionPrimitives";
+import ProjectHairlineCard from "../../../components/ProjectHairlineCard";
 import { BLOG_POSTS } from "../../../data/blogs";
 
 export function generateStaticParams() {
@@ -70,6 +71,13 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
           }}
         >
           <Image src={post.coverImage} alt={post.projectTitle} fill style={{ objectFit: "cover" }} priority />
+        </RevealBlock>
+
+        <RevealBlock delay={0.14}>
+          <ProjectHairlineCard
+            projectKey={post.slug}
+            label={`${post.projectTitle} · INTERACTIVE ARCHITECTURE`}
+          />
         </RevealBlock>
 
         {/* Narrative Sections */}

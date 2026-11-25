@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, BookOpen, Copy, Check, X, ArrowRight } from "lucide-react";
 import HairlineFigure from "../../components/HairlineFigure";
 import { WordReveal, RevealBlock } from "../../components/MotionPrimitives";
-import { pipelineLayersFigure } from "../../data/hairline-figures";
+import { getProjectHairlineFigure } from "../../data/hairline-figures";
 import { FLAGSHIP_PROJECTS, OTHER_REPOS, type WorkProject } from "../../data/portfolio-data";
 
 const CATEGORIES = [
@@ -161,6 +161,24 @@ function WorkContent() {
       }
     }
   }, [searchParams]);
+
+  // Lock background page scroll cleanly while the project dossier drawer is open
+  useEffect(() => {
+    if (!activeStudy) return;
+    const prevHtml = document.documentElement.style.overflow;
+    const prevBody = document.body.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveStudy(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.documentElement.style.overflow = prevHtml;
+      document.body.style.overflow = prevBody;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [activeStudy]);
 
   const openStudy = (study: WorkProject) => {
     setHoveredStep(-1);
@@ -328,6 +346,8 @@ function WorkContent() {
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 320, damping: 34 }}
               onClick={(e) => e.stopPropagation()}
+              onWheel={(e) => e.stopPropagation()}
+              className="dossier-drawer-scroll"
               style={{
                 width: "100%",
                 maxWidth: "660px",
@@ -335,6 +355,7 @@ function WorkContent() {
                 background: "#111112",
                 borderLeft: "1px solid #26262a",
                 overflowY: "auto",
+                overscrollBehavior: "contain",
                 padding: "2rem",
               }}
             >
@@ -450,7 +471,7 @@ function WorkContent() {
                     }}
                   >
                     <HairlineFigure
-                      figure={pipelineLayersFigure}
+                      figure={getProjectHairlineFigure(activeStudy.id)}
                       plateColor="#131314"
                       activeStep={hoveredStep}
                       onStepHover={setHoveredStep}

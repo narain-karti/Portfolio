@@ -686,3 +686,646 @@ export const terminalRigFigure: HairlineFigureSpec = {
     };
   },
 };
+
+/**
+ * 5. DATADOC Ladder — 4 staggered Arrow/Polars data slabs inside a collector tray.
+ * Hovering or focusing a stage lifts it and spreads neighbors staggered by distance.
+ */
+export const datadocLadderFigure: HairlineFigureSpec = {
+  name: "datadoc-ladder",
+  means: "Four Arrow data slabs lift and part staggered by distance from the inspected stage.",
+  range: [20, 42, 75],
+  tour: [
+    [140, 155],
+    [200, 150],
+    [260, 145],
+    null,
+  ],
+  mount({ stage, svg, read }, value, onStepHover) {
+    const bag = disposer();
+    const N = 4, GAP = 24, H = 68, REST_Z = [6, 12, 8, 14];
+    let stag = value, act = -1;
+
+    const C = Cam(45, 0.5, 1.56);
+    fit(C, [[-60, -44, -4], [60, 44, -4], [60, -44, -4], [-60, 44, -4], [0, 0, 56]], 200, 166);
+    const P = proj(C), front = facing(C);
+
+    const g = mk("g", {}, svg);
+    const [tr, ti] = rings(-56, -42, 56, 42, 8, 2);
+    put(solid(g), prism(P, front, tr, ti, -4, 0));
+
+    const slabs = Array.from({ length: N }, (_, i) => {
+      const x0 = -44 + i * GAP;
+      const [ring, inner] = rings(x0, -H / 2, x0 + 16, H / 2, 3.2, 1.0);
+      const el = solid(g);
+      const dots = Array.from({ length: N }, (_, k) =>
+        flatDot(el.g, C, 0.65, k === i ? "dot m" : "dot off")
+      );
+      return { i, cx: x0 + 8, ring, inner, el, dots, zTw: tween(REST_Z[i]), drawn: NaN };
+    });
+
+    function drawSlab(s: (typeof slabs)[number], now: number) {
+      const z = tval(s.zTw, now);
+      if (z === s.drawn) return;
+      s.drawn = z;
+      put(s.el, prism(P, front, s.ring, s.inner, 0, z));
+      s.dots.forEach((d, k) => place(d, P(s.cx, -H / 2 + 8 + k * 7.5, z)));
+    }
+
+    function sync(now: number) {
+      const lit = act >= 0 ? act : 1;
+      const from = act >= 0 ? act : 1;
+      slabs.forEach((s, i) => {
+        const delay = Math.abs(i - from) * stag;
+        const target = act < 0 ? REST_Z[i] : i === act ? 44 : clamp(REST_Z[i] + (2 - Math.abs(i - act)) * 5, 4, 30);
+        tset(s.zTw, target, now, delay);
+        const on = i === lit;
+        s.el.sil.classList.toggle("hi", on);
+        s.dots[i].className.baseVal = on ? "dot" : "dot m";
+      });
+    }
+
+    const B = register(stage, (_dt: number, now: number) => {
+      let moving = false;
+      for (const s of slabs) {
+        drawSlab(s, now);
+        if (!tdone(s.zTw, now)) moving = true;
+      }
+      return moving;
+    });
+    bag.add(B.unregister);
+
+    const restCenters = slabs.map((s) => P(s.cx, 0, REST_Z[s.i])[0]);
+    function setActive(next: number) {
+      if (next === act) return;
+      act = next;
+      read.textContent = act < 0 ? "rest" : `stage 0${act + 1}`;
+      onStepHover?.(act);
+      sync(performance.now());
+      B.wake();
+    }
+
+    function hit(pt: [number, number]) {
+      if (pt[1] < 60 || pt[1] > 265) return -1;
+      let best = -1, bestD = Infinity;
+      restCenters.forEach((cx, i) => {
+        const d = Math.abs(pt[0] - cx);
+        if (d < bestD && d < 32) {
+          bestD = d;
+          best = i;
+        }
+      });
+      return best;
+    }
+
+    sync(performance.now());
+    slabs.forEach((s) => drawSlab(s, performance.now()));
+    bag.add(pointer(stage, { move: (p: [number, number]) => setActive(hit(p)), leave: () => setActive(-1) }));
+    bag.add(() => svg.replaceChildren());
+
+    return {
+      set: (v: number) => { stag = v; },
+      focusStep: (idx: number) => setActive(idx >= 0 && idx < N ? idx : -1),
+      destroy: bag.dispose,
+    };
+  },
+};
+
+/**
+ * 6. MELV / Project K Corridor — 5 stepped edge-vision gantry pylons along an avenue deck.
+ */
+export const melvCorridorFigure: HairlineFigureSpec = {
+  name: "melv-corridor",
+  means: "Five intersection pylons ripple along a street corridor to track the active edge node.",
+  range: [22, 42, 68],
+  tour: [
+    [135, 165],
+    [200, 165],
+    [265, 165],
+    null,
+  ],
+  mount({ stage, svg, read }, value, onStepHover) {
+    const bag = disposer();
+    const N = 5, REST_H = [12, 22, 16, 28, 14];
+    let R = value, act = -1;
+
+    const C = Cam(45, 0.5, 1.54);
+    fit(C, [[-72, -32, -4], [72, 32, -4], [72, -32, -4], [-72, 32, -4], [0, 0, 56]], 200, 166);
+    const P = proj(C), front = facing(C);
+
+    const g = mk("g", {}, svg);
+    const [dr, di] = rings(-68, -28, 68, 28, 8, 2);
+    put(solid(g), prism(P, front, dr, di, -4, 0));
+    mk("path", { d: HL.seg(P(-58, 0, 0.2), P(58, 0, 0.2)), class: "nf dash lo" }, g);
+
+    const nodes = Array.from({ length: N }, (_, i) => {
+      const cx = -48 + i * 24;
+      const [ring, inner] = rings(cx - 8, -12, cx + 8, 12, 3, 1);
+      const el = solid(g);
+      const dot = flatDot(el.g, C, 0.72, i === 3 ? "dot" : "dot m");
+      return { i, cx, ring, inner, el, dot, sp: spring(REST_H[i], { eps: 0.04 }), drawn: NaN };
+    });
+
+    function drawNode(n: (typeof nodes)[number]) {
+      const h = Math.max(2, n.sp.x);
+      if (h === n.drawn) return;
+      n.drawn = h;
+      put(n.el, prism(P, front, n.ring, n.inner, 0, h));
+      place(n.dot, P(n.cx, 0, h));
+    }
+
+    function sync() {
+      const lit = act >= 0 ? act : 3;
+      nodes.forEach((n, i) => {
+        if (act < 0) {
+          n.sp.t = REST_H[i];
+        } else {
+          const dist = Math.abs(n.cx - nodes[act].cx);
+          const wave = clamp(1 - dist / R, 0, 1);
+          n.sp.t = i === act ? 48 : clamp(REST_H[i] + wave * 18, 8, 36);
+        }
+        const on = i === lit;
+        n.el.sil.classList.toggle("hi", on);
+        n.dot.className.baseVal = on ? "dot" : "dot m";
+      });
+    }
+
+    const B = register(stage, (dt: number) => {
+      let moving = false;
+      for (const n of nodes) {
+        if (stepS(n.sp, dt)) moving = true;
+        drawNode(n);
+      }
+      return moving;
+    });
+    bag.add(B.unregister);
+
+    function setActive(next: number) {
+      if (next === act) return;
+      act = next;
+      read.textContent = act < 0 ? "rest" : `node 0${act + 1}`;
+      onStepHover?.(Math.min(act, 3));
+      sync();
+      B.wake();
+    }
+
+    function hit(pt: [number, number]) {
+      const w = unproj(C, pt[0], pt[1], 14);
+      if (Math.abs(w[1]) > 34) return -1;
+      let best = -1, bestD = Infinity;
+      nodes.forEach((n, i) => {
+        const d = Math.abs(w[0] - n.cx);
+        if (d < bestD && d <= 20) {
+          bestD = d;
+          best = i;
+        }
+      });
+      return best;
+    }
+
+    sync();
+    nodes.forEach(drawNode);
+    bag.add(pointer(stage, { move: (p: [number, number]) => setActive(hit(p)), leave: () => setActive(-1) }));
+    bag.add(() => svg.replaceChildren());
+
+    return {
+      set: (v: number) => { R = v; sync(); B.wake(); },
+      focusStep: (idx: number) => setActive(idx >= 0 && idx < N ? idx : -1),
+      destroy: bag.dispose,
+    };
+  },
+};
+
+/**
+ * 7. MECH-G Valve Stack — 4 concentric stepped seal rings over an industrial flange.
+ */
+export const mechgValveFigure: HairlineFigureSpec = {
+  name: "mechg-valve",
+  means: "Concentric relief-valve rings separate cleanly to reveal the active verification gate.",
+  range: [8, 16, 26],
+  tour: [
+    [200, 198],
+    [200, 162],
+    [200, 126],
+    null,
+  ],
+  mount({ stage, svg, read }, value, onStepHover) {
+    const bag = disposer();
+    const N = 4, TH = 7, BASE_Z = [4, 18, 32, 46];
+    let gap = value, act = -1;
+
+    const C = Cam(45, 0.5, 1.56);
+    fit(C, [[-56, -56, -4], [56, 56, -4], [56, -56, -4], [-56, 56, -4], [0, 0, 98]], 200, 166);
+    const P = proj(C), front = facing(C);
+
+    const g = mk("g", {}, svg);
+    const [fr, fi] = rings(-52, -52, 52, 52, 16, 2);
+    put(solid(g), prism(P, front, fr, fi, -4, 2));
+
+    const stages = Array.from({ length: N }, (_, i) => {
+      const half = 38 - i * 6.5;
+      const [ring, inner] = rings(-half, -half, half, half, half * 0.65, 1.4);
+      const el = solid(g);
+      const dot = flatDot(el.g, C, 0.7, i === 2 ? "dot" : "dot m");
+      return { i, half, ring, inner, el, dot, zTw: tween(BASE_Z[i]), drawn: NaN };
+    });
+
+    function drawStage(s: (typeof stages)[number], now: number) {
+      const z = tval(s.zTw, now);
+      if (z === s.drawn) return;
+      s.drawn = z;
+      put(s.el, prism(P, front, s.ring, s.inner, z, z + TH));
+      place(s.dot, P(s.half - 6, 0, z + TH));
+    }
+
+    function sync(now: number) {
+      const lit = act >= 0 ? act : 2;
+      stages.forEach((s, i) => {
+        const delay = act >= 0 ? Math.abs(i - act) * 38 : i * 25;
+        const offset = act < 0 ? 0 : i <= act ? 0 : gap + (i - act) * 4;
+        tset(s.zTw, clamp(BASE_Z[i] + offset, 4, 88), now, delay);
+        const on = i === lit;
+        s.el.sil.classList.toggle("hi", on);
+        s.dot.className.baseVal = on ? "dot" : "dot m";
+      });
+    }
+
+    const B = register(stage, (_dt: number, now: number) => {
+      let moving = false;
+      for (const s of stages) {
+        drawStage(s, now);
+        if (!tdone(s.zTw, now)) moving = true;
+      }
+      return moving;
+    });
+    bag.add(B.unregister);
+
+    const restY = stages.map((s, i) => P(0, 0, BASE_Z[i] + TH * 0.5)[1]);
+    function setActive(next: number) {
+      if (next === act) return;
+      act = next;
+      read.textContent = act < 0 ? "rest" : `gate 0${act + 1}`;
+      onStepHover?.(act);
+      sync(performance.now());
+      B.wake();
+    }
+
+    function hit(pt: [number, number]) {
+      let best = -1, bestD = Infinity;
+      restY.forEach((ry, i) => {
+        const d = Math.abs(pt[1] - ry);
+        if (d < bestD && d < 24 && Math.abs(pt[0] - 200) < 95) {
+          bestD = d;
+          best = i;
+        }
+      });
+      return best;
+    }
+
+    sync(performance.now());
+    stages.forEach((s) => drawStage(s, performance.now()));
+    bag.add(pointer(stage, { move: (p: [number, number]) => setActive(hit(p)), leave: () => setActive(-1) }));
+    bag.add(() => svg.replaceChildren());
+
+    return {
+      set: (v: number) => { gap = v; if (act >= 0) { sync(performance.now()); B.wake(); } },
+      focusStep: (idx: number) => setActive(idx >= 0 && idx < N ? idx : -1),
+      destroy: bag.dispose,
+    };
+  },
+};
+
+/**
+ * 8. DECEPTRIX 7-Signal Spectrum — 7 forensic blades inside a slotted scanner bed.
+ */
+export const deceptrixScanFigure: HairlineFigureSpec = {
+  name: "deceptrix-scan",
+  means: "Seven forensic spectrum blades rise under the pointer across a slotted audit bed.",
+  range: [20, 38, 64],
+  tour: [
+    [135, 162],
+    [200, 154],
+    [265, 160],
+    null,
+  ],
+  mount({ stage, svg, read }, value, onStepHover) {
+    const bag = disposer();
+    const N = 7, REST_H = [16, 26, 20, 34, 22, 30, 14];
+    let R = value, act = -1;
+
+    const C = Cam(45, 0.5, 1.54);
+    fit(C, [[-66, -34, -4], [66, 34, -4], [66, -34, -4], [-66, 34, -4], [0, 0, 58]], 200, 166);
+    const P = proj(C), front = facing(C);
+
+    const g = mk("g", {}, svg);
+    const [br, bi] = rings(-62, -30, 62, 30, 7, 1.8);
+    put(solid(g), prism(P, front, br, bi, -4, 0));
+
+    const blades = Array.from({ length: N }, (_, i) => {
+      const cx = -48 + i * 16;
+      const [ring, inner] = rings(cx - 5.2, -20, cx + 5.2, 20, 2.2, 0.8);
+      const el = solid(g);
+      const dot = flatDot(el.g, C, 0.6, i === 3 ? "dot" : "dot m");
+      return { i, cx, ring, inner, el, dot, sp: spring(REST_H[i], { eps: 0.04 }), drawn: NaN };
+    });
+
+    function drawBlade(b: (typeof blades)[number]) {
+      const h = Math.max(2, b.sp.x);
+      if (h === b.drawn) return;
+      b.drawn = h;
+      put(b.el, prism(P, front, b.ring, b.inner, 0, h));
+      place(b.dot, P(b.cx, 12, h));
+    }
+
+    function sync() {
+      const lit = act >= 0 ? act : 3;
+      blades.forEach((b, i) => {
+        if (act < 0) {
+          b.sp.t = REST_H[i];
+        } else {
+          const dist = Math.abs(b.cx - blades[act].cx);
+          const fall = clamp(1 - dist / R, 0, 1);
+          b.sp.t = i === act ? 50 : clamp(REST_H[i] + fall * 16, 8, 38);
+        }
+        const on = i === lit;
+        b.el.sil.classList.toggle("hi", on);
+        b.dot.className.baseVal = on ? "dot" : "dot m";
+      });
+    }
+
+    const B = register(stage, (dt: number) => {
+      let moving = false;
+      for (const b of blades) {
+        if (stepS(b.sp, dt)) moving = true;
+        drawBlade(b);
+      }
+      return moving;
+    });
+    bag.add(B.unregister);
+
+    function setActive(next: number) {
+      if (next === act) return;
+      act = next;
+      read.textContent = act < 0 ? "rest" : `sig 0${act + 1}`;
+      onStepHover?.(act < 0 ? -1 : Math.floor((act / N) * 4));
+      sync();
+      B.wake();
+    }
+
+    function hit(pt: [number, number]) {
+      const w = unproj(C, pt[0], pt[1], 18);
+      if (Math.abs(w[1]) > 34) return -1;
+      let best = -1, bestD = Infinity;
+      blades.forEach((b, i) => {
+        const d = Math.abs(w[0] - b.cx);
+        if (d < bestD && d <= 14) {
+          bestD = d;
+          best = i;
+        }
+      });
+      return best;
+    }
+
+    sync();
+    blades.forEach(drawBlade);
+    bag.add(pointer(stage, { move: (p: [number, number]) => setActive(hit(p)), leave: () => setActive(-1) }));
+    bag.add(() => svg.replaceChildren());
+
+    return {
+      set: (v: number) => { R = v; sync(); B.wake(); },
+      focusStep: (idx: number) => setActive(idx >= 0 ? clamp(idx * 2, 0, N - 1) : -1),
+      destroy: bag.dispose,
+    };
+  },
+};
+
+/**
+ * 9. OTOMO / Beyond Earth Orbital Ring — 5 stepped orbital memory plates around a core hub.
+ */
+export const otomoOrbitFigure: HairlineFigureSpec = {
+  name: "otomo-orbit",
+  means: "Five orbital plates hold varied memory elevations around a central core plinth.",
+  range: [35, 58, 90],
+  tour: [
+    [142, 152],
+    [258, 148],
+    [200, 206],
+    null,
+  ],
+  mount({ stage, svg, read }, value, onStepHover) {
+    const bag = disposer();
+    const N = 5, RAD = 42, REST_H = [12, 20, 28, 16, 22];
+    let reach = value, act = -1;
+
+    const C = Cam(45, 0.5, 1.56);
+    fit(C, [[-68, -68, -4], [68, 68, -4], [68, -68, -4], [-68, 68, -4], [0, 0, 56]], 200, 166);
+    const P = proj(C), front = facing(C);
+
+    const g = mk("g", {}, svg);
+    const [pr, pi] = rings(-64, -64, 64, 64, 14, 2);
+    put(solid(g), prism(P, front, pr, pi, -4, 0));
+
+    const [cr, ci] = rings(-14, -14, 14, 14, 14, 1.4);
+    put(solid(g), prism(P, front, cr, ci, 0, 8));
+    const hubDot = flatDot(g, C, 0.85, "dot");
+    place(hubDot, P(0, 0, 8));
+
+    const raw = Array.from({ length: N }, (_, i) => {
+      const a = rad(i * 72 - 18);
+      const cx = Math.cos(a) * RAD, cy = Math.sin(a) * RAD;
+      const [ring, inner] = rings(cx - 11, cy - 11, cx + 11, cy + 11, 4, 1);
+      return { i, cx, cy, ring, inner };
+    }).sort((a, b) => a.cx + a.cy - (b.cx + b.cy));
+
+    const plates = raw.map((r) => {
+      const el = solid(g);
+      const dot = flatDot(el.g, C, 0.62, r.i === 2 ? "dot" : "dot m");
+      return { ...r, el, dot, sp: spring(REST_H[r.i], { eps: 0.04 }), drawn: NaN };
+    });
+
+    function drawPlate(p: (typeof plates)[number]) {
+      const h = Math.max(2, p.sp.x);
+      if (h === p.drawn) return;
+      p.drawn = h;
+      put(p.el, prism(P, front, p.ring, p.inner, 0, h));
+      place(p.dot, P(p.cx, p.cy, h));
+    }
+
+    function sync() {
+      const lit = act >= 0 ? act : 2;
+      plates.forEach((p) => {
+        if (act < 0) {
+          p.sp.t = REST_H[p.i];
+        } else {
+          const chosen = plates.find((q) => q.i === act) ?? plates[0];
+          const d = Math.hypot(p.cx - chosen.cx, p.cy - chosen.cy);
+          const w = clamp(1 - d / (reach * 1.4), 0, 1);
+          p.sp.t = p.i === act ? 46 : clamp(REST_H[p.i] + w * 10, 8, 34);
+        }
+        const on = p.i === lit;
+        p.el.sil.classList.toggle("hi", on);
+        p.dot.className.baseVal = on ? "dot" : "dot m";
+      });
+    }
+
+    const B = register(stage, (dt: number) => {
+      let moving = false;
+      for (const p of plates) {
+        if (stepS(p.sp, dt)) moving = true;
+        drawPlate(p);
+      }
+      return moving;
+    });
+    bag.add(B.unregister);
+
+    function setActive(next: number) {
+      if (next === act) return;
+      act = next;
+      read.textContent = act < 0 ? "rest" : `mem 0${act + 1}`;
+      onStepHover?.(Math.min(act, 3));
+      sync();
+      B.wake();
+    }
+
+    function hit(pt: [number, number]) {
+      let best = -1, bestD = Infinity;
+      for (const p of plates) {
+        const w = unproj(C, pt[0], pt[1], REST_H[p.i]);
+        const d = Math.hypot(p.cx - w[0], p.cy - w[1]);
+        if (d < bestD) {
+          bestD = d;
+          best = p.i;
+        }
+      }
+      return bestD <= reach * 0.65 ? best : -1;
+    }
+
+    sync();
+    plates.forEach(drawPlate);
+    bag.add(pointer(stage, { move: (p: [number, number]) => setActive(hit(p)), leave: () => setActive(-1) }));
+    bag.add(() => svg.replaceChildren());
+
+    return {
+      set: (v: number) => { reach = v; },
+      focusStep: (idx: number) => setActive(idx >= 0 && idx < N ? idx : -1),
+      destroy: bag.dispose,
+    };
+  },
+};
+
+/**
+ * 10. AxoWeb / Elio Buffered Queue — 3 parallel queue channels with packets advancing smoothly.
+ * Hovering highlights and lifts a channel's inspection gate (Dilate time / inspect lane).
+ */
+export const axowebQueueFigure: HairlineFigureSpec = {
+  name: "axoweb-queue",
+  means: "Three buffered worker channels elevate their active lane and packet gate under the pointer.",
+  range: [12, 24, 40],
+  tour: [
+    [175, 130],
+    [200, 165],
+    [225, 200],
+    null,
+  ],
+  mount({ stage, svg, read }, value, onStepHover) {
+    const bag = disposer();
+    const LANES = 3, LANE_Y = [-28, 0, 28], REST_Z = [10, 16, 12];
+    let lift = value, act = -1;
+
+    const C = Cam(45, 0.5, 1.54);
+    fit(C, [[-64, -46, -4], [64, 46, -4], [64, -46, -4], [-64, 46, -4], [0, 0, 56]], 200, 166);
+    const P = proj(C), front = facing(C);
+
+    const g = mk("g", {}, svg);
+    const [br, bi] = rings(-60, -44, 60, 44, 8, 2);
+    put(solid(g), prism(P, front, br, bi, -4, 0));
+
+    const lanes = Array.from({ length: LANES }, (_, i) => {
+      const cy = LANE_Y[i];
+      const [ring, inner] = rings(-48, cy - 8, 48, cy + 8, 3, 1);
+      const el = solid(g);
+      const dots = Array.from({ length: 3 }, (__, k) =>
+        flatDot(el.g, C, 0.65, k === 1 ? "dot m" : "dot off")
+      );
+      return { i, cy, ring, inner, el, dots, zTw: tween(REST_Z[i]), drawn: NaN };
+    });
+
+    function drawLane(l: (typeof lanes)[number], now: number) {
+      const h = tval(l.zTw, now);
+      if (h === l.drawn) return;
+      l.drawn = h;
+      put(l.el, prism(P, front, l.ring, l.inner, 0, h));
+      l.dots.forEach((d, k) => place(d, P(-26 + k * 26, l.cy, h)));
+    }
+
+    function sync(now: number) {
+      const lit = act >= 0 ? act : 1;
+      lanes.forEach((l, i) => {
+        const delay = act >= 0 ? Math.abs(i - act) * 40 : 0;
+        const target = act < 0 ? REST_Z[i] : i === act ? 14 + lift : REST_Z[i] - 2;
+        tset(l.zTw, target, now, delay);
+        const on = i === lit;
+        l.el.sil.classList.toggle("hi", on);
+        l.dots.forEach((d, k) => {
+          d.className.baseVal = on ? (k === 1 ? "dot" : "dot m") : "dot off";
+        });
+      });
+    }
+
+    const B = register(stage, (_dt: number, now: number) => {
+      let moving = false;
+      for (const l of lanes) {
+        drawLane(l, now);
+        if (!tdone(l.zTw, now)) moving = true;
+      }
+      return moving;
+    });
+    bag.add(B.unregister);
+
+    function setActive(next: number) {
+      if (next === act) return;
+      act = next;
+      read.textContent = act < 0 ? "rest" : `lane 0${act + 1}`;
+      onStepHover?.(act);
+      sync(performance.now());
+      B.wake();
+    }
+
+    function hit(pt: [number, number]) {
+      const w = unproj(C, pt[0], pt[1], 12);
+      if (Math.abs(w[0]) > 54) return -1;
+      let best = -1, bestD = Infinity;
+      lanes.forEach((l, i) => {
+        const d = Math.abs(w[1] - l.cy);
+        if (d < bestD && d <= 14) {
+          bestD = d;
+          best = i;
+        }
+      });
+      return best;
+    }
+
+    sync(performance.now());
+    lanes.forEach((l) => drawLane(l, performance.now()));
+    bag.add(pointer(stage, { move: (p: [number, number]) => setActive(hit(p)), leave: () => setActive(-1) }));
+    bag.add(() => svg.replaceChildren());
+
+    return {
+      set: (v: number) => { lift = v; if (act >= 0) { sync(performance.now()); B.wake(); } },
+      focusStep: (idx: number) => setActive(idx >= 0 ? clamp(idx, 0, LANES - 1) : -1),
+      destroy: bag.dispose,
+    };
+  },
+};
+
+export function getProjectHairlineFigure(projectKey: string): HairlineFigureSpec {
+  const key = projectKey.toLowerCase();
+  if (key.includes("datadoc")) return datadocLadderFigure;
+  if (key.includes("melv") || key.includes("project-k") || key === "project k") return melvCorridorFigure;
+  if (key.includes("mech-g") || key.includes("mechg")) return mechgValveFigure;
+  if (key.includes("deceptrix")) return deceptrixScanFigure;
+  if (key.includes("quorum")) return quorumRingFigure;
+  if (key.includes("otomo") || key.includes("beyond-earth")) return otomoOrbitFigure;
+  if (key.includes("axoweb") || key.includes("elio") || key.includes("walkthrough")) return axowebQueueFigure;
+  return pipelineLayersFigure;
+}

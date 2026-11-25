@@ -563,25 +563,49 @@ a {
   color: #6ee7b7;
 }
 
-/* Subtle bottom atmospheric blur across the entire site */
+/* Subtle bottom atmospheric blur across the entire site so scrolling emerges from below */
 .bottom-blur-scrim {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 88px;
+  height: 112px;
   pointer-events: none;
   z-index: 80000;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   background: linear-gradient(
     to top,
-    rgba(10, 10, 10, 0.8) 0%,
-    rgba(10, 10, 10, 0.28) 54%,
+    rgba(10, 10, 10, 0.9) 0%,
+    rgba(10, 10, 10, 0.45) 45%,
     rgba(10, 10, 10, 0) 100%
   );
-  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 18%, rgba(0, 0, 0, 0.55) 60%, transparent 100%);
-  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 18%, rgba(0, 0, 0, 0.55) 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 24%, rgba(0, 0, 0, 0.72) 56%, transparent 100%);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 24%, rgba(0, 0, 0, 0.72) 56%, transparent 100%);
+}
+
+/* Isolated scrollbar for project architecture drawer */
+.dossier-drawer-scroll {
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #3a3a42 #111112;
+}
+
+.dossier-drawer-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dossier-drawer-scroll::-webkit-scrollbar-track {
+  background: #111112;
+}
+
+.dossier-drawer-scroll::-webkit-scrollbar-thumb {
+  background: #33333a;
+  border-radius: 999px;
+}
+
+.dossier-drawer-scroll::-webkit-scrollbar-thumb:hover {
+  background: #6ee7b7;
 }
 
 /* =========================================================

@@ -311,7 +311,7 @@ datadoc evaluate titanic.csv --target survived --ablation`,
     commitCount: "v2.0 Engine · 6 AI IDEs",
     readTime: "4 min read",
     category: "Developer Tooling & Motion Systems",
-    coverImage: "/images/hardware_lab.jpg",
+    coverImage: "/images/walkthrough_showcase.jpg",
     summary:
       "Fusing Playwright capture, OneTake spring cursor physics, bounded focus cameras, event-scored SFX, and a universal installer across Antigravity, Claude Code, Cursor, Windsurf, Copilot, and Cline.",
     repoUrl: "https://github.com/narain-karti/Walkthrough",

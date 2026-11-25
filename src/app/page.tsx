@@ -7,56 +7,47 @@ import Image from "next/image";
 import HairlineFigure from "../components/HairlineFigure";
 import { WordReveal, FloatingElement } from "../components/MotionPrimitives";
 import { edgeFieldFigure, pipelineLayersFigure } from "../data/hairline-figures";
+import { playIntroChime, playTransition } from "../lib/sound-fx";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
-const INTRO_FULL_NAME = "Narain Karti";
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+const INTRO_NAME_CHARS = "Narain Karti".split("");
+const EASE_CINEMATIC = [0.16, 1, 0.3, 1] as const;
+
+// Module-level flag: plays cinematic entrance on every fresh site load/refresh, skips on internal back-navigation
+let hasPlayedSiteEntry = false;
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(false);
   const [introReady, setIntroReady] = useState(false);
-  const [typedName, setTypedName] = useState("");
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const dismissIntro = useCallback(() => {
     setShowIntro(false);
     setIntroReady(true);
-    try {
-      sessionStorage.setItem("nk_intro_seen", "1");
-    } catch {
-      // ignore sessionStorage restrictions
-    }
+    hasPlayedSiteEntry = true;
+    playTransition();
   }, []);
 
   useEffect(() => {
-    try {
-      if (sessionStorage.getItem("nk_intro_seen") === "1") {
-        setIntroReady(true);
-        return;
-      }
-    } catch {
-      setIntroReady(true);
-      return;
-    }
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (hasPlayedSiteEntry || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      hasPlayedSiteEntry = true;
       setIntroReady(true);
       return;
     }
 
     setShowIntro(true);
-    let idx = 0;
-    let holdTimer: ReturnType<typeof setTimeout> | null = null;
+    let soundPlayed = playIntroChime();
 
-    // Wait deliberately until the full name finishes typing, then hold before fading out
-    const typeTimer = setInterval(() => {
-      idx++;
-      setTypedName(INTRO_FULL_NAME.slice(0, idx));
-      if (idx >= INTRO_FULL_NAME.length) {
-        clearInterval(typeTimer);
-        holdTimer = setTimeout(() => dismissIntro(), 820);
+    // If browser blocked WebAudio before first gesture, unlock smoothly on first pointer/key event
+    const unlockSound = () => {
+      if (!soundPlayed) {
+        soundPlayed = playIntroChime();
       }
-    }, 92);
+    };
+    window.addEventListener("pointerdown", unlockSound, { once: true, passive: true });
+
+    // Hold cleanly after cinematic blur-to-text completes, then dissolve into the site
+    const holdTimer = setTimeout(() => dismissIntro(), 2450);
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
@@ -66,9 +57,9 @@ export default function Home() {
     window.addEventListener("keydown", onKey);
 
     return () => {
-      clearInterval(typeTimer);
-      if (holdTimer) clearTimeout(holdTimer);
+      clearTimeout(holdTimer);
       window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", unlockSound);
     };
   }, [dismissIntro]);
 
@@ -102,22 +93,57 @@ export default function Home() {
             role="dialog"
             aria-label="Entrance introduction"
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.02, filter: "blur(8px)" }}
-            transition={{ duration: 0.58, ease: EASE_OUT }}
+            exit={{ opacity: 0, scale: 1.03, filter: "blur(12px)" }}
+            transition={{ duration: 0.65, ease: EASE_CINEMATIC }}
           >
             <div className="name-container">
-              <h1>{typedName || "\u00A0"}</h1>
-              <div className="animated-cursor" aria-hidden="true" />
+              <h1 style={{ display: "flex", alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
+                {INTRO_NAME_CHARS.map((ch, idx) => (
+                  <motion.span
+                    key={`${idx}-${ch}`}
+                    initial={{
+                      opacity: 0,
+                      filter: "blur(20px)",
+                      y: 12,
+                      scale: 1.1,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      filter: "blur(0px)",
+                      y: 0,
+                      scale: 1,
+                    }}
+                    transition={{
+                      duration: 1.15,
+                      delay: 0.12 + idx * 0.055,
+                      ease: EASE_CINEMATIC,
+                    }}
+                    style={{
+                      display: "inline-block",
+                      minWidth: ch === " " ? "0.32em" : undefined,
+                    }}
+                  >
+                    {ch === " " ? "\u00A0" : ch}
+                  </motion.span>
+                ))}
+              </h1>
             </div>
             <motion.p
               className="intro-tagline"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.25 }}
+              initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+              animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+              transition={{ duration: 0.9, delay: 0.85, ease: EASE_CINEMATIC }}
             >
               AI systems, data science, and practical engineering
             </motion.p>
-            <span className="intro-skip-hint">Click anywhere or press any key to enter</span>
+            <motion.span
+              className="intro-skip-hint"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.7 }}
+              transition={{ duration: 0.6, delay: 1.1 }}
+            >
+              Click anywhere or press any key to enter
+            </motion.span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -133,7 +159,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 whileHover={{ y: -3, transition: { type: "spring", stiffness: 320, damping: 24 } }}
                 whileTap={{ scale: 0.992 }}
-                transition={{ duration: 0.68, delay: 0.06, ease: EASE_OUT }}
+                transition={{ duration: 0.68, delay: 0.06, ease: EASE_CINEMATIC }}
                 ref={(el) => {
                   cardRefs.current[0] = el;
                 }}
@@ -148,7 +174,7 @@ export default function Home() {
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9, y: 10 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
-                      transition={{ duration: 0.72, delay: 0.22, ease: EASE_OUT }}
+                      transition={{ duration: 0.72, delay: 0.22, ease: EASE_CINEMATIC }}
                       style={{ display: "inline" }}
                     >
                       <FloatingElement amplitude={3.5} duration={5.8} style={{ display: "contents" }}>
@@ -186,7 +212,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 whileHover={{ y: -3, transition: { type: "spring", stiffness: 320, damping: 24 } }}
                 whileTap={{ scale: 0.992 }}
-                transition={{ duration: 0.68, delay: 0.14, ease: EASE_OUT }}
+                transition={{ duration: 0.68, delay: 0.14, ease: EASE_CINEMATIC }}
                 ref={(el) => {
                   cardRefs.current[1] = el;
                 }}
@@ -224,7 +250,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 whileHover={{ y: -3, transition: { type: "spring", stiffness: 320, damping: 24 } }}
                 whileTap={{ scale: 0.992 }}
-                transition={{ duration: 0.68, delay: 0.22, ease: EASE_OUT }}
+                transition={{ duration: 0.68, delay: 0.22, ease: EASE_CINEMATIC }}
                 ref={(el) => {
                   cardRefs.current[2] = el;
                 }}
@@ -256,7 +282,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 whileHover={{ y: -3, transition: { type: "spring", stiffness: 320, damping: 24 } }}
                 whileTap={{ scale: 0.992 }}
-                transition={{ duration: 0.68, delay: 0.3, ease: EASE_OUT }}
+                transition={{ duration: 0.68, delay: 0.3, ease: EASE_CINEMATIC }}
                 ref={(el) => {
                   cardRefs.current[3] = el;
                 }}
@@ -295,7 +321,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   whileHover={{ y: -3, transition: { type: "spring", stiffness: 320, damping: 24 } }}
                   whileTap={{ scale: 0.992 }}
-                  transition={{ duration: 0.68, delay: 0.38, ease: EASE_OUT }}
+                  transition={{ duration: 0.68, delay: 0.38, ease: EASE_CINEMATIC }}
                   ref={(el) => {
                     cardRefs.current[4] = el;
                   }}
@@ -326,7 +352,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   whileHover={{ y: -3, transition: { type: "spring", stiffness: 320, damping: 24 } }}
                   whileTap={{ scale: 0.992 }}
-                  transition={{ duration: 0.68, delay: 0.46, ease: EASE_OUT }}
+                  transition={{ duration: 0.68, delay: 0.46, ease: EASE_CINEMATIC }}
                   ref={(el) => {
                     cardRefs.current[5] = el;
                   }}
