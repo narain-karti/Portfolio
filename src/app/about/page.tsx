@@ -118,6 +118,53 @@ export default function AboutPage() {
           ))}
         </div>
 
+        {/* What I Balance */}
+        <RevealBlock style={{ marginBottom: "4rem" }}>
+          <h2 className="section-heading" style={{ marginBottom: "1.15rem" }}>
+            <WordReveal as="span" inView stagger={0.03}>What I Balance</WordReveal>
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: "1rem" }}>
+            {[
+              {
+                label: "DUAL DEGREES",
+                title: "NIAT & IIT Madras",
+                detail: "B.Tech CSE (AI/ML) at NIAT (8.9 CGPA) alongside B.S. in Data Science at IIT Madras.",
+              },
+              {
+                label: "STARTUP",
+                title: "AxoWeb Technologies",
+                detail: "20+ clients, 15+ shipped builds, ₹10L+ revenue, and BRAVE 2026 Best Innovation & People's Choice.",
+              },
+              {
+                label: "OPEN SOURCE & AI",
+                title: "Shipping Systems",
+                detail: "DATADOC on PyPI, MECH-G offline Gemma 4, Project-MELV 14ms ANPR, and Quorum.",
+              },
+              {
+                label: "COMPETITIONS & LEADERSHIP",
+                title: "Hackathons & Mentorship",
+                detail: "Marinotex 2026 Winner, OpenAI Buildathon ₹3L Runner-Up, DSA, Eduvia & ACEII Joint Secretary.",
+              },
+            ].map((item) => (
+              <div
+                key={item.label}
+                style={{
+                  background: "#131314",
+                  border: "1px solid #242427",
+                  borderRadius: "14px",
+                  padding: "1.2rem",
+                }}
+              >
+                <div className="meta-label meta-label-accent" style={{ marginBottom: "6px" }}>
+                  {item.label}
+                </div>
+                <h3 style={{ fontSize: "1.02rem", color: "#fff", marginBottom: "6px" }}>{item.title}</h3>
+                <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.68)", lineHeight: 1.55 }}>{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </RevealBlock>
+
         {/* National Stage & Project K → Project-MELV Milestone */}
         <RevealBlock style={{ marginBottom: "4rem" }}>
           <div
@@ -269,6 +316,129 @@ export default function AboutPage() {
                   />
                 </div>
               </div>
+            ))}
+          </div>
+        </RevealBlock>
+
+        {/* Marinotex National Hackathon 2026 Win */}
+        <RevealBlock style={{ marginBottom: "4rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "10px",
+              marginBottom: "0.85rem",
+            }}
+          >
+            <h2 className="section-heading">
+              <WordReveal as="span" inView stagger={0.03}>Marinotex National Hackathon 2026</WordReveal>
+            </h2>
+            <Link href="/blog/marinotex-national-hackathon-2026-project-k" className="subtle-link" style={{ color: "#6ee7b7" }}>
+              Read hackathon log →
+            </Link>
+          </div>
+          <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "66ch", marginBottom: "1.4rem", lineHeight: 1.6 }}>
+            Our team won the national-level Marinotex Hackathon 2026 at AMET University (supported by AIM, NITI Aayog) with Project K — receiving strong validation from the jury for both the problem and the direction of our solution.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.15rem" }}>
+            {[
+              {
+                src: "/images/marinotex_pitch.jpg",
+                alt: "Presenting Project K to the Marinotex National Hackathon 2026 jury",
+                caption: "Pitching Project K to the jury · Marinotex 2026",
+              },
+              {
+                src: "/images/marinotex_winners.jpg",
+                alt: "Team holding AMET University Marinotex 2026 certificates supported by AIM NITI Aayog",
+                caption: "National Hackathon Winners · AMET × AIM (NITI Aayog)",
+              },
+            ].map((photo, idx) => (
+              <RevealBlock key={photo.src} className="portrait-card" delay={idx * 0.08} interactive style={{ aspectRatio: "4 / 3" }}>
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: "cover", objectPosition: "center 22%" }}
+                />
+                <div className="portrait-caption">{photo.caption}</div>
+              </RevealBlock>
+            ))}
+          </div>
+        </RevealBlock>
+
+        {/* BRAVE Competition 2026 — AxoWeb Technologies */}
+        <RevealBlock style={{ marginBottom: "4rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "10px",
+              marginBottom: "0.85rem",
+            }}
+          >
+            <h2 className="section-heading">
+              <WordReveal as="span" inView stagger={0.03}>BRAVE Competition 2026 · AxoWeb</WordReveal>
+            </h2>
+            <Link href="/blog/brave-competition-2026-axoweb-awards" className="subtle-link" style={{ color: "#6ee7b7" }}>
+              Read startup story →
+            </Link>
+          </div>
+          <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "68ch", marginBottom: "1.4rem", lineHeight: 1.6 }}>
+            AxoWeb Technologies won both the People&apos;s Choice Award and Best Innovation Award at the national-level BRAVE Competition for student-led startups — alongside conversations with Midhula Devabhaktuni (Founder, Mivi), Google&apos;s Skill Development India head, and A2D Media Group&apos;s CEO.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.15rem" }}>
+            {[
+              {
+                src: "/images/brave_stage_pitch.jpg",
+                alt: "Pitching AxoWeb Technologies on stage at BRAVE Finale 2026",
+                caption: "Pitching AxoWeb on the BRAVE Finale stage",
+              },
+              {
+                src: "/images/brave_solo_award.jpg",
+                alt: "Narain Karti holding the BRAVE Finale 2026 award for AxoWeb Technologies",
+                caption: "People's Choice & Best Innovation · AxoWeb",
+              },
+              {
+                src: "/images/brave_trophy.jpg",
+                alt: "BRAVE Finale 2026 People's Choice Award crystal trophy",
+                caption: "BRAVE Finale 2026 People's Choice Award",
+              },
+              {
+                src: "/images/brave_mivi_founder.jpg",
+                alt: "Team with Midhula Devabhaktuni, Founder of Mivi",
+                caption: "With Midhula Devabhaktuni, Founder of Mivi",
+              },
+              {
+                src: "/images/brave_google_head.jpg",
+                alt: "Team with Google's Skill Development India head",
+                caption: "With Google's Skill Development India head",
+              },
+              {
+                src: "/images/brave_a2d_ceo.jpg",
+                alt: "Team with A2D Media Group CEO and founder",
+                caption: "With A2D Media Group's CEO & Founder",
+              },
+              {
+                src: "/images/brave_team_working.jpg",
+                alt: "Team working together backstage at BRAVE Finale 2026",
+                caption: "Team building backstage at BRAVE Finale",
+              },
+            ].map((photo, idx) => (
+              <RevealBlock key={photo.src} className="portrait-card" delay={idx * 0.05} interactive style={{ aspectRatio: "4 / 3" }}>
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  style={{ objectFit: "cover", objectPosition: "center 22%" }}
+                />
+                <div className="portrait-caption">{photo.caption}</div>
+              </RevealBlock>
             ))}
           </div>
         </RevealBlock>

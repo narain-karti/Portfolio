@@ -109,6 +109,123 @@ export const BLOG_POSTS: ProjectBlogPost[] = [
     ],
   },
   {
+    slug: "marinotex-national-hackathon-2026-project-k",
+    title: "Winning Marinotex National Hackathon 2026 with Project K",
+    projectTitle: "PROJECT K · MARINOTEX",
+    dateRange: "2026 · AMET University × AIM (NITI Aayog)",
+    commitCount: "National Winner · Project K",
+    readTime: "3 min read",
+    category: "Hackathons & Field Notes",
+    coverImage: "/images/marinotex_winners.jpg",
+    summary:
+      "Our team officially won the Marinotex National-Level Hackathon 2026! Presenting Project K against talented innovators from across the country brought strong jury validation for both the problem we are solving and the direction of our solution.",
+    repoUrl: "https://github.com/narain-karti/Project-K",
+    tags: ["Project K", "Marinotex 2026", "National Hackathon", "AIM NITI Aayog", "Edge AI"],
+    sections: [
+      {
+        heading: "1. Pitching Project K to the National Jury",
+        body: [
+          "Competing with talented innovators from across the country at the Marinotex National-Level Hackathon 2026 (hosted at AMET University and supported by Atal Innovation Mission, NITI Aayog) was intense, insightful, and incredibly rewarding.",
+          "In front of the jury panel, we walked through Project K live—demonstrating how real-time traffic intelligence and priority emergency routing can cut gridlock and clear corridors automatically.",
+        ],
+        image: "/images/marinotex_pitch.jpg",
+        imageCaption: "Demonstrating Project K live to the Marinotex 2026 judging panel.",
+      },
+      {
+        heading: "2. Jury Validation & Taking the Momentum Forward",
+        body: [
+          "Project K received strong recognition throughout the hackathon, validating both the urgency of the problem we are tackling and the engineering direction we have chosen.",
+          "The feedback and appreciation from the jury were truly encouraging. Winning the national title gives our team even stronger momentum to keep building and shipping solutions that create real-world impact.",
+        ],
+        image: "/images/marinotex_winners.jpg",
+        imageCaption: "Team holding AMET University Marinotex 2026 Certificates of Merit (Supported by AIM, NITI Aayog).",
+      },
+    ],
+    timeline: [
+      { date: "2026", title: "Live Jury Demonstration", detail: "Pitched Project K's architecture and live prototype to the national Marinotex panel." },
+      { date: "2026", title: "National Hackathon Winner", detail: "Awarded National Winner at Marinotex Hackathon 2026 at AMET University (supported by AIM / NITI Aayog)." },
+    ],
+    lessons: [
+      "Direct jury interrogation sharpens both the real-world problem framing and deployment priorities.",
+      "Carrying field validation across multiple national stages turns a prototype into a durable product direction.",
+    ],
+  },
+  {
+    slug: "brave-competition-2026-axoweb-awards",
+    title: "People's Choice & Best Innovation at BRAVE 2026: Building AxoWeb Technologies",
+    projectTitle: "AXOWEB · BRAVE 2026",
+    dateRange: "2026 · National Student Startup Finale",
+    commitCount: "2 National Awards · AxoWeb Technologies",
+    readTime: "4 min read",
+    category: "Hackathons & Field Notes",
+    coverImage: "/images/brave_solo_award.jpg",
+    summary:
+      "A few months ago, AxoWeb Technologies was just an idea. At the national-level BRAVE Competition 2026 for student-led startups, our team won both the Best Innovation Award and the People's Choice Award.",
+    repoUrl: "https://axoweb.in",
+    tags: ["AxoWeb Technologies", "BRAVE 2026", "People's Choice", "Best Innovation", "Startup"],
+    sections: [
+      {
+        heading: "1. Pitching AxoWeb Technologies on the BRAVE Finale Stage",
+        body: [
+          "A few months ago, this was just an idea. Standing on the national-level BRAVE Competition 2026 stage for student-led startups and walking away with both the Best Innovation Award and the People's Choice Award for AxoWeb Technologies meant far more than a trophy.",
+          "It represents months of late nights, countless iterations, difficult decisions, and a team that refused to stop building—even when things got tough.",
+        ],
+        image: "/images/brave_stage_pitch.jpg",
+        imageCaption: "Pitching AxoWeb Technologies live on the BRAVE Finale 2026 stage.",
+      },
+      {
+        heading: "2. Balancing Dual Degrees, Open Source, Internships & Startup Execution",
+        body: [
+          "For me personally, this journey has been one of the busiest phases of my life. Alongside building AxoWeb Technologies, I was balancing B.Tech CSE (AI/ML) at NIAT, B.S. in Data Science at IIT Madras, open-source contributions, DSA & LeetCode, internships, and hackathons and competitions.",
+          "There were days when it genuinely felt impossible to keep everything moving. Looking back now, every sacrifice feels worth it.",
+        ],
+        image: "/images/brave_team_working.jpg",
+        imageCaption: "Our team working together backstage between rounds at BRAVE Finale 2026.",
+      },
+      {
+        heading: "3. Winning Both Best Innovation & People's Choice",
+        body: [
+          "Receiving both the People's Choice Award and the Best Innovation Award validated the real-world client systems we have been shipping at AxoWeb Technologies.",
+        ],
+        image: "/images/brave_trophy.jpg",
+        imageCaption: "BRAVE Finale 2026 People's Choice Award trophy.",
+      },
+      {
+        heading: "4. Feedback from Midhula Devabhaktuni (Founder, Mivi)",
+        body: [
+          "One of the biggest highlights of BRAVE was interacting with incredible founders, mentors, and industry leaders. A special thanks to Midhula Devabhaktuni, Founder of Mivi, and the entire jury panel for the thoughtful feedback, encouragement, and belief in our vision.",
+          "Their insights have given us even more clarity on where we're headed next.",
+        ],
+        image: "/images/brave_mivi_founder.jpg",
+        imageCaption: "With Midhula Devabhaktuni, Founder of Mivi, at BRAVE Finale 2026.",
+      },
+      {
+        heading: "5. Connecting with Google Skill Development & A2D Media Group",
+        body: [
+          "Beyond the pitch stage, we had the chance to meet and exchange ideas with Google's Skill Development India head and the CEO & Founder of A2D Media Group, one of South India's leading tech creators.",
+        ],
+        image: "/images/brave_google_head.jpg",
+        imageCaption: "With Google's Skill Development India head at BRAVE Finale 2026.",
+      },
+      {
+        heading: "6. Community & Creator Conversations",
+        body: [
+          "Sharing our startup journey with builders, mentors, and tech media leaders at the finale gave us fresh momentum for what AxoWeb Technologies ships next.",
+        ],
+        image: "/images/brave_a2d_ceo.jpg",
+        imageCaption: "With A2D Media Group's CEO & Founder at BRAVE Finale 2026.",
+      },
+    ],
+    timeline: [
+      { date: "2026", title: "National Student Startup Finale", detail: "Pitched AxoWeb Technologies live at the BRAVE Competition 2026." },
+      { date: "2026", title: "Best Innovation & People's Choice", detail: "Awarded both Best Innovation and People's Choice Award for AxoWeb Technologies." },
+    ],
+    lessons: [
+      "Shipping real client outcomes beats pitch-deck theory when founders and operators judge your startup.",
+      "Balancing dual degrees, internships, and a startup requires ruthless prioritization and a team that backs each other.",
+    ],
+  },
+  {
     slug: "datadoc-from-script-to-pypi",
     title: "From a Hackathon Script to PyPI: Killing Data Leakage in 0.42 Seconds with Polars",
     projectTitle: "DATADOC",

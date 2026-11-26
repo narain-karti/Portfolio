@@ -53,7 +53,7 @@ export function playClick(): void {
     bodyOsc.type = "sine";
     bodyOsc.frequency.setValueAtTime(195, now);
     bodyOsc.frequency.exponentialRampToValueAtTime(72, now + 0.032);
-    bodyGain.gain.setValueAtTime(0.065, now);
+    bodyGain.gain.setValueAtTime(0.18, now);
     bodyGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.036);
     bodyOsc.connect(bodyGain);
     bodyGain.connect(ctx.destination);
@@ -66,7 +66,7 @@ export function playClick(): void {
     tickOsc.type = "triangle";
     tickOsc.frequency.setValueAtTime(1650, now);
     tickOsc.frequency.exponentialRampToValueAtTime(620, now + 0.012);
-    tickGain.gain.setValueAtTime(0.028, now);
+    tickGain.gain.setValueAtTime(0.085, now);
     tickGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.014);
     tickOsc.connect(tickGain);
     tickGain.connect(ctx.destination);
@@ -94,7 +94,7 @@ export function playHover(): void {
     osc.type = "sine";
     osc.frequency.setValueAtTime(980, now);
     osc.frequency.exponentialRampToValueAtTime(640, now + 0.014);
-    gain.gain.setValueAtTime(0.014, now);
+    gain.gain.setValueAtTime(0.038, now);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.016);
     osc.connect(gain);
     gain.connect(ctx.destination);
@@ -119,7 +119,7 @@ export function playTransition(): void {
     osc.frequency.setValueAtTime(290, now);
     osc.frequency.exponentialRampToValueAtTime(420, now + 0.11);
     gain.gain.setValueAtTime(0.001, now);
-    gain.gain.linearRampToValueAtTime(0.024, now + 0.025);
+    gain.gain.linearRampToValueAtTime(0.065, now + 0.025);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.13);
     osc.connect(gain);
     gain.connect(ctx.destination);
@@ -143,7 +143,7 @@ export function playToggle(open: boolean): void {
     osc.type = "sine";
     osc.frequency.setValueAtTime(open ? 280 : 410, now);
     osc.frequency.exponentialRampToValueAtTime(open ? 440 : 250, now + 0.075);
-    gain.gain.setValueAtTime(0.036, now);
+    gain.gain.setValueAtTime(0.095, now);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.085);
     osc.connect(gain);
     gain.connect(ctx.destination);
@@ -170,7 +170,7 @@ export function playIntroChime(): boolean {
       osc.frequency.setValueAtTime(f * 0.985, now + idx * 0.055);
       osc.frequency.exponentialRampToValueAtTime(f, now + idx * 0.055 + 0.45);
       gain.gain.setValueAtTime(0.0001, now + idx * 0.055);
-      gain.gain.linearRampToValueAtTime(0.022 / (idx * 0.35 + 1), now + idx * 0.055 + 0.18);
+      gain.gain.linearRampToValueAtTime(0.062 / (idx * 0.35 + 1), now + idx * 0.055 + 0.18);
       gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.15 + idx * 0.08);
       osc.connect(gain);
       gain.connect(ctx.destination);

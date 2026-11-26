@@ -101,9 +101,9 @@ export const NARAIN_PROFILE = {
   availability: "Open to AI research, engineering roles & collaborations",
   domains: ["AI / ML", "Data Science", "AI Infrastructure", "Product Engineering"],
   bioParagraphs: [
-    "I'm studying Computer Science & AI/ML at NIAT alongside a B.S. in Data Science from IIT Madras (expected 2029). Most of my time goes into connecting statistical foundations with software that actually runs on real hardware.",
-    "Outside classes, I started AxoWeb Technologies to build backend systems, mobile apps, and workflow tools for real clients. That grew from cold outreach with local businesses into 20+ active clients, 15+ shipped builds, and a ₹10L+ revenue milestone.",
-    "I also mentor student builders through Eduvia and serve as Joint Secretary at AMET Incubation Centre (ACEII), after serving as Vice President of the NIAT Advanced Technology Club. Long term, I want to build an AI research and infrastructure company where research, products, and open source sit under one roof.",
+    "At 17, I'm pursuing a dual academic track — a B.Tech in CSE (AI/ML) at NIAT (CGPA 8.9) alongside a B.S. in Data Science from IIT Madras (expected 2029) — while balancing open-source engineering, DSA & LeetCode, internships, and national hackathons.",
+    "Outside classes, I founded AxoWeb Technologies to build backend systems, mobile apps, and workflow tools for real clients. That grew from cold outreach into 20+ active clients, 15+ shipped builds, a ₹10L+ revenue milestone, and both the Best Innovation and People's Choice Awards at the BRAVE Competition 2026.",
+    "On the national stage, our team won the Marinotex Hackathon 2026 and finished First Runner-Up (₹3,00,000) out of 70,000+ students at the OpenAI Academy × NxtWave GenAI Buildathon in New Delhi with Project K (which evolved into Project-MELV). I also mentor student builders through Eduvia and serve as Joint Secretary at AMET Incubation Centre (ACEII).",
   ],
   academicAchievements: [
     "National Science Olympiad (NSO) — Zonal-level selection",
@@ -307,14 +307,14 @@ export const FLAGSHIP_PROJECTS: WorkProject[] = [
     title: "PROJECT K",
     subtitle: "Edge AI Traffic Intelligence & Emergency Corridor System",
     category: "AI_ML",
-    badge: "₹3L OPENAI BUILDATHON",
-    awardHighlight: "OpenAI Academy × NxtWave GenAI Buildathon — ₹3,00,000 National Runner-Up",
+    badge: "MARINOTEX WINNER · ₹3L OPENAI BUILDATHON",
+    awardHighlight: "Marinotex National Hackathon 2026 Winner · OpenAI Academy × NxtWave ₹3L National Runner-Up",
     image: "/images/project_k_showcase.jpg",
     tags: ["NVIDIA Jetson", "YOLOv8", "MARL", "SUMO", "MQTT", "Three.js"],
-    status: "Awarded Architecture",
+    status: "National Winner Architecture",
     year: "2025–2026",
     summary:
-      "Edge traffic optimization and emergency green-wave system, awarded ₹3,00,000 First Runner-Up at the OpenAI Academy Buildathon in New Delhi before evolving into Project-MELV.",
+      "Edge traffic optimization and emergency green-wave system — National Winner at Marinotex Hackathon 2026 and ₹3,00,000 First Runner-Up at the OpenAI Academy Buildathon before evolving into Project-MELV.",
     githubUrl: "https://github.com/narain-karti/Project-K",
     blogSlug: "project-k-openai-buildathon-journey",
     videoUrl: "https://www.youtube-nocookie.com/embed/9cr06w31vpY",
@@ -719,6 +719,15 @@ export const TOOLKIT: ToolkitItem[] = [
 
 export const AWARDS: AwardItem[] = [
   {
+    id: "marinotex-2026",
+    title: "National Level Winner — Marinotex Hackathon 2026",
+    org: "AMET University × Atal Innovation Mission (NITI Aayog)",
+    prize: "National Winner",
+    year: "2026",
+    story: "Won the national-level Marinotex Hackathon 2026 with Project K, earning strong jury recognition and validation against innovators from across the country.",
+    linkedProject: "project-k",
+  },
+  {
     id: "openai-buildathon",
     title: "National Runner-Up — OpenAI Academy × NxtWave Buildathon",
     org: "OpenAI Academy × NxtWave",
@@ -729,12 +738,12 @@ export const AWARDS: AwardItem[] = [
   },
   {
     id: "brave-2026",
-    title: "Best Student Innovation & People's Choice — BRAVE Competition",
-    org: "BRAVE Initiative",
+    title: "Best Innovation & People's Choice — BRAVE Competition 2026",
+    org: "BRAVE National Student Startup Finale",
     prize: "Best Innovation + People's Choice",
     year: "2026",
-    story: "Recognized for Otomo ('CRM That Never Forgets') & entrepreneurial execution alongside AxoWeb's venture milestones.",
-    linkedProject: "otomo",
+    story: "Won both Best Innovation and People's Choice Award for AxoWeb Technologies at the national-level student startup competition, alongside feedback from Midhula Devabhaktuni (Founder, Mivi) and industry leaders.",
+    linkedProject: "axoweb",
   },
   {
     id: "takeover-26",
