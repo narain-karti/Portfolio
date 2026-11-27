@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense, memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { ArrowUpRight, BookOpen, Copy, Check, X, ArrowRight } from "lucide-react";
 import HairlineFigure from "../../components/HairlineFigure";
 import { WordReveal, RevealBlock } from "../../components/MotionPrimitives";

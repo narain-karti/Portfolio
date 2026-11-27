@@ -101,7 +101,7 @@ export const NARAIN_PROFILE = {
   availability: "Open to AI research, engineering roles & collaborations",
   domains: ["AI / ML", "Data Science", "AI Infrastructure", "Product Engineering"],
   bioParagraphs: [
-    "At 17, I'm pursuing a dual academic track — a B.Tech in CSE (AI/ML) at NIAT (CGPA 8.9) alongside a B.S. in Data Science from IIT Madras (expected 2029) — while balancing open-source engineering, DSA & LeetCode, internships, and national hackathons.",
+    "At 18, I'm pursuing a dual academic track — a B.Tech in CSE (AI/ML) at NIAT (CGPA 9.2) alongside a B.S. in Data Science from IIT Madras (expected 2029) — while balancing open-source engineering, DSA & LeetCode, internships, and national hackathons.",
     "Outside classes, I founded AxoWeb Technologies to build backend systems, mobile apps, and workflow tools for real clients. That grew from cold outreach into 20+ active clients, 15+ shipped builds, a ₹10L+ revenue milestone, and both the Best Innovation and People's Choice Awards at the BRAVE Competition 2026.",
     "On the national stage, our team won the Marinotex Hackathon 2026 and finished First Runner-Up (₹3,00,000) out of 70,000+ students at the OpenAI Academy × NxtWave GenAI Buildathon in New Delhi with Project K (which evolved into Project-MELV). I also mentor student builders through Eduvia and serve as Joint Secretary at AMET Incubation Centre (ACEII).",
   ],
@@ -122,7 +122,7 @@ export const NARAIN_PROFILE = {
     {
       institution: "NxtWave Institute of Advanced Technologies (NIAT)",
       short: "NIAT · B.Tech",
-      degree: "B.Tech, Computer Science Engineering (AI/ML · CGPA 8.9)",
+      degree: "B.Tech, Computer Science Engineering (AI/ML · CGPA 9.2)",
       period: "2025 — 2029",
       focus: "Artificial Intelligence, Machine Learning, Backend Architecture & Product Engineering",
     },

@@ -1,7 +1,6 @@
+@import "tailwindcss";
+
 :root {
-  --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-space-grotesk: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --background: #0a0a0a;
   --foreground: #f5f5f5;
   --muted: #8e8e93;
@@ -21,50 +20,52 @@
   --text-meta: 0.76rem;
 }
 
-/* Native root scrolling without horizontal overflow traps */
-html {
-  overflow-x: clip;
-  height: auto;
-  background-color: var(--background);
-  color: var(--foreground);
-  color-scheme: dark;
-}
+@layer base {
+  /* Native root scrolling without horizontal overflow traps */
+  html {
+    overflow-x: clip;
+    height: auto;
+    background-color: var(--background);
+    color: var(--foreground);
+    color-scheme: dark;
+  }
 
-body {
-  overflow-x: clip;
-  min-height: 100vh;
-  height: auto;
-  margin: 0;
-  padding: 0;
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
-  font-size: var(--text-body);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  letter-spacing: -0.01em;
-}
+  body {
+    overflow-x: clip;
+    min-height: 100vh;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+    font-size: var(--text-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.01em;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-}
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-space-grotesk), sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
 
-code, pre, .font-mono {
-  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-}
+  code, pre, .font-mono {
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 /* =========================================================
@@ -137,17 +138,20 @@ a {
    Home Bento Portal Grid (Minimal 6-Card Viewport Layout)
    ========================================================= */
 .exact-layout {
+  position: relative;
   width: 100%;
   height: 100dvh;
   max-height: 100dvh;
   overflow: hidden;
-  padding: clamp(16px, 2.4vh, 28px) clamp(16px, 2.4vw, 32px) clamp(84px, 11vh, 102px);
+  padding: clamp(16px, 2.4vh, 28px) clamp(16px, 2.4vw, 32px) clamp(68px, 8.8vh, 84px);
   display: flex;
   flex-direction: column;
   background: var(--background);
 }
 
 .exact-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   width: 100%;
   max-width: 1440px;
@@ -198,6 +202,10 @@ a {
   cursor: pointer;
   border: 1px solid var(--border-color);
   transition: background-color 0.2s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease, box-shadow 0.22s ease;
+}
+
+.exact-layout .grid-card {
+  background-color: rgba(19, 19, 20, 0.86);
 }
 
 .grid-card::after {
@@ -571,19 +579,19 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 112px;
+  height: 76px;
   pointer-events: none;
   z-index: 80000;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   background: linear-gradient(
     to top,
     rgba(10, 10, 10, 0.9) 0%,
-    rgba(10, 10, 10, 0.45) 45%,
+    rgba(10, 10, 10, 0.42) 48%,
     rgba(10, 10, 10, 0) 100%
   );
-  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 24%, rgba(0, 0, 0, 0.72) 56%, transparent 100%);
-  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 24%, rgba(0, 0, 0, 0.72) 56%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 24%, rgba(0, 0, 0, 0.7) 58%, transparent 100%);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 24%, rgba(0, 0, 0, 0.7) 58%, transparent 100%);
 }
 
 /* Isolated scrollbar for project architecture drawer */
@@ -626,12 +634,10 @@ a {
 }
 
 .contact-viewport-shell {
-  height: 100dvh;
-  max-height: 100dvh;
-  overflow: hidden;
+  min-height: 100dvh;
   background-color: var(--background);
   color: var(--foreground);
-  padding: clamp(1rem, 2.4vh, 2rem) clamp(1.1rem, 3vw, 2.2rem) clamp(78px, 10vh, 96px);
+  padding: clamp(1rem, 2.4vh, 2rem) clamp(1.1rem, 3vw, 2.2rem) clamp(88px, 12vh, 112px);
   display: flex;
   flex-direction: column;
 }
@@ -639,7 +645,7 @@ a {
 .contact-viewport-inner {
   max-width: 1120px;
   width: 100%;
-  height: 100%;
+  flex: 1;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

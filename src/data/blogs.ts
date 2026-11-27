@@ -35,7 +35,7 @@ export interface ProjectBlogPost {
 export const BLOG_POSTS: ProjectBlogPost[] = [
   {
     slug: "india-ai-impact-summit-2026-project-k-to-melv",
-    title: "At 17, First Runner-Up in New Delhi: Project K to Project-MELV",
+    title: "At 18, First Runner-Up in New Delhi: Project K to Project-MELV",
     projectTitle: "PROJECT K → MELV",
     dateRange: "February 2026 · New Delhi",
     commitCount: "90 Finals / 70,000+ Students · ₹3L Prize",
@@ -43,7 +43,7 @@ export const BLOG_POSTS: ProjectBlogPost[] = [
     category: "Hackathons & Field Notes",
     coverImage: "/images/projectk_stage_finale.jpg",
     summary:
-      "Six months of late nights as a 17-year-old first-year student—shortlisted among 90 teams out of 70,000+ students for the OpenAI Academy × NxtWave GenAI Buildathon Finale at India AI Impact Summit 2026, winning First Runner-Up, and evolving Project K into Project-MELV.",
+      "Six months of late nights as an 18-year-old first-year student—shortlisted among 90 teams out of 70,000+ students for the OpenAI Academy × NxtWave GenAI Buildathon Finale at India AI Impact Summit 2026, winning First Runner-Up, and evolving Project K into Project-MELV.",
     repoUrl: "https://github.com/narain-karti/Project-K",
     tags: ["Project K", "Project-MELV", "India AI Impact Summit", "OpenAI Academy", "Edge AI"],
     videoUrl: "https://www.youtube-nocookie.com/embed/9cr06w31vpY",
@@ -64,7 +64,7 @@ export const BLOG_POSTS: ProjectBlogPost[] = [
       {
         heading: "1. From Regional Rounds to 90 Finalists out of 70,000+ Students",
         body: [
-          "At 17 years old, in my first year of college, standing on a national stage in New Delhi felt unreal. Our journey started six months earlier in the regional rounds, where getting selected among thousands of student builders gave us the push to keep iterating.",
+          "At 18 years old, in my first year of college, standing on a national stage in New Delhi felt unreal. Our journey started six months earlier in the regional rounds, where getting selected among thousands of student builders gave us the push to keep iterating.",
           "By the time we travelled to New Delhi for the OpenAI Academy × NxtWave GenAI Buildathon Grand Finale—held as part of the India AI Impact Summit 2026—only 90 teams remained out of more than 70,000 students mobilized across the country.",
         ],
         image: "/images/projectk_team_backdrop.jpg",

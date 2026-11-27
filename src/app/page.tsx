@@ -2,10 +2,11 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import Image from "next/image";
 import HairlineFigure from "../components/HairlineFigure";
+import { BackgroundBeams } from "@/components/ui/background-beams";
 import { WordReveal, FloatingElement } from "../components/MotionPrimitives";
 import { edgeFieldFigure, pipelineLayersFigure } from "../data/hairline-figures";
 import { playIntroChime, playTransition } from "../lib/sound-fx";
@@ -157,6 +158,7 @@ export default function Home() {
 
       {introReady && (
         <main className="exact-layout">
+          <BackgroundBeams />
           <div className="exact-grid">
             {/* 01 / HERO */}
             <Link href="/about" className="grid-area-about">

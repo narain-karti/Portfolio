@@ -7,7 +7,7 @@ import {
   useTransform,
   type SpringOptions,
   AnimatePresence,
-} from "framer-motion";
+} from "motion/react";
 import Link from "next/link";
 import React, { useEffect, useRef, useState, memo } from "react";
 import { createPortal } from "react-dom";
@@ -18,7 +18,6 @@ export type DockItemData = {
   icon: React.ReactNode;
   label: string;
   href: string;
-  onClick?: () => void;
   active?: boolean;
 };
 
@@ -64,7 +63,7 @@ const DockItem = memo(
 
     const targetScale = useTransform(mouseDistance, [-distance, 0, distance], [1, maxScale, 1]);
     const scale = useSpring(targetScale, springConfig);
-    const liftY = useTransform(scale, [1, maxScale], [0, -7]);
+    const liftY = useTransform(scale, [1, maxScale], [0, -5]);
 
     return (
       <div
@@ -131,7 +130,7 @@ const DockItem = memo(
             style={{
               width: "100%",
               height: "100%",
-              borderRadius: "11px",
+              borderRadius: "9px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -140,7 +139,6 @@ const DockItem = memo(
             }}
             onClick={(e) => {
               e.stopPropagation();
-              item.onClick?.();
               onNavigate?.();
             }}
             onFocus={() => setIsHovered(true)}
@@ -177,9 +175,9 @@ const Dock = ({
   items,
   className = "",
   spring = { mass: 0.1, stiffness: 300, damping: 24 },
-  magnification = 58,
-  distance = 110,
-  baseItemSize = 44,
+  magnification = 44,
+  distance = 86,
+  baseItemSize = 34,
   activeLabel = "NARAIN.OS",
 }: DockProps) => {
   const mouseX = useMotionValue(Infinity);
@@ -211,9 +209,9 @@ const Dock = ({
 
   const isMobile = viewportWidth <= 680;
   const isTablet = viewportWidth > 680 && viewportWidth <= 920;
-  const adjustedBase = isMobile ? 42 : isTablet ? 38 : baseItemSize;
-  const itemGap = isMobile ? 8 : isTablet ? 14 : 22;
-  const maxScale = isMobile ? 1 : isTablet ? 1.24 : magnification / baseItemSize;
+  const adjustedBase = isMobile ? 36 : isTablet ? 32 : baseItemSize;
+  const itemGap = isMobile ? 6 : isTablet ? 8 : 10;
+  const maxScale = isMobile ? 1 : isTablet ? 1.18 : magnification / baseItemSize;
 
   const toggleCollapse = (next: boolean) => {
     setCollapsed(next);
@@ -237,7 +235,7 @@ const Dock = ({
         position: "fixed",
         left: 0,
         right: 0,
-        bottom: isMobile ? "14px" : "16px",
+        bottom: "12px",
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-end",
@@ -260,32 +258,32 @@ const Dock = ({
             className="site-dock-panel"
             style={{
               pointerEvents: "auto",
-              width: isMobile ? "52px" : "auto",
-              height: isMobile ? "52px" : "auto",
-              padding: isMobile ? 0 : "9px 16px",
+              width: isMobile ? "44px" : "auto",
+              height: isMobile ? "44px" : "auto",
+              padding: isMobile ? 0 : "6px 12px",
               borderRadius: "999px",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "8px",
+              gap: "6px",
               color: "#f5f5f5",
               cursor: "pointer",
               position: "relative",
               fontFamily: "var(--font-mono), monospace",
-              fontSize: "0.75rem",
+              fontSize: "0.7rem",
             }}
             aria-label={`Open navigation menu (${activeLabel})`}
             title={`Menu · ${activeLabel}`}
           >
-            <LayoutGrid size={19} strokeWidth={1.8} />
+            <LayoutGrid size={15} strokeWidth={1.75} />
             {!isMobile && <span>{activeLabel}</span>}
             <span
               style={{
                 position: isMobile ? "absolute" : "static",
-                top: isMobile ? "10px" : undefined,
-                right: isMobile ? "10px" : undefined,
-                width: "6px",
-                height: "6px",
+                top: isMobile ? "8px" : undefined,
+                right: isMobile ? "8px" : undefined,
+                width: "5px",
+                height: "5px",
                 borderRadius: "999px",
                 backgroundColor: "#6ee7b7",
               }}
@@ -309,9 +307,9 @@ const Dock = ({
                     pointerEvents: "auto",
                     display: "grid",
                     gridTemplateColumns: "repeat(6, minmax(0, 1fr))",
-                    gap: "8px",
-                    padding: "10px 12px",
-                    borderRadius: "20px",
+                    gap: "6px",
+                    padding: "8px 10px",
+                    borderRadius: "16px",
                     width: "fit-content",
                     maxWidth: "calc(100vw - 20px)",
                     justifyItems: "center",
@@ -323,8 +321,8 @@ const Dock = ({
                     alignItems: "center",
                     justifyContent: "center",
                     gap: `${itemGap}px`,
-                    padding: isTablet ? "8px 16px 10px" : "10px 24px 12px",
-                    borderRadius: "18px",
+                    padding: isTablet ? "5px 10px" : "6px 12px",
+                    borderRadius: "14px",
                     maxWidth: "calc(100vw - 16px)",
                   }
             }
@@ -367,7 +365,7 @@ const Dock = ({
               style={{
                 width: adjustedBase,
                 height: adjustedBase,
-                borderRadius: "11px",
+                borderRadius: "9px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -376,7 +374,7 @@ const Dock = ({
                 flexShrink: 0,
               }}
             >
-              {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+              {muted ? <VolumeX size={14} /> : <Volume2 size={14} />}
             </motion.button>
 
             <motion.button
@@ -390,7 +388,7 @@ const Dock = ({
               style={{
                 width: adjustedBase,
                 height: adjustedBase,
-                borderRadius: "11px",
+                borderRadius: "9px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -399,7 +397,7 @@ const Dock = ({
                 flexShrink: 0,
               }}
             >
-              <ChevronDown size={16} />
+              <ChevronDown size={14} />
             </motion.button>
           </motion.nav>
         )}

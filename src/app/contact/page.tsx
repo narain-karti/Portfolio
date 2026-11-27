@@ -47,7 +47,7 @@ export default function ContactPage() {
             flex: 1,
             minHeight: 0,
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(290px, 100%), 1fr))",
             gap: "clamp(1.25rem, 3vw, 3rem)",
             alignItems: "center",
           }}

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import { motion, MotionConfig } from "framer-motion";
+import { motion, MotionConfig } from "motion/react";
 
 const EASE_OUT_CUBIC = [0.22, 1, 0.36, 1] as const;
 

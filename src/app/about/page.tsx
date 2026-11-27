@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { MotionConfig } from "motion/react";
 import HairlineFigure from "../../components/HairlineFigure";
+import { PinContainer } from "@/components/ui/3d-pin";
 import { WordReveal, RevealBlock } from "../../components/MotionPrimitives";
 import { terminalRigFigure } from "../../data/hairline-figures";
 import { NARAIN_PROFILE } from "../../data/portfolio-data";
@@ -12,16 +14,28 @@ const ABOUT_PANELS = [
     src: "/images/about_panel_1.jpg",
     alt: "Isometric architectural systems blueprint",
     caption: "01 · Sketching how systems connect",
+    pinTitle: "/work · System Architecture",
+    href: "/work",
+    detailTitle: "Architecture Before Code",
+    detailBody: "Mapping OKF knowledge graphs, edge inference paths, and failure gates before writing modules.",
   },
   {
     src: "/images/about_panel_2.jpg",
     alt: "Minimalist research notebook on dark desk",
     caption: "02 · Foundations at IIT Madras & NIAT",
+    pinTitle: "/builder · 9.2 CGPA",
+    href: "/builder",
+    detailTitle: "Dual-Degree Foundations",
+    detailBody: "B.Tech CSE (AI/ML · 9.2 CGPA) at NIAT alongside B.S. in Data Science at IIT Madras.",
   },
   {
     src: "/images/about_panel_3.jpg",
     alt: "South Indian filter coffee beside a glowing laptop at night",
     caption: "03 · Late nights shipping software",
+    pinTitle: "/blog · Engineering Logs",
+    href: "/blog",
+    detailTitle: "Iterating to Production",
+    detailBody: "From hackathon prototypes like Project K to DATADOC on PyPI and offline Gemma 4 builds.",
   },
 ];
 
@@ -60,22 +74,37 @@ export default function AboutPage() {
           </WordReveal>
         </header>
 
-        {/* 3 Distinct Theme-Matched Images */}
-        <div className="portrait-grid">
-          {ABOUT_PANELS.map((panel, idx) => (
-            <RevealBlock key={panel.src} className="portrait-card" inView={false} delay={0.1 + idx * 0.08} interactive>
-              <Image
-                src={panel.src}
-                alt={panel.alt}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                style={{ objectFit: "cover" }}
-                priority
-              />
-              <div className="portrait-caption">{panel.caption}</div>
-            </RevealBlock>
-          ))}
-        </div>
+        {/* 3 Distinct Theme-Matched Images with 3D Pin Hover Details */}
+        <MotionConfig reducedMotion="user">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            {ABOUT_PANELS.map((panel) => (
+              <div key={panel.src} className="h-[24.5rem] w-full flex items-center justify-center">
+                <PinContainer title={panel.pinTitle} href={panel.href}>
+                  <div className="relative flex flex-col w-[17.5rem] h-[20.5rem] rounded-xl overflow-hidden bg-neutral-950">
+                    <Image
+                      src={panel.src}
+                      alt={panel.alt}
+                      fill
+                      sizes="(max-width: 768px) 280px, 280px"
+                      style={{ objectFit: "cover" }}
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-300 group-hover/pin:from-black/95 group-hover/pin:via-black/75" />
+                    <div className="relative z-10 mt-auto p-3.5">
+                      <div className="text-[11px] font-mono uppercase tracking-wider text-emerald-300/90 mb-1">
+                        {panel.caption}
+                      </div>
+                      <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-300 group-hover/pin:max-h-32 group-hover/pin:opacity-100">
+                        <h3 className="text-sm font-semibold text-white mb-1">{panel.detailTitle}</h3>
+                        <p className="text-xs text-neutral-300 leading-relaxed">{panel.detailBody}</p>
+                      </div>
+                    </div>
+                  </div>
+                </PinContainer>
+              </div>
+            ))}
+          </div>
+        </MotionConfig>
 
         <RevealBlock className="spectrum-line" delay={0.1}>
           Usually somewhere between sketching an architecture at midnight and{" "}
@@ -128,7 +157,7 @@ export default function AboutPage() {
               {
                 label: "DUAL DEGREES",
                 title: "NIAT & IIT Madras",
-                detail: "B.Tech CSE (AI/ML) at NIAT (8.9 CGPA) alongside B.S. in Data Science at IIT Madras.",
+                detail: "B.Tech CSE (AI/ML) at NIAT (9.2 CGPA) alongside B.S. in Data Science at IIT Madras.",
               },
               {
                 label: "STARTUP",
@@ -195,7 +224,7 @@ export default function AboutPage() {
             </div>
           </div>
           <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "66ch", marginBottom: "0.85rem", lineHeight: 1.6 }}>
-            At 17, in my first year, our team finished First Runner-Up (₹3,00,000) out of 70,000+ students at the OpenAI Academy × NxtWave GenAI Buildathon in New Delhi with Project K — before evolving the system into Project-MELV.
+            At 18, in my first year, our team finished First Runner-Up (₹3,00,000) out of 70,000+ students at the OpenAI Academy × NxtWave GenAI Buildathon in New Delhi with Project K — before evolving the system into Project-MELV.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginBottom: "1.4rem" }}>
             <a
@@ -217,36 +246,63 @@ export default function AboutPage() {
               Express News Asia ↗
             </a>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.15rem" }}>
-            {[
-              {
-                src: "/images/projectk_live_pitch.jpg",
-                alt: "Pitching Project K live on stage in New Delhi",
-                caption: "Pitching Project K's 3D intersection twin",
-              },
-              {
-                src: "/images/projectk_solo_award.jpg",
-                alt: "First Runner-Up plaque and ₹3L cheque at India AI Impact Summit 2026",
-                caption: "First Runner-Up · New Delhi 2026",
-              },
-              {
-                src: "/images/projectk_stage_finale.jpg",
-                alt: "Team Project K on the Buildathon Grand Finale stage",
-                caption: "With teammates on the Grand Finale stage",
-              },
-            ].map((photo, idx) => (
-              <RevealBlock key={photo.src} className="portrait-card" delay={idx * 0.07} interactive style={{ aspectRatio: "4 / 3" }}>
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  style={{ objectFit: "cover", objectPosition: "center 20%" }}
-                />
-                <div className="portrait-caption">{photo.caption}</div>
-              </RevealBlock>
-            ))}
-          </div>
+          <MotionConfig reducedMotion="user">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  src: "/images/projectk_live_pitch.jpg",
+                  alt: "Pitching Project K live on stage in New Delhi",
+                  caption: "Live Stage Demo · New Delhi",
+                  pinTitle: "/blog · Watch & Read",
+                  href: "/blog/india-ai-impact-summit-2026-project-k-to-melv",
+                  detailTitle: "3D Intersection Twin Live",
+                  detailBody: "Presented live YOLOv8 Jetson inference & emergency green-wave switching to the national jury.",
+                },
+                {
+                  src: "/images/projectk_solo_award.jpg",
+                  alt: "First Runner-Up plaque and ₹3L cheque at India AI Impact Summit 2026",
+                  caption: "First Runner-Up · ₹3,00,000 Grant",
+                  pinTitle: "OpenAI × NxtWave · Top 2",
+                  href: "/work?project=project-k",
+                  detailTitle: "Top 2 / 70,000+ Students",
+                  detailBody: "Awarded National First Runner-Up at the India AI Impact Summit 2026 Grand Finale in New Delhi.",
+                },
+                {
+                  src: "/images/projectk_stage_finale.jpg",
+                  alt: "Team Project K on the Buildathon Grand Finale stage",
+                  caption: "Team Project K · Grand Finale",
+                  pinTitle: "/work · Project-MELV",
+                  href: "/work?project=project-melv",
+                  detailTitle: "Project K → Project-MELV",
+                  detailBody: "Evolved from single-junction control into a city-wide 14ms ANPR mesh cutting bandwidth by 99.82%.",
+                },
+              ].map((photo) => (
+                <div key={photo.src} className="h-[22rem] w-full flex items-center justify-center">
+                  <PinContainer title={photo.pinTitle} href={photo.href}>
+                    <div className="relative flex flex-col w-[17.5rem] h-[15.5rem] rounded-xl overflow-hidden bg-neutral-950">
+                      <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        fill
+                        sizes="280px"
+                        style={{ objectFit: "cover", objectPosition: "center 20%" }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-300 group-hover/pin:from-black/95 group-hover/pin:via-black/75" />
+                      <div className="relative z-10 mt-auto p-3.5">
+                        <div className="text-[11px] font-mono uppercase tracking-wider text-emerald-300/90 mb-1">
+                          {photo.caption}
+                        </div>
+                        <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-300 group-hover/pin:max-h-28 group-hover/pin:opacity-100">
+                          <h3 className="text-sm font-semibold text-white mb-0.5">{photo.detailTitle}</h3>
+                          <p className="text-xs text-neutral-300 leading-relaxed">{photo.detailBody}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </PinContainer>
+                </div>
+              ))}
+            </div>
+          </MotionConfig>
 
           <div
             style={{

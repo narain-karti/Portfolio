@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { motion, type MotionStyle } from "framer-motion";
+import { motion, type MotionStyle } from "motion/react";
 
 const EASE_OUT_CUBIC = [0.22, 1, 0.36, 1] as const;
 
@@ -41,8 +41,8 @@ export function WordReveal({
         inView ? (
           <motion.span
             key={`${idx}-${word}`}
-            initial={{ opacity: 0, y: 11, filter: "blur(4px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.12 }}
             transition={{
               duration,
@@ -56,8 +56,8 @@ export function WordReveal({
         ) : (
           <motion.span
             key={`${idx}-${word}`}
-            initial={{ opacity: 0, y: 11, filter: "blur(4px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{
               duration,
               delay: delay + idx * step,
