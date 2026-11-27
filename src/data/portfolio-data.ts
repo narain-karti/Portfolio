@@ -88,8 +88,7 @@ export const NARAIN_PROFILE = {
   positioningStatement:
     "Hi, I'm Narain. Welcome in. I enjoy taking ideas apart to see how they work, then building quiet, reliable software around them.",
   location: "Chennai, India",
-  email: "narainkarti.work@gmail.com",
-  secondaryEmail: "studyusage2008@gmail.com",
+  email: "studyusage2008@gmail.com",
   phone: "+91-9176257316",
   github: "https://github.com/narain-karti",
   linkedin: "https://www.linkedin.com/in/narainkarti/",

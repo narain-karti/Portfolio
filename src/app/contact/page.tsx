@@ -76,7 +76,7 @@ export default function ContactPage() {
             </RevealBlock>
 
             <RevealBlock inView={false} delay={0.18} style={{ display: "flex", flexDirection: "column", gap: "10px", maxWidth: "440px" }}>
-              {[NARAIN_PROFILE.email, NARAIN_PROFILE.secondaryEmail].map((email) => (
+              {[NARAIN_PROFILE.email].map((email) => (
                 <div
                   key={email}
                   style={{
